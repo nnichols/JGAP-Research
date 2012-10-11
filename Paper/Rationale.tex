@@ -1,0 +1,21 @@
+The selection phase of Genetic Algorithms determines the probability of a given individual being chosen for recombination based upon fitness. This is necessary in order to preserve the genes that performed well. This was conceptually expanded upon with elitism, allowing the best performing individual to survive into the next generation. The genetic overlay method aims to also engrain this concept within a genetic operator. Now, let us define a genetic overlay:
+
+\begin{overlay}
+A genetic operator which modifies an individual's genetic sequence to match the specified alleles of a given schema, while leaving the unspecified alleles at their original values. 
+\end{overlay}
+
+Below we have a simple example of a binary genetic overlay where the unspecified alleles have been marked with a dash.
+
+\begin{figure}[h!]
+\centering 
+\begin{align*}
+\text{Initial Individual} &: 0~1~0~0~1~0 		\\
+\text{Genetic Overlay} &: 1-0~1-0		\\
+\text{Resultant Individual} &: 1~1~0~1~1~0			
+\end{align*}
+
+\caption{Genetic overlay on a binary genetic sequence}
+
+\end{figure}
+
+This operator allows us to quickly give a set of individuals very similar genetic sequence, thus allowing us to search the neighborhood of the provided schema. The choice and density of the schema that we use is very important. If our schema is very dense, i.e. it consists of mostly specified alleles, then the population we apply this operator to will converge very quickly. Likewise, a very sparse schema will spend excess computation cycles applying very few changes. Additionally, we want to ensure that our schema consists of alleles that yield high fitness values. Each of these factors must be carefully considered when developing a strategy for creating genetic overlays. These will be investigated further in the following section.

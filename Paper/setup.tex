@@ -1,0 +1,118 @@
+%%%% setup.tex - Common packages, definitions, etc.
+
+\usepackage{color}
+\definecolor{myred}{rgb}{0.6,0,0}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{myblue}{rgb}{0,0,0.6}
+
+% url for citations
+\usepackage{url}
+
+% for subfigures
+%\usepackage[]{subfig}
+
+% side captions!
+\usepackage[rightcaption]{sidecap}
+
+% Squeeeeze figures in there (sorry, Latex)
+\renewcommand\floatpagefraction{.9}
+\renewcommand\topfraction{.8}
+\renewcommand\bottomfraction{.8}
+\renewcommand\textfraction{.1}  
+
+% amsmath for align and equation environments
+\usepackage{amsmath}
+
+% for somem extra symbols
+\usepackage{amssymb}
+
+
+% AMSTHM fix
+\let\proof\relax 
+\let\endproof\relax
+
+% For theorem/definition environment
+\usepackage{amsthm}
+\newtheorem{overlay}{Genetic Overlay}
+\newtheorem{eschema}{Elitist Schema Overlay}
+
+% Better font encoding for characters with accents
+% http://tex.stackexchange.com/questions/664/why-should-i-use-usepackaget1fontenc
+\usepackage[T1]{fontenc}
+% But the standard Computer Modern w/ T1 encoding uses bitmap fonts (ugly)
+% http://tex.stackexchange.com/questions/1291/why-are-bitmap-fonts-used-automatically
+% http://tex.stackexchange.com/questions/1390/latin-modern-vs-cm-super
+\usepackage{lmodern}
+
+
+
+% just for TODO markers
+\newcommand{\TODO}[1]{{\color{red} ((#1))}}
+
+% large dash for tables
+\newcommand{\bigdash}[1]{ \begin{picture}(#1,2) \put(0,2){\line(1,0){#1}} \end{picture} }
+
+% custom functions for algorithms
+\definecolor{varcolor}{rgb}{0.2,0.2,0.6}
+\definecolor{funccolor}{rgb}{0.5,0.1,0.1}
+\definecolor{commentcolor}{rgb}{0.1,0.4,0.1}
+\newcommand{\tab}{{\hspace{1.1em}}}
+%\newcommand{\var}[1]{\mbox{{\color{varcolor}\texttt{#1}}}}
+\newcommand{\var}[1]{\mbox{\texttt{#1}}}
+%\newcommand{\func}[1]{\mbox{{\color{funccolor}\textbf{#1}}}}
+\newcommand{\func}[1]{\mbox{{\color{funccolor}{#1}}}}
+\newcommand{\kw}[1]{\mbox{\textbf{#1}}}  % language keyword
+\newcommand{\alg}[1]{\mbox{\textsf{#1}}}
+\newcommand{\comment}[2] {\item[] #1{\color{commentcolor}$\triangledown$ #2}}
+\newcommand{\inlinecomment}[1] {\tab \tab {\color{commentcolor}$\triangleleft$ \parbox[t]{2.5in}{#1} } }
+\newenvironment{alg_enumerate}
+	{
+	\setlength{\partopsep}{-7pt}
+	\begin{enumerate}
+	\addtolength{\itemsep}{1pt}
+	}
+	{
+	\end{enumerate}
+	\setlength{\partopsep}{0pt}
+	}
+% lines for algorithms
+\newcommand{\lined}{\vspace{1mm}\hrule\vspace{1mm}}
+
+\usepackage{pifont}
+\newcommand{\chk}{\ding{52}}
+
+
+\usepackage{ifpdf}
+
+\ifpdf
+
+	% figures
+	\usepackage[pdftex]{graphicx}
+	%\usepackage{epstopdf}  % enable if needed for .eps files
+
+	%\usepackage{thumbpdf}  % most PDF viewers generate thumbnails themselves these days...
+
+	\usepackage[
+		pdftex,
+		pdftitle={\papertitle},
+		pdfauthor={\paperauthors},
+		%pdfsubject={Just a test},
+		%pdfkeywords={test testing testable},
+		colorlinks=true,
+		urlcolor=myblue,     % \href{...}{...} external (URL)
+		citecolor=mygreen,   % \cite{...}
+		linkcolor=myblue,    % \ref{...} and \pageref{...}
+		%pagebackref,
+		pdfpagemode=UseNone, % PDF viewer's initial display mode (no expanded sidebars)
+        bookmarks=false      % Don't generate TOC bookmarks (doesn't work for LLNCS)
+		%bookmarksopen=true  % Display them by default
+		%pdfadjustspacing=1  % does not work with my version of latex
+	]{hyperref}
+
+\else  % not PDf
+
+	% figures
+	\usepackage[dvips]{graphicx} 
+
+\fi
+

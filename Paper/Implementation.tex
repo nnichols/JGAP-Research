@@ -1,0 +1,58 @@
+Obviously, there are many different methodologies that we could utilize to build effective genetic overlays. The central focus of this paper are \emph{Elitist Schema Overlays}, and they are conceptually defined below.
+
+\begin{eschema}
+A genetic overlay that is built from the matching alleles of the elite sub-population.
+\end{eschema}
+
+To define this formally, let $P = \{p_1,p_2,\ldots,p_n\}$ be a set of $n$ individuals selected for recombination. Consider $T=\{t_1,t_2,\ldots,t_k\}$ as the set of the $k$ individuals with the highest fitness rankings in the population. From $P$, we will create a new individual $c$.  We will now construct the genetic overlay, named $s$, to be applied to $c$ from the genetic sequences in $T$. The notations $s(i), t(i), \text{ and } c(i)$ represent the value, or lack-thereof in the case of the schema, at position $i$.
+ 
+ \begin{displaymath}
+   s(i) = \left\{
+     \begin{array}{lr}
+       t_1(i) \text{~~~if~ } t_1(i) = t_2(1) = \ldots = t_k(i) \\
+       \text{empty~} \text{if~ } \text{otherwise} 
+     \end{array}
+   \right.
+\end{displaymath} 
+
+Thus, our schema will only have specified values where every individual in $T$ has the same value at that same position. If our best performing individuals all have the same values at various alleles, this may hint that these assignments are correlated with success. Thus, it would be reasonable to search the neighborhood of this partial solution more thuroughly. Below is an example of the creation and application of an Elitist Schema Overlay:
+\begin{figure}[h!]
+\centering 
+\begin{align*}
+\text{Elite Individual 1} &: 0~1~0~0~1~0~1~1~0 			\\
+\text{Elite Individual 2} &: 0~1~0~0~0~0~1~0~0 			\\
+\text{Elite Individual 3} &: 1~1~0~1~1~0~1~1~0 			\\
+\text{Resultant Genetic Overlay} &:   -1~0--0~1-0			\\
+\text{Unmodified New Individual} &: 1~0~0~1~1~0~1~1~1	\\		
+\text{Resultant New Individual} &: 1~1~0~1~1~0~1~1~0
+\end{align*}
+\caption{Production and Application of an Elitist Schema Overlay}
+\end{figure}
+
+It should be noted that our $c$ can be created using any existing, or future, genetic operator. This was done intentionally to explore its behavior in several scenarios. This process allows us to search around those genes that are common among the fittest members in our population. 
+
+Admittedly, the effects of this method will depend greatly upon our choice of $k$. For instance, the choice $k = 1$ will replace every individual that has a genetic overlay applied with the highest ranked member of the population. This is problematic, since it will instantly lead us to convergence. Likewise, a large value of $k$, will greatly reduce the probability that $t_1(i) = t_2(i) = \ldots = t_k(i)$ is true. This would lead us to checking a large number of alleles and ultimately doing little to nothing with that information.
+
+Now we will determine the probability of a single allele matching across $k$ parents. We will denote $\alpha_i$ to be this value, and $\beta_i$ to represent the size of the domain of the $i$th allele. Note that this assumes that each value for an allele has an equal probability of showing up in a selected genetic sequence at allele $i$. If this is not the case, then this gives us a lower bound for the values more likely to occur at this position, and an upper bound for the values less likely to occur at this position.
+
+\[ \alpha = P(\text{\emph{k} parents matching \emph{i}th allele}) = \frac{1}{\beta_i}^{k-1} \]
+
+With this, we can easily derive the probabilities of having at least one match, no matches, and a total match for a chromosome of length $n$ in terms of $\alpha$.
+
+\begin{align*}
+P( \text{No matches})&= (1 - \alpha)^n \\
+P( \text{At least }1 \text{ match}) &=\sum\limits^{n}_{r=1} \binom{n}{r}*\alpha^{r}*(1-\alpha)^{n-r} \\
+P( \text{All matches})&= \alpha^n
+\end{align*}
+
+Thus, our choice of $k$ should be made carefully, but there are a large number of possibilities that we could easily consider. A fixed and predetermined $k$ could be chosen, $k$ could be randomized for each generation, or $k$ could be set to the number of individuals above a certain fitness threshold; however, the successes of Memetic Algorithms inspired a different approach. If we create an inverse relationship between the generations elapsed and our choice of $k$ we get some interesting properties:
+
+\begin{enumerate}
+
+\item Narrowing Search - Since the initial $k$ values will be very large, it is unlikely that $t_1(i) = t_2(i) = \ldots = t_k(i)$, and so we will not disturb the initial natural diversity with the operator.  Likewise, as our $k$ drops our genetic overlay has a higher chance to be mostly specified, thus we will be searching the narrowing neighborhood of the best performing solutions discovered so far \cite{Neri11}.
+
+\item Controlled Convergence - We can control how quickly $k$ decreases, and so how quickly our population will converge towards the best known solutions. When we set $k=1$ we will instantly converge the entire target population of this operator, and so the minimum convergence rate can now be set by the user.
+
+
+\end{enumerate}
+
