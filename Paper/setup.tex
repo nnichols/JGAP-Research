@@ -53,30 +53,31 @@
 \newcommand{\bigdash}[1]{ \begin{picture}(#1,2) \put(0,2){\line(1,0){#1}} \end{picture} }
 
 % custom functions for algorithms
+\usepackage{algorithm2e}
 \definecolor{varcolor}{rgb}{0.2,0.2,0.6}
 \definecolor{funccolor}{rgb}{0.5,0.1,0.1}
 \definecolor{commentcolor}{rgb}{0.1,0.4,0.1}
-\newcommand{\tab}{{\hspace{1.1em}}}
+%\newcommand{\tab}{{\hspace{1.1em}}}
 %\newcommand{\var}[1]{\mbox{{\color{varcolor}\texttt{#1}}}}
-\newcommand{\var}[1]{\mbox{\texttt{#1}}}
+%\newcommand{\var}[1]{\mbox{\texttt{#1}}}
 %\newcommand{\func}[1]{\mbox{{\color{funccolor}\textbf{#1}}}}
-\newcommand{\func}[1]{\mbox{{\color{funccolor}{#1}}}}
-\newcommand{\kw}[1]{\mbox{\textbf{#1}}}  % language keyword
-\newcommand{\alg}[1]{\mbox{\textsf{#1}}}
-\newcommand{\comment}[2] {\item[] #1{\color{commentcolor}$\triangledown$ #2}}
-\newcommand{\inlinecomment}[1] {\tab \tab {\color{commentcolor}$\triangleleft$ \parbox[t]{2.5in}{#1} } }
-\newenvironment{alg_enumerate}
-	{
-	\setlength{\partopsep}{-7pt}
-	\begin{enumerate}
-	\addtolength{\itemsep}{1pt}
-	}
-	{
-	\end{enumerate}
-	\setlength{\partopsep}{0pt}
-	}
+%\newcommand{\func}[1]{\mbox{{\color{funccolor}{#1}}}}
+%\newcommand{\kw}[1]{\mbox{\textbf{#1}}}  % language keyword
+%\newcommand{\alg}[1]{\mbox{\textsf{#1}}}
+%\newcommand{\comment}[2] {\item[] #1{\color{commentcolor}$\triangledown$ #2}}
+%\newcommand{\inlinecomment}[1] {\tab \tab {\color{commentcolor}$\triangleleft$ \parbox[t]{2.5in}{#1} } }
+%\newenvironment{alg_enumerate}
+%	{
+%	\setlength{\partopsep}{-7pt}
+%	\begin{enumerate}
+%	\addtolength{\itemsep}{1pt}
+%	}
+%	{
+%	\end{enumerate}
+%	\setlength{\partopsep}{0pt}
+%	}
 % lines for algorithms
-\newcommand{\lined}{\vspace{1mm}\hrule\vspace{1mm}}
+%\newcommand{\lined}{\vspace{1mm}\hrule\vspace{1mm}}
 
 \usepackage{pifont}
 \newcommand{\chk}{\ding{52}}

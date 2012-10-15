@@ -1,2 +1,49 @@
 Genetic Algorithms are frequently compared based upon their abilities to solve various benchmark numerical functions and real world problems like the Traveling Salesman and Job Scheduling problems\cite{molga05}. In order to get a good grasp on the general behavior of elitist schemata overlays in comparison to the other tested operators, we will choose a variety of problems from both of these fields. 
-A common set of problems mentioned can be found in the existing research\cite{Eiben95}\cite{Tsutsui99}\cite{Deb99}. We will also test performance on several instances of the Traveling Salesman and Knapsack problems. Additionally, since multi-parent recombination operators have had success on NK-Landscapes in previous studies, we will test each genetic operator on several NK-Landscapes of varying size and ruggedness\cite{Eiben96}\cite{Skellett05}. Definitions from current research for these problems and several of their characteristics can be found below\cite{molga05}\cite{yang10}.
+
+Our research found a set of common minimization functions used as benchmarks of the performance of new Genetic Algorithms\cite{Deb99,Eiben95,Tsutsui99}. These functions should give us a picture of how well our algorithm compares to more traditional ones. In order to make some reasoning about the behavior of elitist schemata overlays on real world problems, we will also test performance on several instances of the Traveling Salesman and Knapsack problems. Additionally, since multi-parent recombination operators have had success on NK-Landscapes in previous studies, we will test each genetic operator on several NK-Landscapes of varying size and ruggedness\cite{Eiben96,Skellett05}. Definitions from current research for these problems and several of their characteristics can be found below\cite{molga05,Skellett05,yang10}.
+
+%
+% De Jong Sphere Definition
+%
+The sphere and hyper-ellipsoid De Jong functions are both convex and unimodal with global minimums of $0$ located at $(0,0,\ldots,0)$. The n-dimensional version of the sphere function is as defined\cite{molga05,yang10}:
+\[ f(x_1,x_2,\ldots,x_n) = \sum\limits_{i=1}^n x_i^2 \text{ for } -5.12 \leq x_i \leq 5.12 \]
+%
+%De Jong Hyper-Ellipsoid Definition
+%
+The hyper-ellipsoid function is defined similarly\cite{molga05,yang10}:
+\[ f(x_1,x_2,\ldots,x_n) = \sum\limits_{i=1}^n ix_i^2 \text{ for } -5.12 \leq x_i \leq 5.12\]
+%
+% Sum of Different Powers Function
+%
+We also selected the closely related sum of different powers function, whose minimum is also of $0$ located at $0,0,\ldots,0)$of $0$ located at $(0,0,\ldots,0)$\cite{molga05,yang10}:
+\[ f(x_1,x_2,\ldots,x_n) = \sum\limits_{i=1}^n |x_i|^{i+1} \text{ for } -1 \leq x_i \leq 1\]
+%
+% Griewank's Function
+%
+The Griewank function is known for its multi-modality and also has its global minimum of $0$ located at $(0,0,\ldots,0)$\cite{molga05,yang10}:
+ \[ f(x_1,x_2,\ldots,x_n) = \frac{1}{4000}\sum\limits_{i=1}^n x_i^{2} - \prod\limits_{i=1}^{n} \cos(\frac{x_i}{\sqrt{i}})+1 \text{ for } -600 \leq x_i \leq 600\]
+ %
+ % 2-D Michaelwicz Function
+ %
+ The two dimensional Michaelwicz function has a global minimum approximately equal to $-1.8013$ at the approximate points $(2.2032,1.5705)$ and is defined below\cite{molga05,yang10}:
+ \[ f(x,y) = -\sin(x)\sin^{20}(\frac{x^2}{\pi}) - \sin(y)\sin^{20}(\frac{2y^2}{\pi}) \text{ for } 0 \leq x,y \leq 5\]
+ %
+ % Rastrigin's Function
+ %
+ Rastrigin's Function is another highly multimodal function with a global minimum of $0$ at $(0,0,\ldots,0)$ \cite{molga05,yang10}:
+ \[f(x_1,x_2,\ldots,x_n) = \sum\limits_{i=1}^n \big( x_i^2 - 10\cos(2\pi x_i) \big)\text{ for } -600 \leq x_i \leq 600\]
+ %
+ % Rosenbrock's Function
+ %
+ Rosenbrock's function has a global minimum of 0 at $(1,1,\ldots,1)$ \cite{molga05,yang10}:
+ \[f(x_1,x_2,\ldots,x_n) = \sum\limits_{i=1}^{n-1} ((x_i-1)^2 + 100(x_{i+1}-x_i^2)^2) \text{ for } -5 \leq x_i \leq 5\]
+ %
+ % Six Hump Camel Back Function
+ %
+ The two-dimensional six-hump camel back function has a global minimum of approximately $-1.0316$ at the coordinates $(0.0898,-0.7126)$ and $(-0.0898,0.7126)$\cite{molga05,yang10}:
+ \[f(x,y) = \frac{x^6}{3}-2.1x^4+4x^2+xy+4y^4-4y^2 \]
+ %
+ % Schubert's 2D Function
+ %
+ Schubert's function is multimodal and has $18$ global minima of approximate value $-186.7309$ in the given search domain \cite{molga05,yang10}:
+ \[ f(x,y) = (\sum\limits_{i=1}^{5} i\cos(i + ix + x)) * (\sum\limits_{i=1}^{5} i\cos(i + iy + y)) \text{ for } -10 \leq x,y \leq 10 \]
