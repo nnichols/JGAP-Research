@@ -8,6 +8,8 @@
  
 import org.jgap.*;
 import org.jgap.impl.*;
+import org.jgap.event.*;
+import org.jgap.util.*;
  
 public class MCP{
 
@@ -21,10 +23,13 @@ public class MCP{
 		
 	public static void main(String[] args) throws Exception{
 	
-		// Default configuration has standard crossover, selection, and mutation
-		// After constructing it, we pass the population size
-		Configuration config = new DefaultConfiguration();
+		// Set up a Configuration, which drives evolution
+		Configuration config = configurationSetup();
+		
+		
+		// Population size to evolve
 		config.setPopulationSize( POPULATION_SIZE );
+		
 		
 		// Providing an arbitrary test amount for the MinimizingMakeChange problem
 		int changeTarget = 37;
@@ -88,6 +93,8 @@ public class MCP{
 		report(fittest, endTime - startTime);
 	}
 	
+	
+	// Output information about the run
 	public static void report( IChromosome fittest, long runTime ){
 		
 		System.out.println( "The best solution contained the following: " );
@@ -115,5 +122,59 @@ public class MCP{
   			      fittest ) + " coins." );
   			      
   			System.out.println( "Runtime in Milliseconds: " + runTime );
+	}
+	
+	
+	// Set up the Configuration
+	public static Configuration configurationSetup() throws Exception {
+		
+		Configuration config = new Configuration();
+		
+		// Set up a breeder to run the evolutions
+		config.setBreeder( new GABreeder() );
+		
+		// Set up a random value calculator
+		config.setRandomGenerator( new StockRandomGenerator() );
+		
+		// Set up an EventManager for error reporting
+		config.setEventManager( new EventManager() );
+		
+		// Enable elitism
+		config.setPreservFittestIndividual( true );
+		
+		// Allow for population shrinkage/growth
+		config.setKeepPopulationSizeConstant( true );
+		
+		// Set minimum thershold on population size
+		config.setMinimumPopSizePercent( 0 );
+		
+		// Set up the high evaluation on fitness functions
+		config.setFitnessEvaluator( new DefaultFitnessEvaluator() );
+		
+		//Build the Chromosome Pool to store the population
+		config.setChromosomePool( new ChromosomePool() );
+		
+		
+		
+		/* Add the GeneticOperators and NaturalSelectors.
+		 * For testing, we will add the default set. Later, this function will
+		 * take a switching parameter to choose which operators we want
+		 */
+		 
+		// Add natural selector
+		// boolean switch means this is processed after genetic operators
+		StandardPostSelector nSelector = new StandardPostSelector( config );
+		config.addNaturalSelector( nSelector, false);
+		 
+		// Add crossover operator
+		CrossoverOperator xOver = new CrossoverOperator( config );
+		config.addGeneticOperator( xOver );
+		 
+		// Add mutation operator
+		MutationOperator mOperator = new MutationOperator( config );
+		config.addGeneticOperator( mOperator );
+		
+		
+		return config;
 	}
 }
