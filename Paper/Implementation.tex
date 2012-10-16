@@ -1,5 +1,5 @@
 \subsection*{Elitist Schema Overlays}
-Obviously, there are many different methodologies that we could utilize to build effective genetic overlays. The central focus of this paper are \emph{Elitist Schema Overlays}, and they are conceptually defined below.
+Obviously, there are many different methodologies that we could utilize to build effective genetic overlays. The central focus of this paper is the use of \emph{Elitist Schema Overlays}, and they are conceptually defined below.
 
 \begin{eschema}
 A genetic overlay that is built from the matching alleles of the elite sub-population.
@@ -36,7 +36,7 @@ Admittedly, the effects of this method will depend greatly upon our choice of $k
 
 Now we will determine the probability of a single allele matching across $k$ parents. We will denote $\alpha_i$ to be this value, and $\beta_i$ to represent the size of the domain of the $i$th allele. Note that this assumes that each value for an allele has an equal probability of showing up in a selected genetic sequence at allele $i$. If this is not the case, then this gives us a lower bound for the values more likely to occur at this position, and an upper bound for the values less likely to occur at this position.
 
-\[ \alpha = P(\text{\emph{k} parents matching \emph{i}th allele}) = \frac{1}{\beta_i}^{k-1} \]
+\[ \alpha = P(\text{\emph{k} parents matching \emph{i}th allele}) = \big(\frac{1}{\beta_i}\big)^{k-1} \]
 
 With this, we can easily derive the probabilities of having at least one match, no matches, and a total match for a chromosome of length $n$ in terms of $\alpha$.
 
@@ -57,11 +57,11 @@ Thus, our choice of $k$ should be made carefully, but there are a large number o
 \end{enumerate}
 
 \subsection*{Fitness-Based Scanning}
-Another operator that will be implemented and tested is fitness-based scanning as proposed by Eiben et al\cite{Eiben94}. The generalized form of scanning iterated through the empty genetic sequence of a child and determined its value based upon the values present in $n$ selected parents\cite{Eiben91}. Fitness-based scanning makes a roulette wheel selection to choose each allele. At each allele, the probability that a parent, from the population $S$, named $i$ with a fitness value of $f(i)$ will donate its allele to the child's genetic sequence with probability $P(i)$ as described below\cite{Eiben94}:
+Another operator that will be implemented and tested is fitness-based scanning as proposed by Eiben et al\cite{Eiben94}. The generalized form of scanning iterated through the empty genetic sequence of a child and determined its value based upon the values present in $n$ selected parents\cite{Eiben91}. Fitness-based scanning makes a roulette wheel selection to choose each allele. At each allele, the probability that a parent, from the population $S$, named $i$ with a fitness value of $f(i)$ will donate its allele to the child's genetic sequence with probability $P(i)$ as described below\cite{Eiben94}: 
 
 \[ P(i) = \frac{f(i)}{\sum\limits_{i \in S} f(i)} \]
 
-Thus, the expected number of alleles inherited from a parent $i$ is $E(i)$\cite{Eiben94}:
+\noindent Thus, the expected number of alleles inherited from a parent $i$ is $E(i)$\cite{Eiben94}:
 
 \[ E(i) = P(i) *(\text{ Chromosome length }) \]
 
