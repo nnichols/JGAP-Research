@@ -58,15 +58,20 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 	
 	// Perform Diagonalization
 	public void operate( final Population population, final List candidateChromosomes) {
-		int i = 1;
+		int populationSize = population.size();
+
+		// Iterate over the population with no weighting and copy chromosomes
+		for( int i = 0; i < populationSize; i++ ){
+			candidateChromosomes.add( population.getChromosome(i).clone() );
+		}
+	
 	}
 	
 	
 	// Compares the instance of this operator to another
 	// Return 0 if settings are identical
 	public int compareTo( final Object target ){
-	
-		
+			
 		return 0;
 	}
 	
