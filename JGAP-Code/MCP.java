@@ -151,6 +151,8 @@ public class MCP{
 		// Set up the high evaluation on fitness functions
 		config.setFitnessEvaluator( new DefaultFitnessEvaluator() );
 		
+		// DeltaFitnessEvaluator should be used for low evaluation
+		
 		//Build the Chromosome Pool to store the population
 		config.setChromosomePool( new ChromosomePool() );
 		
