@@ -77,8 +77,8 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 				// Get a random Chromosome
 				IChromosome randomParent = population.getChromosome( generator.nextInt( population.size() ) );
 				
-				// Get the Genetic Sequence and store it
-				parents.add( randomParent );
+				// Get the Genetic Sequence and clone to store it
+				parents.add( (IChromosome) randomParent.clone() );
 				
 			}
 			
@@ -129,7 +129,11 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 			for( int l = 0; l < parents.size(); l++ ){
 			
 				Gene[] currentParent = parents.get( l );
-				currentParent[ k ].setAllele( values[ ( (l + offset) % parents.size() ) ] );
+				
+				Gene newVal = values[ ( (l + offset) % parents.size() ) ] ;
+				
+				currentParent[ k ].setAllele( newVal.getAllele() );
+											
 				
 			}
 			

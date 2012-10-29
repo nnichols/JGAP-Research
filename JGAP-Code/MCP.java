@@ -53,9 +53,9 @@ public class MCP{
 		 */
 		Gene[] sampleSequence = new Gene[ 4 ];
 		 
-		sampleSequence[0] = new IntegerGene( config, 0, 3 );  // Quarters
- 		sampleSequence[1] = new IntegerGene( config, 0, 2 );  // Dimes
- 		sampleSequence[2] = new IntegerGene( config, 0, 1 );  // Nickels
+		sampleSequence[0] = new IntegerGene( config, 0, 4 );  // Quarters
+ 		sampleSequence[1] = new IntegerGene( config, 0, 4 );  // Dimes
+ 		sampleSequence[2] = new IntegerGene( config, 0, 4 );  // Nickels
  		sampleSequence[3] = new IntegerGene( config, 0, 4 );  // Pennies
  		
  		Chromosome sampleChromosome = new Chromosome( config, sampleSequence );
@@ -169,7 +169,7 @@ public class MCP{
 		config.addNaturalSelector( nSelector, false);
 		 
 		// Add crossover operator
-		CrossoverOperator xOver = new CrossoverOperator( config );
+		DiagonalizationOperator xOver = new DiagonalizationOperator( config );
 		config.addGeneticOperator( xOver );
 		 
 		// Add mutation operator
