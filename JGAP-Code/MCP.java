@@ -32,7 +32,7 @@ public class MCP{
 		
 		
 		// Providing an arbitrary test amount for the MinimizingMakeChange problem
-		int changeTarget = 37;
+		int changeTarget = 88;
 		
 		
 		// Import the fitness function and target it to our amount
@@ -53,10 +53,10 @@ public class MCP{
 		 */
 		Gene[] sampleSequence = new Gene[ 4 ];
 		 
-		sampleSequence[0] = new IntegerGene( config, 0, 4 );  // Quarters
- 		sampleSequence[1] = new IntegerGene( config, 0, 4 );  // Dimes
- 		sampleSequence[2] = new IntegerGene( config, 0, 4 );  // Nickels
- 		sampleSequence[3] = new IntegerGene( config, 0, 4 );  // Pennies
+		sampleSequence[0] = new IntegerGene( config, 0, 8 );  // Quarters
+ 		sampleSequence[1] = new IntegerGene( config, 0, 8 );  // Dimes
+ 		sampleSequence[2] = new IntegerGene( config, 0, 8 );  // Nickels
+ 		sampleSequence[3] = new IntegerGene( config, 0, 8 );  // Pennies
  		
  		Chromosome sampleChromosome = new Chromosome( config, sampleSequence );
  		
