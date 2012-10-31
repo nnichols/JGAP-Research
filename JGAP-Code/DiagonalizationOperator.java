@@ -3,14 +3,13 @@
  * Genetic Operator to support Diagonalization
  * Based upon the CrossoverOperator in JGAP, but extended to k-arity
  *
- * 10/16 - Initialized
  */
 
 import java.util.*;
 import org.jgap.*;
 import org.jgap.impl.*;
 
-public class DiagonalizationOperator extends BaseGeneticOperator implements Comparable{
+public class DiagonalizationOperator extends BaseGeneticOperator implements Comparable {
 		
 	// The number of parents to recombine
 	private int arity;
@@ -154,7 +153,7 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 	
 	
 	// Compares the instance of this operator to another
-	// Return 0 if settings are identical
+	// Return 0 in all cases since only one instance of this operator should exist at a time
 	public int compareTo( final Object target ){
 			
 		return 0;
