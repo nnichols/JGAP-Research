@@ -13,7 +13,7 @@ public class SupportFunctions{
 
 	// Maps a genetic sequence of BooleanGenes to the integer
 	// it represents in traditional binary.
-	private static int[] booleanChromosomeToInt( IChromosome in, int dimension, int dimensionLength ){
+	public static int[] booleanChromosomeToInt( IChromosome in, int dimension, int dimensionLength ){
 	
 		// Get the genetic sequence
 		Gene[] genome = in.getGenes();
@@ -69,7 +69,7 @@ public class SupportFunctions{
 	
 	// Maps a genetic sequence of BooleanGenes to the integer
 	// it represents in grqy coded binary.
-	private static int[] booleanChromosomeToGrayInt( IChromosome in, int dimension, int dimensionLength ){	
+	public static int[] booleanChromosomeToGrayInt( IChromosome in, int dimension, int dimensionLength ){	
 	
 		// Get the genetic sequence
 		Gene[] genome = in.getGenes();
@@ -141,5 +141,32 @@ public class SupportFunctions{
 	
 	}
 	
+	
+	// Takes an integer array and transforms it into an array of doubles
+	// for the values those ints represent
+	public static double[] intToDoubleDomain( int[] in, double lowerBound, double upperBound, int blocks ){
+		
+		// Calculate the denominator for all calculations since it will not change	
+		// (2 ^ blocks) - 1
+		double denominator = Math.pow( 2, (double) blocks ) - 1.0;
+		
+		// Now calculate the value of the fractional end
+		// (lower - upper) / denominator
+		double fraction = (upperBound - lowerBound) / denominator;
+		
+		// Create an array to store the values as they are generated
+		double[] evaluations = new double[ in.length ];
+		
+		// Iterate through all of the values
+		for( int i = 0; i < in.length; i++ ){
+		
+			// Compute the value the current position
+			evaluations[i] = lowerBound + ( (double) in[i] ) * fraction; 
+			
+		}
+		
+		return evaluations;
+		
+	}
 	
 }

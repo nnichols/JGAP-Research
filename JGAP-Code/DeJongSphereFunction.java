@@ -12,19 +12,22 @@ import org.jgap.impl.*;
 
 public class DeJongSphereFunction extends FitnessFunction {
 
-	private int dimension, domainSize;
+	private int dimension, dimensionLength;
+	private boolean isGreyCoded;
+	private static double bound = 5.12;
 	
 	// Constructor that builds an instance of k dimensions
-	// each with n bits used to define the domain
-	public DeJongSphereFunction( int newDimension, int newDomain ){
+	// each with n bits used to define the dimension
+	public DeJongSphereFunction( int newDimension, int newDomain, boolean coding ){
 		this.dimension = newDimension;
-		this.domainSize = newDomain;
+		this.dimensionLength = newDomain;
+		this.isGreyCoded = coding;
 	}
 	
 	// Default constructor
 	public DeJongSphereFunction(){
 		this.dimension = 1;
-		this.domainSize = 10;
+		this.dimensionLength = 10;
 	}
 	
 	
@@ -34,8 +37,12 @@ public class DeJongSphereFunction extends FitnessFunction {
 		this.dimension = newDimension;
 	}
 	
-	public void setDomainSize( int newDomain ){
-		this.domainSize = newDomain;
+	public void setDimensionLength( int newDimension ){
+		this.dimensionLength = newDimension;
+	}
+	
+	public void setCoding( boolean newCoding ){
+		this.isGreyCoded = newCoding;
 	}
 	
 	
@@ -45,14 +52,41 @@ public class DeJongSphereFunction extends FitnessFunction {
 		return dimension;
 	}
 	
-	public int getDomainSize(){
-		return domainSize;
+	public int getDimensionLength(){
+		return dimensionLength;
+	}
+	
+	public boolean getCoding(){
+		return isGreyCoded;
 	}
 	
 	
 	// Performs the evaluation of a given individual
 	// Genetic sequence must consist of dimension * domianSize BooleanGenes
 	public double evaluate( IChromosome target ){
-		return 0.0;
+		
+		int[] translatedValues;
+		
+		// Determine our encoding and get the corrct array of ints depending on the situation
+		if( isGreyCoded ){
+			translatedValues = SupportFunctions.booleanChromosomeToGrayInt( target, this.dimension, this.dimensionLength );
+		} else {
+			translatedValues = SupportFunctions.booleanChromosomeToInt( target, this.dimension, this.dimensionLength );
+		}
+		
+		// Use this information to build an array of doubles that represents
+		// the actual point encoded by our genetic sequence
+		double[] dimensionValues = SupportFunctions.intToDoubleDomain( translatedValues, -bound, bound, this.dimensionLength );
+		
+		double runningSum = 0.0;
+		
+		// Compute the sum of each value squared
+		for( int i = 0; i < dimensionValues.length; i++ ){
+		
+			runningSum = runningSum + Math.pow( dimensionValues[i], 2 );
+			
+		}
+		
+		return runningSum;
 	}
 }
