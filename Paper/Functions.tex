@@ -2,6 +2,8 @@ Improvements to Genetic Algorithms are frequently compared based upon their abil
 
 Our research found a set of common minimization functions used as benchmarks of the performance of new Genetic Algorithms\cite{Deb99,Eiben95,Tsutsui99}. These functions should give us a picture of how well our algorithm compares to more traditional ones. 
 
+\subsection*{Minimization Functions}
+
 %
 % De Jong Sphere Definition
 %
@@ -51,13 +53,21 @@ The Griewank function is known for its multi-modality and also has its global mi
 %
 % TSP + Knapsack
 %
-In order to make some reasoning about the behavior of elitist schemata overlays on real world problems, we will also test performance on several instances of the Traveling Salesman and Knapsack problems. 
+\subsection*{NP-Hard Problems}
 
-The Traveling Salesman Problem is an NP-Hard problem taken from Graph Theory. Let $V$ be a set of verticies $v_1, v_2, \ldots v_r$ of a graph $G$. The set of edges $E$ is defined such that each $e_i \in E$ is an ordered tuple of the form $(v_j,v_k), j \not = k$ where $v_j,v_k \in V$ are the veriticies that $e_i$ connects. For each $e_n \in E$, there is an associated $w_n \in W$ where $w_n$ is a positive real number that is the weight of the edge $e_n$. The goal of a given Travelling Salesman Problem instance is to find the Hamiltonian Circuit that has the minimum total weight. In other words, we must find a series of edges $T = e_{\alpha 1},e_{\alpha 2},\ldots,e_{\alpha n}$ such that minimizes the following\cite{Haxhimusa11}:
+In order to make some reasoning about the behavior of elitist schemata overlays on real world problems, we will also test performance on several instances of the Knapsack and Traveling Salesman problems. 
+
+The 0-1 Knapsack Problem is an NP-Hard optimization problem. Let $X$ be the set of items $\{x_1, x_2, \ldots, x_n\}$, $C$ be the set of cost values $\{c_1, c_2, \ldots, c_n\}$, and $B$ be the set of benefitt values $\{b_1, b_2, \ldots, b_n\}$. Each item $x_i$, with the domain $\{0,1\}$, has an associated cost $c_i$ and benefit $b_i$, where each $b_i,c_i \in \mathbb{R}^{+}$. Given a cost limit $L$ we want to maximize the sum of the benefit values while not allowing the sum of our cost values to exceed $L$:
+\[ max\big( \sum\limits_{i = 1}^{n} b_ix_i \big) \text{ where } \sum\limits_{i = 1}^{n} c_ix_i \leq L \]
+
+The Traveling Salesman Problem from Graph Theory is another NP-Hard problem. Let $V$ be a set of verticies $v_1, v_2, \ldots v_r$ of a graph $G$. The set of edges $E$ is defined such that each $e_i \in E$ is an ordered tuple of the form $(v_j,v_k), j \not = k$ where $v_j,v_k \in V$ are the veriticies that $e_i$ connects. For each $e_n \in E$, there is an associated $w_n \in W$ where $w_n$ is a positive real number that is the weight of the edge $e_n$. The goal of a given Travelling Salesman Problem instance is to find the Hamiltonian Circuit that has the minimum total weight. In other words, we must find a series of edges $T = e_{\alpha 1},e_{\alpha 2},\ldots,e_{\alpha n}$ such that minimizes the following\cite{Haxhimusa11}:
 \[\sum\limits_{e_{\alpha i} \in T} w_{\alpha i}\]
 \noindent Where $w_{\alpha i}$ is the weight of the edge $e_{\alpha i}$.
 
-The 0-1 Knapsack Problem is another NP-Hard optimization problem. Let $X$ be the set $\{x_1, x_2, \ldots, x_n\}$, $C$ be the set $\{c_1, c_2, \ldots, c_n\}$, and $B$ be the set $\{b_1, b_2, \ldots, b_n\}$. Each item $x_i$, with the domain $\{0,1\}$, has an associated cost $c_i$ and benefit $b_i$, where each $b_i,c_i \in \mathbb{R}^{+}$. Given a cost limit $L$ we want to maximize the sum of the benefit values while not allowing the sum of our cost values to exceed $L$:
-\[ max\big( \sum\limits_{i = 1}^{n} b_ix_i \big) \text{ where } \sum\limits_{i = 1}^{n} c_ix_i \leq L \]
+%
+% NK-Landscapes
+%
+
+\subsection*{NK-Landscapes}
 
 Since multi-parent recombination operators have had success on NK-Landscapes in previous studies, we will test each genetic operator on several NK-Landscapes of varying size and ruggedness\cite{Eiben96,Skellett05}. Definitions from current research for these problems and several of their characteristics can be found below\cite{molga05,Skellett05,yang10}.

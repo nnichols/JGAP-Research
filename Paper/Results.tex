@@ -1,3 +1,36 @@
+\subsection*{Encoding}
+Genetic sequences have traditionally been encoded as both traditional binary strings and \emph{Binary Reflective Gray Codes} \cite{Whitley97}. Gray Codes are modified interpretations of bitstrings that minimize the variation in representation of adjacent values \cite{Back93}. In the traditional binary system, the unsigned values of $2^n$ and $2^n - 1$ have no bits in common over the first $n$ places, even though their values only differ by $1$. In a Gray Coding, all adjacent values differ by exactly one bit \cite{Michalewicz98}. Given a bitstring $a = a_1 a_2 \ldots a_n$, we can described the translation between traditional binary strings and Binary Reflective Gray Codes mathematically. The traditional binary bitstring $a$ can be rewritten as a Binary Reflective Gray Code bitstring $b =  b_1 b_2 \ldots b_n$ with the following function \cite{Back93}:
+
+\begin{displaymath}
+   b_i = \left\{
+     \begin{array}{cr}
+       a_1 & \text{if~ } i = 1 \\
+       (a_{i-1} + a_i) \bmod{2} & \text{if~ } i > 1
+     \end{array}
+   \right.
+\end{displaymath} 
+
+Likewise, we can translate between a Binary Reflective Gray Code bitstring $b$ to the traditional binary bitstring $a$ with this procedure \cite{Back93}:
+
+\begin{displaymath}
+   a_i = \left\{
+     \begin{array}{cr}
+       b_1 & \text{if~ } i = 1 \\
+       (a_{i-1} + b_i) \bmod{2} & \text{if~ } i > 1
+     \end{array}
+   \right.
+\end{displaymath} 
+
+To describe continuous domains, like those in the test functions presented, we must map our discrete genetic sequences to the real numbers. Suppose we wish to operate on a variable $x$ whose domain $D = [a,b] \subseteq \mathbb{R}$, and that we require $k$ decimal places of precision for $x$. To accomplish this, we need to parition $D$ into $(b - a) * 10^k$ ranges of equivalent length. So we find the smallest $n \in \mathbb{N}$ such that $(b - a) * 10^k \leq 2^n - 1$. To assign values to $x$ given a genetic sequence $g$ and a decoding function $d$, which takes genetic sequences with any encoding and evaluates them to their decimal equivalent \cite{Michalewicz98}:
+\[ x = a + d(g) * \frac{b-a}{2^n - 1} \]
+
+The  0-1 Knapsack Problem is typically also represented with bitstrings, but these are not evaluated in the same manner. For a genetic sequece $g = g_1 g_2 \ldots g_n$, each $g_i$, where $1 \leq i \leq n$, represents the value of the corresponding $x_i$ in the item set $X$ for a given instance of the problem. 
+
+Permutation based problems, like the Travelling Salesman Problem, break away from this tradition. Na\"{\i}ve bitstring representations create long genetic sequences that commonly encode infeasible, those that do not meet the constraints of the problem instance, or incorrect, those that are not permutations, solutions\cite{Potvin96}. To help correct this, Travelling Salesman Problems of size $n$ can be encoded as a sequence of integers from the set $\{1, 2, \ldots, n\}$ to minimize the length of the genetic sequences. Additionally, by using our permutation repair algorithm, we can ensure that newly created or modified individuals are correct permuations.
+
+\subsection*{JGAP}
+To implement the operators and benchmarks described earlier, we have built upon the JGAP framework. JGAP is an open source Genetic Algorithms package for the Java programming language developed by Meffert et al \cite{jgap}. 
+
 \subsection*{Setup}
 Nothing here yet.
 
