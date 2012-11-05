@@ -114,26 +114,34 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 			// Offset to rotate forward with
 			int offset = k / step;
 			
-			Gene[] values = new Gene[ parents.size() ];
+			// Only operate if the offset will cause a change in the
+			// genetic sequences
+			if( offset > 0 ){
 			
-			// Iterate through the parents to get the genes
-			for( int l = 0; l < parents.size(); l++ ){
+				Gene[] values = new Gene[ parents.size() ];
 			
-				Gene[] currentValues = parents.get( l );
-				values[l] = currentValues[ k ];
+				// Iterate through the parents to get the genes
+				for( int l = 0; l < parents.size(); l++ ){
+			
+					Gene[] currentValues = parents.get( l );
+					values[l] = currentValues[ k ];
 				
-			}
+				}
 			
-			// Push the values to the new parents
-			for( int l = 0; l < parents.size(); l++ ){
+				// Push the values to the new parents
+				for( int l = 0; l < parents.size(); l++ ){
 			
-				Gene[] currentParent = parents.get( l );
+					Gene[] currentParent = parents.get( l );
 				
-				Gene newVal = values[ ( (l + offset) % parents.size() ) ] ;
+					// Makes sure we wrap around if the swapping depth
+					// is greater than the number of parents
+					Gene newVal = values[ ( (l + offset) % parents.size() ) ] ;
 				
-				currentParent[ k ].setAllele( newVal.getAllele() );
+					currentParent[ k ].setAllele( newVal.getAllele() );
 											
 				
+				}
+			
 			}
 			
 		}
