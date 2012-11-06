@@ -88,7 +88,7 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 	
 	// Actually perform the diagonalization
 	// The swapping loci will be located every ChromosomeLength / arity alleles
-	protected void doDiagonalization( ArrayList<IChromosome> parentList, List candidateChromosomes ){
+	protected void doDiagonalization( ArrayList<IChromosome> parentList, final List candidateChromosomes ){
 	
 		ArrayList<Gene[]> parents = new ArrayList<Gene[]>();
 		

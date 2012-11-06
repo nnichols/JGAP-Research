@@ -169,4 +169,99 @@ public class SupportFunctions{
 		
 	}
 	
+	// Takes a permutation and corrects is 
+	// This version DOES NOT handle genetic overlays
+	public static IChromosome repairPermutation( IChromosome given, int permutableValues ){
+		
+		// Extract the genetic sequence
+		Gene[] permutation = given.getGenes();
+		
+		// Assume we have a permutation until we know otherwise
+		boolean isPermutation = true;
+		
+		// Build an array to store how often each value is used
+		int[] valuesUsed = new int[ permutation.length ];
+		
+		// Flood with 0s
+		for( int i = 0; i < valuesUsed.length; i++ ){
+			valuesUsed[i] = 0;
+		}
+		
+		
+		// Fill the array with how often a given index has been used
+		for( int i = 0; i < permutation.length; i++ ){
+		
+			// Get the current Gene
+			IntegerGene currentGene = (IntegerGene) permutation[i];
+			
+			// Get that gene's value
+			int currentValue = currentGene.intValue();
+			
+			// Make a note if the sequence is not a permutation
+			if( valuesUsed[ currentValue ] != 0 ){
+				isPermutation = false;
+			}
+			
+			// Update how much this value has been used
+			valuesUsed[ currentValue ] = valuesUsed[ currentValue ] + 1;
+			
+		}
+		
+		
+		// Return the sequence unaltered if it is a permutation
+		// Else, repair it first
+		if( isPermutation ){
+		
+			return given;
+		
+		} else {
+			
+			// Iterate through the entire genetic sequence
+			for( int i = 0; i < permutation.length; i++ ){
+				
+				// Get the current Gene
+				IntegerGene currentGene = (IntegerGene) permutation[i];
+				
+				// Get that gene's value
+				int currentValue = currentGene.intValue();
+			
+				// Test and see if this gene value has been used multiple times
+				// If it has, we need to change it
+				if( valuesUsed[ currentValue ] > 1 ) {
+				
+					boolean noValueFound = true;
+					int startPosition = (currentValue + 1) % valuesUsed.length;
+					
+					// Iterate through the remaining possible values
+					// utill we find one that is unused
+					while( noValueFound ){
+						
+						// We have found an unused value
+						if( valuesUsed[ startPosition ] == 0 ) {
+							
+							// Create a new Integer to store
+							Integer newVal = new Integer( valuesUsed[ startPosition ] );
+							
+							// Update the current gene
+							currentGene.setAllele( newVal );
+							
+							// Exit the loop					  
+							 noValueFound = false;
+						}
+						
+						// Go to the next value
+						startPosition = (startPosition + 1) % valuesUsed.length;
+						
+					}
+					
+				}
+				
+			}
+			
+			return given;
+			
+		}
+		
+	}
+	
 }

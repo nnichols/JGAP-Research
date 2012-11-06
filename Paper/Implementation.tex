@@ -1,11 +1,11 @@
 \subsection*{Elitist Schema Overlays}
-There are many reasonable methodologies that we could utilize to build effective genetic overlays. The central focus of this paper is the use of \emph{Elitist Schema Overlays}, and they are conceptually defined below.
+There are many reasonable methodologies that we could utilize to build effective genetic overlays. The central focus of this paper is the use of \emph{elitist schema overlays}, and they are conceptually defined below.
 
-\begin{eschema}
+\begin{overlay}
 Elitist Schema Overlay - A genetic overlay that is built from the matching alleles of the elite sub-population.
-\end{eschema}
+\end{overlay}
 
-To define this formally, let $P = \{p_1,p_2,\ldots,p_n\}$ be a set of $n$ individuals selected for recombination. Consider $T=\{t_1,t_2,\ldots,t_k\}$ as the set of the $k$ individuals with the highest fitness rankings in the population. From $P$, we will create a new individual $c$.  We will now construct the genetic overlay, named $s$, to be applied to $c$ from the genetic sequences in $T$. The notations $s[i], t[i], \text{ and } c[i]$ represent the value, or lack-thereof in the case of the schema, at position $i$. The character '-' will represent a value that has been left unspecified
+To define this formally, let $P = \{p_1,p_2,\ldots,p_n\}$ be a set of $n$ individuals selected for recombination. Consider $T=\{t_1,t_2,\ldots,t_k\}$ as the set of the $k$ individuals with the highest fitness rankings in the population. From $P$, we will create a new individual $c$.  We will now construct the genetic overlay, named $s$, to be applied to $c$ from the genetic sequences in $T$. The notations $s[i], t[i], \text{ and } c[i]$ represent the value, or lack-thereof in the case of the schema, at position $i$. 
  
  \begin{displaymath}
    s[i] = \left\{
@@ -103,4 +103,12 @@ For most applications, these operators function correctly unmodified; however, f
 \label{PRA-Fig}
 \end{figure}
 
-As we can see in Figure-\ref{PRA-Fig}, the resultant individual now contains two instances of both 2 and 9, and lacks both a 7 and an 8. The repair algorithm can be used to correct this example, and maintain the given genetic overlay. This algorithm iterates through a genetic sequence, and for any value that is not in the genetic overlay (if applicable) it will check if it has been used exactly once in the permutation. It this is true, then we advance. Otherwise, we replace it with the closest value not in the permutation. The fact that a genetic overlay cannot contain duplicates and the fact that we cannot increase the number of duplicates in the permutation lets us know that the end result of this algorithm will always be a permutation. 
+As we can see in Figure-\ref{PRA-Fig}, the resultant individual now contains two instances of both 2 and 9, and lacks both a 7 and an 8. The repair algorithm can be used to correct this example, and maintain the given genetic overlay. At a high level, this algorithm iterates through a genetic sequence, and for any value that is not in the genetic overlay (if applicable) it will check if it has been used exactly once in the permutation. If this is true, then we advance to the next allele. Otherwise, we replace it with the closest value not in the permutation. With this structure, we maintain the invariant that the genetic subsequence from the beginning up to the point we are operating on is a valid permutation.
+
+\begin{thm}
+The result of applying the Permutation Repair Algorithm on a genetic sequence of length $k$ is always a genetic sequence that is a $k$-permutation of the $n$ possible values for each allele given that $ k \leq n$.
+\end{thm}
+
+\begin{thm}
+The Permutation Repair Algorithm will never disrupt the alleles in the given genetic overlay.
+\end{thm}
