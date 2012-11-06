@@ -8,7 +8,7 @@ import java.util.*;
 import org.jgap.*;
 import org.jgap.impl.*;
 
-public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements Comparable {
+public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements Comparable{
 
 	// The k-value for the ESO 
 	private int kValue;
@@ -54,9 +54,52 @@ public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements
 
 	// Build and apply the ESO
 	public void operate( final Population population, final List candidateChromosomes ) {
+
+		// setGenes can throw exception, so we'll catch it if we can
+		try{
 		
-		// Dummy operation for compilation
-		int i = 0;
+			// Get the top k individuals from the population
+			// (P.S. Thank Dijkstra that this operation exists)
+			List<IChromosome> fittestIndividuals = (List<IChromosome>) population.determineFittestChromosomes( kValue );
+		
+			// Build the ESO
+			Gene[] overlay = buildOverlay( fittestIndividuals );
+		
+			// Iterate through the first applicationPercent of the population
+			int applicationCount = (int) ((double) population.size() * applicationPercent);
+		
+			for( int i = 0; i < applicationCount; i++ ){
+		
+				// Grab the current applicand
+				IChromosome nextParent = population.getChromosome( i );
+			
+				// Grab its genetic sequence
+				Gene[] currentSequence = nextParent.getGenes();
+			
+				// Iterate over its genetic sequence to apply the overlay
+				for( int j = 0; j < nextParent.size(); j++ ){
+			
+					// Only modify specified alleles
+					if( overlay[j] != null ){
+				
+						// Modify the current allele
+						currentSequence[j].setAllele( overlay[j] );
+					
+					}
+				
+				}
+			
+				// Give the parent its new sequence
+				nextParent.setGenes( currentSequence );
+			
+				// Add the modified individual to the population
+				candidateChromosomes.add( nextParent );
+				
+			}
+			
+		} catch(Exception e) {
+			System.err.println( e.getMessage() );
+		}
 		
 	}
 	
@@ -102,6 +145,59 @@ public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements
 			
 		}
 		
+	}
+	
+	
+	// Build an genetic overlay from the List of the fittest individuals
+	private Gene[] buildOverlay( List<IChromosome> fittestIndividuals ){
+		
+		// Pull an example Chromosome out
+		IChromosome sample = fittestIndividuals.get(0);
+		
+		Gene[] runningOverlay = new Gene[ sample.size() ];
+		
+		// Flood the array with nulls
+		for( int i = 0; i < runningOverlay.length; i++ ){
+			runningOverlay[i] = null;
+		}
+		
+		// Iterate through each position in the genome
+		for( int i = 0; i < runningOverlay.length; i++ ){
+		
+			boolean noMismatches = true;
+			Iterator<IChromosome> parentItr = fittestIndividuals.iterator();
+			
+			// Get the first parent's value for comparison
+			IChromosome firstParent = parentItr.next();
+			
+			Gene firstValue = firstParent.getGene(i);
+			
+			// Iterate through the Chromosomes until we hit a mismatch or we
+			// reach the last parent's value
+			while( noMismatches && parentItr.hasNext() ){
+				
+				// Get the next parent
+				IChromosome currentParent = parentItr.next();
+				
+				// Get the gene we are currently looking at
+				Gene currentValue = currentParent.getGene(i);
+				
+				// If these values are not equal, exit the loop and print a null
+				// in this slot
+				if( currentValue.compareTo( firstValue ) != 0 ){
+					noMismatches = false;
+				}
+				
+			}
+			
+			// Add the matched gene to the array if no mismatches occured
+			if( noMismatches ){
+				runningOverlay[i] = firstValue;
+			}
+			
+		}
+		
+		return runningOverlay;
 	}
 
 }

@@ -72,7 +72,7 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 	public void operate( final Population population, final List candidateChromosomes) {
 		
 		// Calculate the number of times to run the operator
-		int populationSize = (int) (population.size() * diagonalizationPercent);
+		int populationSize = (int) ((double) population.size() * diagonalizationPercent);
 		
 		// Get the current random generator
 		RandomGenerator generator = getConfiguration().getRandomGenerator();
