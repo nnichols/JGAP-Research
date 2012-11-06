@@ -83,7 +83,7 @@ public class SumOfPowersFunction extends FitnessFunction {
 		// Compute the sum of each value squared
 		for( int i = 0; i < dimensionValues.length; i++ ){
 		
-			runningSum = runningSum +  Math.pow( dimensionValues[i], (double) i + 1.0 );
+			runningSum = runningSum +  Math.pow( Math.abs( dimensionValues[i] ), (double) i + 1.0 );
 			
 		}
 		
