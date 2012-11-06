@@ -16,6 +16,9 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 	
 	// Percentage of population that will undergo Diagonalization
 	private double diagonalizationPercent;
+	
+	// Indicate whether or not these genetic sequences represent permutations
+	private boolean isPermutation;
 
 	
 	// Arguementless Constructor that grabs configuration from the Genotype
@@ -47,11 +50,21 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 	}
 	
 	
+	// Constructor that takes and sets the Configuration, arity, and diagonalizationPercent,
+	// and if the genetic sequence represents a permutation
+	public DiagonalizationOperator( final Configuration configuration, int newArity, double newPercent, boolean isPerm ) throws InvalidConfigurationException {
+		super(configuration);
+		this.arity = newArity;
+		this.diagonalizationPercent = newPercent;
+		this.isPermutation = isPerm;
+	}
+	
 	// Set up the Diagonalization operator with some defaults
 	// We automatically choose to use traditional crossover
 	protected void initialize(){
 		arity = 2;
 		diagonalizationPercent = 0.7;
+		isPermutation = false;
 	}
 	
 	
@@ -152,6 +165,12 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 		while( parentIterator.hasNext() ){
 		
 			IChromosome newAddition = parentIterator.next();
+			
+			// If they are permutations, fix them first
+			if( isPermutation){
+				newAddition = SupportFunctions.repairPermutation( newAddition );
+			}
+			
 			candidateChromosomes.add( newAddition );
 			
 		}

@@ -171,7 +171,7 @@ public class SupportFunctions{
 	
 	// Takes a permutation and corrects is 
 	// This version DOES NOT handle genetic overlays
-	public static IChromosome repairPermutation( IChromosome given, int permutableValues ){
+	public static IChromosome repairPermutation( IChromosome given ){
 		
 		// Extract the genetic sequence
 		Gene[] permutation = given.getGenes();
