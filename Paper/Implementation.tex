@@ -1,63 +1,7 @@
-\subsection*{Elitist Schema Overlays}
-There are many reasonable methodologies that we could utilize to build effective genetic overlays. The central focus of this paper is the use of \emph{elitist schema overlays}, and they are conceptually defined below.
-
-\begin{overlay}
-Elitist Schema Overlay - A genetic overlay that is built from the matching alleles of the elite sub-population.
-\end{overlay}
-
-To define this formally, let $P = \{p_1,p_2,\ldots,p_n\}$ be a set of $n$ individuals selected for recombination. Consider $T=\{t_1,t_2,\ldots,t_k\}$ as the set of the $k$ individuals with the highest fitness rankings in the population. From $P$, we will create a new individual $c$.  We will now construct the genetic overlay, named $s$, to be applied to $c$ from the genetic sequences in $T$. The notations $s[i], t[i], \text{ and } c[i]$ represent the value, or lack-thereof in the case of the schema, at position $i$. 
- 
- \begin{displaymath}
-   s[i] = \left\{
-     \begin{array}{cl}
-       t_1[i] & \text{if~ } t_1[i] = t_2[i]) = \ldots = t_k[i] \\
-       - & \text{if~ } \text{otherwise} 
-     \end{array}
-   \right.
-\end{displaymath} 
-
-Thus, our schema will only have specified values where every individual in $T$ has the same value at that same position. If our best performing individuals all have the same values at various alleles, this may hint that these assignments are correlated with success. Thus, it would be reasonable to search the neighborhood of this partial solution more thoroughly. 
-\begin{figure}[h!]
-\centering 
-\begin{align*}
-\text{Elite Individual 1} &: 0~1~0~0~1~0~1~1~0 			\\
-\text{Elite Individual 2} &: 0~1~0~0~0~0~1~0~0 			\\
-\text{Elite Individual 3} &: 1~1~0~1~1~0~1~1~0 			\\
-\text{Resultant Genetic Overlay} &:   -1~0--0~1-0			\\
-\text{Unmodified New Individual} &: 1~0~0~1~1~0~1~1~1	\\		
-\text{Resultant Individual} &: 1~1~0~1~1~0~1~1~0
-\end{align*}
-\caption{Production and Application of an Elitist Schema Overlay}
-\label{ESO-Fig}
-\end{figure}
-
-Figure-\ref{ESO-Fig} demonstrates how elitist schema overlays are constructed and the result of its application. It should be noted that our $c$ can be created using any existing, or future, genetic operator. This was done intentionally to explore its behavior in several scenarios. This process allows us to search around those genes that are common among the fittest members in our population. 
-
-Admittedly, the effects of this method will depend greatly upon our choice of $k$. For instance, the choice $k = 1$ will replace every individual that has a genetic overlay applied with the highest ranked member of the population. This is problematic, since it will instantly lead us to convergence. Likewise, a large value of $k$, will greatly reduce the probability that $t_1[i] = t_2[i] = \ldots = t_k[i]$ is true. This would lead us to checking a large number of alleles and, in the likeliest case, doing little to nothing with that information.
-
-To determine reasonable values for $k$, it is helpful to know what the probability of an allele being specified in an elitist schema overlay is. We will denote $\alpha_i$ to be this probability, and $x_i$ to represent the size of the domain of the $i$th allele for a genetic sequence of length $n$. Note that this assumes that each value for an allele has an equal probability of showing up in a selected genetic sequence at allele $i$. If this is not the case, then this gives us a lower bound of the probability that this property is true.
-
-\[ \alpha_i = P(\text{\emph{k} parents matching \emph{i}th allele}) = \left(\frac{1}{x_i}\right)^{k-1} \]
-
-With this, we can easily derive the probabilities of having no matches and a total match for a chromosome of length $n$ in terms of $\alpha_i$.
-
-\begin{align*}
-P( \text{No matches})&= \prod\limits_{i = 1}^n (1 - \alpha_i) \\
-P( \text{All matches})&= \prod\limits_{i = 1}^n (\alpha_i)
-\end{align*}
-
-Thus, our choice of $k$ should be made carefully, but there are a large number of possibilities that we could easily consider. A fixed and predetermined $k$ could be chosen, $k$ could be randomized for each generation, or $k$ could be set to the number of individuals above a certain fitness threshold; however, the successes of Memetic Algorithms inspired a different approach. If we create an inverse relationship between the generations elapsed and our choice of $k$ we get some interesting properties:
-
-\begin{enumerate}
-
-\item Narrowing Search - Since the initial $k$ values will be very large, it is unlikely that $t_1(i) = t_2(i) = \ldots = t_k(i)$, and so we will not disturb the initial natural diversity with the operator.  Likewise, as our $k$ drops our genetic overlay has a higher chance to be mostly specified, thus we will be searching the narrowing neighborhood of the best performing solutions discovered so far \cite{Neri11}.
-
-\item Bounded Convergence - We can control how quickly $k$ decreases, and by this, how quickly our population will converge towards the best known solutions. When we set $k=1$ we will instantly converge the entire target population of this operator, and so the minimum convergence rate can now be set by the user.
-
-\end{enumerate}
+Reviewing the literature around multi-parent genetic operators highlighted two operators: fitness-based scanning and diagonal crossover. These two strategies have shown success as multi-parent genetic operators, and are the conceptual descendants of traditional genetic operators.
 
 \subsection*{Fitness-Based Scanning}
-Another operator that has been implemented and tested is fitness-based scanning as proposed by Eiben, et al\cite{Eiben94}. The generalized form of scanning iterates through the empty genetic sequence of a child and determines its value based upon the values present in $n$ selected parents\cite{Eiben91}. Fitness-based scanning makes a roulette wheel selection to choose each allele. At each allele, the probability that a parent, from the population $S$, named $i$ with a fitness value of $f(i)$, will donate its allele to the child's genetic sequence has probability $P(i)$ as described below\cite{Eiben94}: 
+The first operator from the literature that has been implemented and tested is fitness-based scanning as proposed by Eiben, et al\cite{Eiben94}. The generalized form of scanning iterates through the empty genetic sequence of a child and determines its value based upon the values present in $n$ selected parents\cite{Eiben91}. Fitness-based scanning makes a roulette wheel selection to choose each allele. At each allele, the probability that a parent, from the population $S$, named $i$ with a fitness value of $f(i)$, will donate its allele to the child's genetic sequence has probability $P(i)$ as described below\cite{Eiben94}: 
 
 \[ P(i) = \frac{f(i)}{\sum\limits_{i \in S} f(i)} \]
 
@@ -89,26 +33,3 @@ $d_1$ & $c_2$ & $b_3$ & $a_4$ & $\text{ child d }$ 	\\ \hline
 \end{figure} 
 
 The rationale behind expanding this operator was to increase the disruptiveness, and by extension the explorativity, of Genetic Algorithms\cite{Eiben97}. This meant that the population would have to have a large degree of similar genetic sequences before the search would narrow and converge\cite{Eiben95}. It should also be noted that in the special case of $n = 2$ is identical to traditional 1-point crossover\cite{Eiben95}.
-
-\subsection*{Permutation Repair Algorithm}
-For most applications, these operators function correctly unmodified; however, for permutation based problems that allow for only one instance of a given value, like the Traveling Salesman and N-Queens Problems, a slight change is necessary. For instance, the application of an overlay might leave identical values in multiple positions in the genetic sequence, which is not permitted in either of these problems. Many genetic operators have this effect and two main solutions have been found: New genetic operators tailored to these problems and repair algorithms\cite{Larranaga99}. To keep our choice of operators consistent, we have devised a repair algorithm to use in every necessary case.
-\begin{figure}[h!]
-\centering 
-\begin{align*}
-\text{Genetic Overlay} &:   -1~3--6~2-9				\\
-\text{New Individual} &: 2~1~3~4~5~7~6~8~9			\\		
-\text{Resultant Individual} &: 2~1~3~4~5~6~2~1~9
-\end{align*}
-\caption{The Permutation Problem with Genetic Overlays}
-\label{PRA-Fig}
-\end{figure}
-
-As we can see in Figure-\ref{PRA-Fig}, the resultant individual now contains two instances of both 2 and 9, and lacks both a 7 and an 8. The repair algorithm can be used to correct this example, and maintain the given genetic overlay. At a high level, this algorithm iterates through a genetic sequence, and for any value that is not in the genetic overlay (if applicable) it will check if it has been used exactly once in the permutation. If this is true, then we advance to the next allele. Otherwise, we replace it with the closest value not in the permutation. With this structure, we maintain the invariant that the genetic subsequence from the beginning up to the point we are operating on is a valid permutation.
-
-\begin{thm}
-The result of applying the Permutation Repair Algorithm on a genetic sequence of length $k$ is always a genetic sequence that is a $k$-permutation of the $n$ possible values for each allele given that $ k \leq n$.
-\end{thm}
-
-\begin{thm}
-The Permutation Repair Algorithm will never disrupt the alleles in the given genetic overlay.
-\end{thm}
