@@ -1,6 +1,6 @@
 Improvements to Genetic Algorithms are frequently compared based upon their abilities to solve various benchmark numerical functions and real world problems like the Traveling Salesman and Job Scheduling problems\cite{molga05}. In order to get a good grasp on the general behavior of elitist schemata overlays in comparison to the other tested operators, we have chosen a variety of problems from both of these fields. 
 
-Our research found a set of common minimization functions used as benchmarks of the performance of new Genetic Algorithms\cite{Deb99,Eiben95,Tsutsui99}. These functions should give us a picture of how well our algorithm compares to more traditional ones. 
+Our research found a set of common minimization functions used as benchmarks of the performance of new Genetic Algorithms\cite{Deb99,Eiben95,Tsutsui99}. These functions should give us a picture of how well our algorithm compares to more traditional ones. In order to make some reasoning about the behavior of elitist schemata overlays on real world problems, we will also test performance on several instances of the Knapsack and Traveling Salesman problems. Finally, each of the genetic operators will be ran on several NK-Landscapes, a common testing tool for Genetic Algorithms.
 
 \subsection*{Minimization Functions}
 \subsubsection*{Definitions}
@@ -86,8 +86,6 @@ Likewise, we can translate between a Binary Reflective Gray Code bitstring $b$ t
 %
 \subsection*{0-1 Knapsack Problem}
 \subsubsection*{Definition}
-
-In order to make some reasoning about the behavior of elitist schemata overlays on real world problems, we will also test performance on several instances of the Knapsack and Traveling Salesman problems. 
 
 The 0-1 Knapsack Problem is an NP-Hard optimization problem. Let $X$ be the set of items $\{x_1, x_2, \ldots, x_n\}$, $C$ be the set of cost values $\{c_1, c_2, \ldots, c_n\}$, and $B$ be the set of benefitt values $\{b_1, b_2, \ldots, b_n\}$. Each item $x_i$, with the domain $\{0,1\}$, has an associated cost $c_i$ and benefit $b_i$, where each $b_i,c_i \in \mathbb{R}^{+}$. Given a cost limit $L$ we want to maximize the sum of the benefit values while not allowing the sum of our cost values to exceed $L$:
 \[ max\big( \sum\limits_{i = 1}^{n} b_ix_i \big) \text{ where } \sum\limits_{i = 1}^{n} c_ix_i \leq L \]
