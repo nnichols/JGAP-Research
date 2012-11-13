@@ -42,9 +42,23 @@ public class UnitTest{
 			printTestStatus( testBinaryToInt( "00000000000000001000000000000000", 2 ) );
 			
 			
+			
+			// BLOCK FOR GREY CODED BINARY TO INTEGER CONVERSION
+			System.out.println( "Grey Coded Binary to Integer Conversion Test" );
+			System.out.println("");
+			
+			printTestStatus( testGreyToInt( "000000101101110111", 2 ) );
+			printTestStatus( testGreyToInt( "0101010101", 5 ) );
+			printTestStatus( testGreyToInt( "00000000", 8 ) );
+			printTestStatus( testGreyToInt( "11111111", 8 ) );
+			printTestStatus( testGreyToInt( "00000000000000001000000000000000", 2 ) );			
+			
+			
+			
+			
 			// FINAL REPORTING BLOCK
 			if( failures == 0 ){
-				System.out.println( "All test successful" );
+				System.out.println( "All tests were successful" );
 			} else {
 				System.out.printf( "%d errors were found %n", failures );
 			}
@@ -87,6 +101,25 @@ public class UnitTest{
 		}
 	}
 	
+	// Function to decode Grey Code sequences to their int value
+	//
+	// Code is based off of Wikipedia from the following URL:
+	// http://en.wikipedia.org/wiki/Gray_code#Converting_to_and_from_Gray_code
+	public static int greyConvertor( String greySequence ){
+		
+		// Convert the string to "binary"
+		int binaryValue = Integer.parseInt( greySequence, 2 );
+		
+		// Iterate through the binary sequence
+		for( int i = 1; i < greySequence.length(); i = i * 2 ){
+			
+			binaryValue = binaryValue ^ ( binaryValue >> i );
+			
+		}
+		
+		return binaryValue;
+	}
+	
 	// Function to compare the binary string compared to our decoding of it
 	public static boolean testBinaryToInt( String binarySequence, int dimensions ){
 		
@@ -95,7 +128,7 @@ public class UnitTest{
 		try {
 			
 			// Build a configuration
-			Configuration uTest = new Configuration( "TestSupportFunctions" );
+			Configuration uTest = new Configuration( "BtoIntTest" );
 			
 			// Build the genetic sequence for testing
 			Chromosome bToIntTest = stringToBinaryGenes( uTest, binarySequence );
@@ -139,6 +172,61 @@ public class UnitTest{
 			return false;
 		}
 		
+	}
+	
+	// Function to compare the Grey Coded Binary string to the actual value
+	public static boolean testGreyToInt( String greySequence, int dimensions ){
+		
+		boolean hasNotFailed = true;
+		
+		try {
+	
+			// Build a configuration
+			Configuration uTest = new Configuration( "gToIntTest" );
+			
+			// Build the genetic sequence for testing
+			Chromosome gToIntTest = stringToBinaryGenes( uTest, greySequence );
+			
+			// Get the length of each dimension
+			int dimensionLength = greySequence.length() / dimensions;
+			
+			// Send it to the function
+			int[] gToIntSolutions = SupportFunctions.booleanChromosomeToGrayInt( gToIntTest, dimensions, dimensionLength );
+			
+			// Print out the results and compare them to actual values
+			for( int i = 0; i < gToIntSolutions.length; i++ ){
+				
+				// Get the substring that we're looking at
+				String test = greySequence.substring( i * dimensionLength, (i + 1) * dimensionLength );
+				
+				// Get the int value represented by this grey code
+				int trueGreyValue = greyConvertor( test );
+				
+				// Print the value we found and the value we should have
+				// If there is a mismatch anywhere, we will return false
+				if( trueGreyValue == gToIntSolutions[ i ] ) {
+					
+					System.out.printf( "%d was expected and %d was returned: Success %n", trueGreyValue,  gToIntSolutions[ i ] );
+					
+				} else {
+					
+					System.out.printf( "%d was expected and %d was returned: Failure %n", trueGreyValue,  gToIntSolutions[ i ] );
+					hasNotFailed = false;
+				}
+			}	
+		
+			
+			// Return
+			return hasNotFailed;
+		
+		} catch ( Exception e ) {
+			System.err.println( "A fatal error occured" );
+			System.err.println( e.getMessage() );
+			
+			// Something messed up, so we reutn false
+			return false;
+		}	
+			
 	}
 	
 	// Function to print result of each test
