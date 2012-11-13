@@ -20,61 +20,143 @@ import org.jgap.impl.*;
 
 public class UnitTest{
 
+	static int testCount;
+	static int failures;
+	
 	public static void main( String[] args ){
+		
+		testCount = 1; 
+		failures = 0;
 		
 		// Exception handling
 		try{
 		
-			// Configuration for testing support functions
-			Configuration uTest = new Configuration( "TestSupportFunctions" );
-
-			// Build a sequence for a two-dimensional binary to integer mapping
-			// The values as integers will be [42 : 32 + 8 + 2 , 213: 128 + 64 + 16 + 4 + 1 ]
-			// And both will be in a sequence of length 8:	0010 1010 , 1101 0101
-			Gene[] binaryToInt = new Gene[ 16 ];
-		
-			// Initialize values for the first number
-			binaryToInt[ 0 ] = new BooleanGene( uTest, false );
-			binaryToInt[ 1 ] = new BooleanGene( uTest, false);
-			binaryToInt[ 2 ] = new BooleanGene( uTest, true );
-			binaryToInt[ 3 ] = new BooleanGene( uTest, false );
-			binaryToInt[ 4 ] = new BooleanGene( uTest, true );
-			binaryToInt[ 5 ] = new BooleanGene( uTest, false );
-			binaryToInt[ 6 ] = new BooleanGene( uTest, true );
-			binaryToInt[ 7 ] = new BooleanGene( uTest, false );
-		
-			// Initialize values for the second number
-			binaryToInt[ 8  ] = new BooleanGene( uTest, true );
-			binaryToInt[ 9  ] = new BooleanGene( uTest, true );
-			binaryToInt[ 10 ] = new BooleanGene( uTest, false );
-			binaryToInt[ 11 ] = new BooleanGene( uTest, true );
-			binaryToInt[ 12 ] = new BooleanGene( uTest, false );
-			binaryToInt[ 13 ] = new BooleanGene( uTest, true );
-			binaryToInt[ 14 ] = new BooleanGene( uTest, false );
-			binaryToInt[ 15 ] = new BooleanGene( uTest, true );
-		
-		
-			// Build a chromosome to test
-			Chromosome bToIntTest = new Chromosome( uTest, binaryToInt );
-		
-			// Send it to the function
-			int[] bToIntSolutions = SupportFunctions.booleanChromosomeToInt( bToIntTest, 2, 8 );
-		
-			// Print the solutions
-			System.out.println( "The first binary to int conversion output: " + bToIntSolutions[ 0 ] );
-			System.out.println( "The second binary to int conversion output: " + bToIntSolutions[ 1 ] );
-		
-			// Verify the solutions
-			if( bToIntSolutions[ 0 ] == 42 && bToIntSolutions[ 1 ] == 213 ){
-				System.out.println( "Binary to int conversion passed" );
-			} else { 
-				System.out.println( "Binary to int conversion failed" );
+			// BLOCK FOR BINARY TO INTEGER CONVERSION
+			System.out.println( "Binary to Integer Conversion Test" );
+			System.out.println("");
+			
+			printTestStatus( testBinaryToInt( "000000101101110111", 2 ) );
+			printTestStatus( testBinaryToInt( "0101010101", 5 ) );
+			printTestStatus( testBinaryToInt( "00000000", 8 ) );
+			printTestStatus( testBinaryToInt( "11111111", 8 ) );
+			printTestStatus( testBinaryToInt( "00000000000000001000000000000000", 2 ) );
+			
+			
+			// FINAL REPORTING BLOCK
+			if( failures == 0 ){
+				System.out.println( "All test successful" );
+			} else {
+				System.out.printf( "%d errors were found %n", failures );
 			}
-
+		
 		} catch ( Exception e ) {
 			System.err.println( "A fatal error occured" );
 			System.err.println( e.getMessage() );
 		}
 
 	}
+	
+	// Function to convert Strings of '0' and '1's to a binary Chromosome
+	public static Chromosome stringToBinaryGenes( Configuration config, String binarySequence ){
+		
+		// Exception handling
+		try{
+		
+			// The Gene[] for use
+			Gene[] binaryToInt = new Gene[ binarySequence.length() ];
+		
+			// Iterate through the string
+			for( int i = 0; i < binarySequence.length(); i++ ){
+			
+				// If the next char is '1', we set the value to true
+				boolean placeValue = ( binarySequence.charAt(i) == '1' ) ? true : false;
+			
+				binaryToInt[ i ] = new BooleanGene( config, placeValue );
+			}
+		
+			// Build a new Chromosome to return
+			Chromosome retVal = new Chromosome( config, binaryToInt );
+		
+			return retVal;
+			
+		} catch ( Exception e ) {
+			System.err.println( "A fatal error occured" );
+			System.err.println( e.getMessage() );
+			
+			return null;
+		}
+	}
+	
+	// Function to compare the binary string compared to our decoding of it
+	public static boolean testBinaryToInt( String binarySequence, int dimensions ){
+		
+		boolean hasNotFailed = true;
+		
+		try {
+			
+			// Build a configuration
+			Configuration uTest = new Configuration( "TestSupportFunctions" );
+			
+			// Build the genetic sequence for testing
+			Chromosome bToIntTest = stringToBinaryGenes( uTest, binarySequence );
+			
+			// Get the length of each dimension
+			int dimensionLength = binarySequence.length() / dimensions;
+			
+			// Send it to the function
+			int[] bToIntSolutions = SupportFunctions.booleanChromosomeToInt( bToIntTest, dimensions, dimensionLength );
+			
+			// Print out the results and compare them to actual values
+			for( int i = 0; i < bToIntSolutions.length; i++ ){
+				
+				// Get the substring that we're looking at
+				String test = binarySequence.substring( i * dimensionLength, (i + 1) * dimensionLength );
+				
+				// Parse the actual value out in binary
+				int comparisonValue = Integer.parseInt( test, 2 );
+				
+				// Print the value we found and the value we should have
+				// If there is a mismatch anywhere, we will return false
+				if( comparisonValue == bToIntSolutions[ i ] ) {
+					
+					System.out.printf( "%d was expected and %d was returned: Success %n", comparisonValue,  bToIntSolutions[ i ] );
+			
+				} else {
+					
+					System.out.printf( "%d was expected and %d was returned: Failure %n", comparisonValue,  bToIntSolutions[ i ] );
+					hasNotFailed = false;
+				}
+				
+			}
+			
+			return hasNotFailed;
+			
+		} catch ( Exception e ) {
+			System.err.println( "A fatal error occured" );
+			System.err.println( e.getMessage() );
+			
+			// Something messed up, so we reutn false
+			return false;
+		}
+		
+	}
+	
+	// Function to print result of each test
+	public static void printTestStatus( boolean passMarker ){
+	
+		if( passMarker ){
+			System.out.printf( "Test %d was successful %n", testCount );
+		} else { 
+			System.out.printf( "Test %d failed %n", testCount );
+			
+			// Record that a test has failed
+			failures++;
+		}
+		
+		// Leave a blank line and increment the testCount
+		System.out.println("");
+		testCount++;
+		
+	}
+	
 }
