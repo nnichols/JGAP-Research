@@ -32,26 +32,29 @@ public class UnitTest{
 		try{
 		
 			// BLOCK FOR BINARY TO INTEGER CONVERSION
+			// MAXIMUM SEQUENCE LENTH IS 31 PLACES
 			System.out.println( "Binary to Integer Conversion Test" );
 			System.out.println("");
 			
 			printTestStatus( testBinaryToInt( "000000101101110111", 2 ) );
-			printTestStatus( testBinaryToInt( "0101010101", 5 ) );
+			printTestStatus( testBinaryToInt( "01100011", 4 ) );
 			printTestStatus( testBinaryToInt( "00000000", 8 ) );
 			printTestStatus( testBinaryToInt( "11111111", 8 ) );
-			printTestStatus( testBinaryToInt( "00000000000000001000000000000000", 2 ) );
-			
+			printTestStatus( testBinaryToInt( "1111111111111111111111111111111", 1 ) );	
+			printTestStatus( testBinaryToInt( "00000000000000000000000000000000", 1 ) );
 			
 			
 			// BLOCK FOR GREY CODED BINARY TO INTEGER CONVERSION
+			// MAXIMUM SEQUENCE LENTH IS 31 PLACES
 			System.out.println( "Grey Coded Binary to Integer Conversion Test" );
 			System.out.println("");
 			
 			printTestStatus( testGreyToInt( "000000101101110111", 2 ) );
-			printTestStatus( testGreyToInt( "0101010101", 5 ) );
+			printTestStatus( testGreyToInt( "01100011", 4 ) );
 			printTestStatus( testGreyToInt( "00000000", 8 ) );
 			printTestStatus( testGreyToInt( "11111111", 8 ) );
-			printTestStatus( testGreyToInt( "00000000000000001000000000000000", 2 ) );			
+			printTestStatus( testGreyToInt( "1111111111111111111111111111111", 1 ) );	
+			printTestStatus( testGreyToInt( "00000000000000000000000000000000", 1 ) );
 			
 			
 			
@@ -103,7 +106,7 @@ public class UnitTest{
 	
 	// Function to decode Grey Code sequences to their int value
 	//
-	// Code is based off of Wikipedia from the following URL:
+	// Conversion uses Wikipedia's code as a source from the following URL:
 	// http://en.wikipedia.org/wiki/Gray_code#Converting_to_and_from_Gray_code
 	public static int greyConvertor( String greySequence ){
 		
