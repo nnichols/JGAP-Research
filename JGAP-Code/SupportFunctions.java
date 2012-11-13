@@ -66,7 +66,6 @@ public class SupportFunctions{
 	}
 	
 	
-	
 	// Maps a genetic sequence of BooleanGenes to the integer
 	// it represents in grqy coded binary.
 	public static int[] booleanChromosomeToGrayInt( IChromosome in, int dimension, int dimensionLength ){	
@@ -168,6 +167,7 @@ public class SupportFunctions{
 		return evaluations;
 		
 	}
+	
 	
 	// Takes a permutation and corrects is 
 	// This version DOES NOT handle genetic overlays
