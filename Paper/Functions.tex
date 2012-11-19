@@ -118,7 +118,54 @@ For most applications, the described genetic operators function correctly unmodi
 \label{PRA-Fig}
 \end{figure}
 
-As we can see in Figure-\ref{PRA-Fig}, the resultant individual now contains two instances of both 2 and 9, and lacks both a 7 and an 8. The repair algorithm can be used to correct this example, and maintain the given genetic overlay. At a high level, this algorithm iterates through a genetic sequence, and for any value that is not in the genetic overlay (if applicable) it will check if it has been used exactly once in the permutation. If this is true, then we advance to the next allele. Otherwise, we replace it with the closest value not in the permutation. With this structure, we maintain the invariant that the genetic subsequence from the beginning up to the point we are operating on is a valid permutation.
+As we can see in Figure-\ref{PRA-Fig}, the resultant individual now contains two instances of both 2 and 9, and lacks both a 7 and an 8. The repair algorithm can be used to correct this example, and maintain the given genetic overlay. At a high level, this algorithm iterates through a genetic sequence and counts how often each value is used. On the second pass, we check each value to see if it has been used exactly once in the permutation. If this is true, then we advance to the next allele. Otherwise, we replace it with the closest value not in the permutation. With this structure, we maintain the invariant that the genetic subsequence from the beginning up to the point we are operating on is a valid permutation.
+
+%
+% Permutation Repair Algorithm Code
+%
+\begin{algorithm}
+	\SetAlgoLined
+	\KwData{A genetic sequence, \emph{seq}, of permutable values} \SetKwData{Seq}{seq} \SetKwData{Value}{value} \SetKwData{Use}{use} \SetKwData{Unused}{unused} \SetKwData{aye}{i}
+	\KwResult{\emph{seq}, with values that form a permutation.}
+	\BlankLine
+
+	initialization\;
+	\tcp{Find out how many times each value is used in \Seq}
+	\For{$ \Value \in \Seq $}{
+		$\Use [ \Value ]  \leftarrow \Use[ \Value ] + 1 $ \;
+	}
+	
+	\BlankLine
+	\tcp{Correct the sequence}
+	\For{$ \Value \in \Seq $}{ 
+		\If{ $ \Use[ \Value ] > 1 $ }{ 
+		\BlankLine
+			
+			\tcp{Find an unused value}
+			\For{ $\aye \leftarrow 0$ \KwTo $\Use.length$}{
+			\BlankLine
+				
+				\tcp{ Store the unused value and update the usage array}
+				\If{ $\Use[ \aye ] == 0$ }{
+
+					$\Unused \leftarrow \aye $\;
+					$\Use[ \aye ] \leftarrow \Use[ \Value ] - 1 $ \;
+					break \;	
+				}
+			}
+		\BlankLine
+		\tcp{Update the current point in the sequence}
+		$\Value \leftarrow \Unused$ \;
+	
+		}
+	}
+	
+
+	
+
+	\caption{The Permutation Repair Algorithm}
+\end{algorithm}
+
 
 \begin{thm}
 The result of applying the Permutation Repair Algorithm on a genetic sequence of length $k$ is always a genetic sequence that is a $k$-permutation of the $n$ possible values for each allele given that $ k \leq n$.
