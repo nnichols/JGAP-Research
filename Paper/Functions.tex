@@ -118,52 +118,66 @@ For most applications, the described genetic operators function correctly unmodi
 \label{PRA-Fig}
 \end{figure}
 
-As we can see in Figure-\ref{PRA-Fig}, the resultant individual now contains two instances of both 2 and 9, and lacks both a 7 and an 8. The repair algorithm can be used to correct this example, and maintain the given genetic overlay. At a high level, this algorithm iterates through a genetic sequence and counts how often each value is used. On the second pass, we check each value to see if it has been used exactly once in the permutation. If this is true, then we advance to the next allele. Otherwise, we replace it with the closest value not in the permutation. With this structure, we maintain the invariant that the genetic subsequence from the beginning up to the point we are operating on is a valid permutation.
+As we can see in Figure-\ref{PRA-Fig}, the resultant individual now contains two instances of both 2 and 9, and lacks both a 7 and an 8. The repair algorithm can be used to correct this example, and maintain the given genetic overlay. For instances that do not handle genetic overlays, a simple permutation repair algorithm is used. 
+
+At a high level, the simple repair algorithm iterates through a genetic sequence and counts how often each value is used. On the second pass, we check each value to see if it has been used exactly once in the permutation. If this is true, then we advance to the next allele. Otherwise, we replace it with the closest value not in the permutation. With this structure, we maintain the invariant that the genetic subsequence from the beginning up to the point we are operating on is a valid permutation.
+
+With a small extension, this algorithm allows us to deal with genetic sequemces based off of genetic overlays in a similar matter. We need only skip over the values in the genetic overlay, and use the pre-exsisting algorithm for the undefined portions of the overlay. In order to guarantee that we both do not disturb a given genetic overlay and that our end result is a permutation, we must require that every genetic overlay is a permutation. This constraint is feasible in practice, and we show that no elitist schema overlay will ever contain a duplicated value.
+
+\begin{thm}
+An elitist schema overlay will never contain a duplicated element.
+\end{thm}
+
+The extended permutation repair algorithm is fully defined in Figure-\ref{PRA-Alg}. When defined genetic overlays are not in use, this algorithm can be given an empty overlay and it will run in the same fashion as the simple algorithm.
 
 %
 % Permutation Repair Algorithm Code
 %
 \begin{algorithm}
 	\SetAlgoLined
-	\KwData{A genetic sequence, \emph{seq}, of permutable values} \SetKwData{Seq}{seq} \SetKwData{Value}{value} \SetKwData{Use}{use} \SetKwData{Unused}{unused} \SetKwData{aye}{i}
+	\KwData{A genetic sequence, \emph{seq}, of permutable values and a genetic overlay, \emph{g}} \SetKwData{Seq}{seq} \SetKwData{Value}{value} \SetKwData{Use}{use} \SetKwData{aye}{i} \SetKwData{jay}{j} \SetKwData{gee}{g} \SetKwData{Undef}{undefined}
 	\KwResult{\emph{seq}, with values that form a permutation.}
 	\BlankLine
 
-	initialization\;
 	\tcp{Find out how many times each value is used in \Seq}
 	\For{$ \Value \in \Seq $}{
-		$\Use [ \Value ]  \leftarrow \Use[ \Value ] + 1 $ \;
+		$\Use [ \Value ]  \gets \Use[ \Value ] + 1 $ \;
 	}
 	
 	\BlankLine
 	\tcp{Correct the sequence}
-	\For{$ \Value \in \Seq $}{ 
-		\If{ $ \Use[ \Value ] > 1 $ }{ 
-		\BlankLine
-			
-			\tcp{Find an unused value}
-			\For{ $\aye \leftarrow 0$ \KwTo $\Use.length$}{
-			\BlankLine
-				
-				\tcp{ Store the unused value and update the usage array}
-				\If{ $\Use[ \aye ] == 0$ }{
+	\For{ $\aye \gets 0$ \KwTo $\Seq.length$}{
 
-					$\Unused \leftarrow \aye $\;
-					$\Use[ \aye ] \leftarrow \Use[ \Value ] - 1 $ \;
-					break \;	
+		$\Value \gets \Seq[ \aye ]$	\;	
+
+		
+		\tcp{Only check undefined locations in the overlay}
+		\If{ $ \gee[ \aye ] = \Undef $ }{ 
+		\BlankLine
+
+			\tcp{Check if the value has been reused}
+			\If{ $ \Use[ \Value ] > 1 $ }{ 
+			\BlankLine
+			
+				\tcp{Find an unused value}
+				\For{ $\jay \gets 0$ \KwTo $\Use.length$}{
+				\BlankLine
+				
+					\tcp{Update the usage array and genetic sequence}
+					\If{ $\Use[ \jay ] = 0$ }{
+
+						$\Seq[ \aye ] \gets \jay $\;
+						$\Use[ \jay ] \gets 1$ \;
+						$\Use[ \Value ] \gets \Use[ \Value ] - 1 $ \;
+						break \;	
+					}
 				}
 			}
-		\BlankLine
-		\tcp{Update the current point in the sequence}
-		$\Value \leftarrow \Unused$ \;
-	
 		}
 	}
-	
-
-	
 
 	\caption{The Permutation Repair Algorithm}
+	\label{PRA-Alg}
 \end{algorithm}
 
 
