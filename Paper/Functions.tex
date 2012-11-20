@@ -118,17 +118,17 @@ For most applications, the described genetic operators function correctly unmodi
 \label{PRA-Fig}
 \end{figure}
 
-As we can see in Figure-\ref{PRA-Fig}, the resultant individual now contains two instances of both 2 and 9, and lacks both a 7 and an 8. The repair algorithm can be used to correct this example, and maintain the given genetic overlay. For instances that do not handle genetic overlays, a simple permutation repair algorithm is used. 
+As we can see in Figure-\ref{PRA-Fig}, the resultant individual now contains two instances of both 2 and 9, and lacks both a 7 and an 8. Thus, we need a repair algorithm can be used to correct this example, and maintain the given genetic overlay. We have implemented a permutation repair algorithm capable of working on genetic sequences with and without genetic overlays.
 
 At a high level, the simple repair algorithm iterates through a genetic sequence and counts how often each value is used. On the second pass, we check each value to see if it has been used exactly once in the permutation. If this is true, then we advance to the next allele. Otherwise, we replace it with the closest value not in the permutation. With this structure, we maintain the invariant that the genetic subsequence from the beginning up to the point we are operating on is a valid permutation.
 
-With a small extension, this algorithm allows us to deal with genetic sequemces based off of genetic overlays in a similar matter. We need only skip over the values in the genetic overlay, and use the pre-exsisting algorithm for the undefined portions of the overlay. In order to guarantee that we both do not disturb a given genetic overlay and that our end result is a permutation, we must require that every genetic overlay is a permutation. This constraint is feasible in practice, and we show that no elitist schema overlay will ever contain a duplicated value.
+With a small extension, this algorithm allows us to deal with genetic sequemces based off of genetic overlays in a similar matter. We need only skip over the values in the genetic overlay, and use the pre-exsisting algorithm for the undefined portions of the overlay. The extended permutation repair algorithm is fully defined in Figure-\ref{PRA-Alg}. When defined genetic overlays are not in use, this algorithm can be given an empty overlay and it will run in the same fashion as the simple algorithm. In order to guarantee that we both do not disturb a given genetic overlay and that our end result is a permutation, we must require that every genetic overlay is a permutation. This constraint is feasible in practice, and we show that no elitist schema overlay will ever contain a duplicated value if the population consists of permutations only.
 
 \begin{thm}
-An elitist schema overlay will never contain a duplicated element.
+An elitist schema overlay will never contain a duplicated element, given that all members of the population are $k$-permutations of $n$ elements where k $\leq$ n.
 \end{thm}
 
-The extended permutation repair algorithm is fully defined in Figure-\ref{PRA-Alg}. When defined genetic overlays are not in use, this algorithm can be given an empty overlay and it will run in the same fashion as the simple algorithm.
+To begin, let $e$ be an elitist schema overlay created from a population $P$. It is given that $\forall p \in P$, $p$ must be a $k$-permutation of $n$ elements. Thus, the $x$ most fit individuals in $P$ must also be permutations. Since each of these individuals is a permuataion, none of them may contain duplicate values. By the definition of an elitist schema overlay, $e$ will only be defined for the matching alleles of the $x$ most fit members of $P$. Since none of these members can have duplicate values, $e$ cannot have duplicate values either.
 
 %
 % Permutation Repair Algorithm Code
@@ -182,12 +182,22 @@ The extended permutation repair algorithm is fully defined in Figure-\ref{PRA-Al
 
 
 \begin{thm}
-The result of applying the Permutation Repair Algorithm on a genetic sequence of length $k$ is always a genetic sequence that is a $k$-permutation of the $n$ possible values for each allele given that $ k \leq n$.
+The result of applying the permutation repair algorithm on a genetic sequence and overlay of length $k$ is always a genetic sequence that is a $k$-permutation of the $n$ possible values for each allele given that $ k \leq n$.
 \end{thm}
 
-\begin{thm}
-The Permutation Repair Algorithm will never disrupt the alleles in the given genetic overlay.
-\end{thm}
+To prove this theorem via strong induction, we shall begin with the base case of genetic sequences of length 1. Since neither a genetic sequence nor a genetic overlay of length 1 can have any duplicated values, we are done. 
+
+Now we assume that the permutation repair algorithm will work on any genetic sequence and genetic overlay of length $k$, and will return a $k$-permutation of $n$ with the genetic overlay intact. From here, we show that the case of $k + 1 \leq n$ follows. We must consider the three following cases:
+\begin{enumerate}
+\item The genetic overlay is defined for all values. 
+If this is true, then by the constraint of the algorithm, the genetic overlay must be a permutation. Thus, the sequence resulting from the genetic overlay's application will have identical values to the genetic overlay. Thus, the sequence is already a permutation, and we are done.
+
+\item The genetic overlay is defined for no values. 
+To begin, consider the subsequence formed by taking the first $k$ values of the given genetic sequence. By the inductive hypothesis, we can use the permutation repair algorithm to change this into a $k$-permutation of $n$ elements. Since $k < n$, there must exist an element $c$ that does not appear in the first $k$ values. If the $k + 1$st value is already set to a unique element, we are done. Else, we can change the $k + 1$st value to $c$ and be done.
+
+\item The genetic overlay is defined for $j$ values, where $0 < j < k + 1$. 
+Consider the subsequence formed by taking an arbitrary $k$ values of the given genetic sequence in order, such that the position \emph{not} selected, $d$, does not appear in the genetic overlay. By the inductive hypothesis, we can use the permutation repair algorithm to change this into a $k$-permutation of $n$ elements. Since $k < n$, there must exist an element $c$ that does not appear in the other $k$ values. If the $d$th value is already set to a unique element, we are done. Else, we can change the $d$th value to $c$ and be done.
+\end{enumerate}
 
 %
 % NK-Landscapes
