@@ -169,7 +169,7 @@ public class SupportFunctions{
 	}
 	
 	
-	// Takes a permutation and corrects is 
+	// Takes a permutation and corrects it 
 	// This version DOES NOT handle genetic overlays
 	public static IChromosome repairPermutation( IChromosome given ){
 		
@@ -274,6 +274,123 @@ public class SupportFunctions{
 			return returned;
 			
 		}
+			
+		} catch ( Exception e ) {
+			System.err.println( e.getMessage() );
+			System.exit(0);
+		}
+		
+		return null;
+		
+	}
+	
+	
+	// Takes a permutation and corrects is 
+	// This version will not disrupt a given genetic overlay
+	// Most of the code is the same as above
+	public static IChromosome repairPermutation( IChromosome given, Gene[] overlay ){
+		
+		try{
+			
+			// Build a new genetic sequence to use
+			Gene[] newGenome = new Gene[ given.size() ];
+			
+			// Extract the genetic sequence
+			Gene[] permutation = given.getGenes();
+			
+			// Assume we have a permutation until we know otherwise
+			boolean isPermutation = true;
+			
+			// Build an array to store how often each value is used
+			int[] valuesUsed = new int[ permutation.length ];
+			
+			// Flood with 0s
+			for( int i = 0; i < valuesUsed.length; i++ ){
+				valuesUsed[i] = 0;
+			}
+			
+			
+			// Fill the array with how often a given index has been used
+			for( int i = 0; i < permutation.length; i++ ){
+				
+				// Get the current Gene
+				IntegerGene currentGene = (IntegerGene) permutation[i];
+				
+				// Get that gene's value
+				int currentValue = currentGene.intValue();
+				
+				// Make a note if the sequence is not a permutation
+				if( valuesUsed[ currentValue ] != 0 ){
+					isPermutation = false;
+				}
+				
+				// Update how much this value has been used
+				valuesUsed[ currentValue ] = valuesUsed[ currentValue ] + 1;			
+			}
+			
+			
+			// Return the sequence unaltered if it is a permutation
+			// Else, repair it first
+			if( isPermutation ){
+				
+				return given;
+				
+			} else {
+				
+				// Iterate through the entire genetic sequence
+				for( int i = 0; i < permutation.length; i++ ){
+					
+					// Get the current Gene
+					IntegerGene currentGene = (IntegerGene) permutation[i];
+					
+					// Get that gene's value
+					int currentValue = currentGene.intValue();
+					
+					// Test and see if this gene value has been used multiple times and if it is undefined in the genetic overlay
+					// If either of these is true, we need to change the value at this position
+					if( valuesUsed[ currentValue ] != 1 && overlay[i] == null ) {
+						
+						// Update valuesUsed
+						valuesUsed[ currentValue ] = valuesUsed[ currentValue ] - 1;
+						
+						for( int j = 0; j < permutation.length; j++ ){
+							
+							currentValue = (currentValue + 1) % permutation.length;
+							
+							// We have found an unused value
+							if( valuesUsed[ currentValue ] == 0 ) {
+								
+								// Create a new Integer to store the new point
+								Integer newVal = new Integer( currentValue );
+								
+								// Update the current gene
+								IntegerGene newGene = new IntegerGene( given.getConfiguration(), 0, given.size() );
+								newGene.setAllele( newVal );
+								newGenome[i] = newGene;
+								
+								// Update valuesUsed and leave the loop
+								valuesUsed[ newVal.intValue() ] = valuesUsed[ newVal.intValue() ] + 1;
+								break;
+								
+							}
+						}
+						
+					} else {
+						
+						// Update the current gene
+						IntegerGene newGene = new IntegerGene( given.getConfiguration(), 1, given.size() + 1);
+						newGene.setAllele( new Integer( currentValue ) );
+						newGenome[i] = newGene;	
+						
+					}
+					
+				}
+				
+				Chromosome returned = new Chromosome( given.getConfiguration(), newGenome );
+				
+				return returned;
+				
+			}
 			
 		} catch ( Exception e ) {
 			System.err.println( e.getMessage() );
