@@ -16,7 +16,10 @@
 
 import java.util.*;
 import org.jgap.*;
+import org.jgap.*;
 import org.jgap.impl.*;
+import org.jgap.event.*;
+import org.jgap.util.*;
 
 public class UnitTest{
 
@@ -27,6 +30,7 @@ public class UnitTest{
 		
 		testCount = 1; 
 		failures = 0;
+		Configuration defConf = new DefaultConfiguration();
 		
 		// Exception handling
 		try{
@@ -57,6 +61,55 @@ public class UnitTest{
 			printTestStatus( testGreyToInt( "00000000000000000000000000000000", 1 ) );
 			
 			
+			// BLOCK FOR REPAIR ALGORITHM TESTING (SANS OVERLAY)
+			System.out.println( "Permutation Repair Algorithm Test" );
+			System.out.println("");
+			
+			Gene[] sample1 = new Gene[ 10 ];
+			Gene[] sample2 = new Gene[ 10 ];
+			Gene[] sample3 = new Gene[ 10 ];
+			
+			// Build a correct permutation for first test
+			for( int i = 0; i < 10; i++ ){
+				
+				IntegerGene testGene = new IntegerGene( defConf, 0, 10 );
+				
+				testGene.setAllele( new Integer( i ) );
+								   
+				sample1[i] = testGene;
+				
+			}
+			
+			// Build a sequence with one repeated value (8) for the second test
+			for( int i = 0; i < 10; i++ ){
+				
+				IntegerGene testGene = new IntegerGene( defConf, 0, 10 );
+				
+				testGene.setAllele( new Integer( (i + 1) % 9 ) );
+				
+				sample2[i] = testGene;
+				
+			}
+			
+			// Build a sequence of all repeated values (1) for the third test
+			for( int i = 0; i < 10; i++ ){
+				
+				IntegerGene testGene = new IntegerGene( defConf, 0, 10 );
+				
+				testGene.setAllele( new Integer( 1 ) );
+				
+				sample3[i] = testGene;
+				
+			}
+			
+			// Move values into their respective Chromosomes
+			Chromosome firstChrom = new Chromosome( defConf, sample1 );
+			Chromosome secondChrom = new Chromosome( defConf, sample2 );
+			Chromosome thirdChrom = new Chromosome( defConf, sample3 );
+			
+			printTestStatus( testRepairAlg( firstChrom ) );
+			printTestStatus( testRepairAlg( secondChrom) );
+			printTestStatus( testRepairAlg( thirdChrom ) );
 			
 			
 			// FINAL REPORTING BLOCK
@@ -230,6 +283,42 @@ public class UnitTest{
 			return false;
 		}	
 			
+	}
+	
+	// Function to test the permutation repair algorithm
+	public static boolean testRepairAlg( IChromosome in ){
+		
+		// Fix the sequence
+		in = SupportFunctions.repairPermutation( in );
+		
+		boolean didWork = true;
+		
+		// Use a HashSet to see if the integer values in the chromosome are unique
+		HashSet<Integer> permChecker = new HashSet<Integer>();
+		
+		// Get the genetic sequence
+		Gene[] permutation = in.getGenes();
+		
+		// Iterate through the sequence
+		for( int i = 0; i < permutation.length; i++ ){
+			
+			// Ensure that we do not continue once we find a problem
+			if( didWork ){
+				
+				// Get the next value
+				IntegerGene current = (IntegerGene) permutation[ i ];
+				
+				// Add the value to the hash
+				didWork = permChecker.add( current.intValue() );
+				System.out.println( current.intValue() );
+				
+			} else {
+				break;
+			}
+		}
+		
+		return didWork;
+		
 	}
 	
 	// Function to print result of each test
