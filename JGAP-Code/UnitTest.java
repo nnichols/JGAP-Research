@@ -28,13 +28,162 @@ public class UnitTest{
 	
 	public static void main( String[] args ){
 		
-		testCount = 1; 
-		failures = 0;
-		Configuration defConf = new DefaultConfiguration();
-		
-		// Exception handling
+		// Exception handling 
 		try{
 		
+			testCount = 1; 
+			failures = 0;
+			Configuration defConf = new DefaultConfiguration();
+		
+		
+			// Construct all objects needed for testing
+			// Permutation Repair Algorithm Sequences
+			Gene[] sample1 = new Gene[ 10 ];
+			Gene[] sample2 = new Gene[ 10 ];
+			Gene[] sample3 = new Gene[ 10 ];
+		
+			Gene[] overlaySample1 = new Gene[ 10 ];
+			Gene[] overlaySample2 = new Gene[ 10 ];
+			Gene[] overlaySample3 = new Gene[ 10 ];
+			Gene[] overlaySample4 = new Gene[ 10 ];
+			Gene[] overlaySample5 = new Gene[ 10 ];
+			Gene[] overlaySample6 = new Gene[ 10 ];
+			Gene[] overlaySample7 = new Gene[ 10 ];
+			Gene[] overlaySample8 = new Gene[ 10 ];
+			Gene[] overlaySample9 = new Gene[ 10 ];
+		
+		
+			// Build a correct permutation for first test of each type
+			for( int i = 0; i < 10; i++ ){
+			
+				IntegerGene testGene = new IntegerGene( defConf, 0, 10 );
+				testGene.setAllele( new Integer( i ) );
+				sample1[i] = testGene;
+			
+				IntegerGene testGene1 = new IntegerGene( defConf, 0, 10 );
+				testGene1.setAllele( new Integer( i ) );
+				overlaySample1[i] = testGene1;
+			
+				IntegerGene testGene2 = new IntegerGene( defConf, 0, 10 );
+				testGene2.setAllele( new Integer( i ) );
+				overlaySample2[i] = testGene2;
+			
+				IntegerGene testGene3 = new IntegerGene( defConf, 0, 10 );
+				testGene3.setAllele( new Integer( i ) );
+				overlaySample3[i] = testGene3;
+			
+			}
+		
+			// Build a sequence with one repeated value (8) for the second test
+			for( int i = 0; i < 10; i++ ){
+			
+				IntegerGene testGene = new IntegerGene( defConf, 0, 10 );
+				testGene.setAllele( new Integer( (i % 9) ) );
+				sample2[i] = testGene;
+			
+				IntegerGene testGene4 = new IntegerGene( defConf, 0, 10 );
+				testGene4.setAllele( new Integer( (i % 9) ) );
+				overlaySample4[i] = testGene4;
+			
+				IntegerGene testGene5 = new IntegerGene( defConf, 0, 10 );
+				testGene5.setAllele( new Integer( (i % 9) ) );
+				overlaySample5[i] = testGene5;
+			
+				IntegerGene testGene6 = new IntegerGene( defConf, 0, 10 );
+				testGene6.setAllele( new Integer( (i % 9) ) );
+				overlaySample6[i] = testGene6;
+			}
+		
+			// Build a sequence of all repeated values (1) for the third test
+			for( int i = 0; i < 10; i++ ){
+			
+				IntegerGene testGene = new IntegerGene( defConf, 0, 10 );
+				testGene.setAllele( new Integer( 1 ) );
+				sample3[i] = testGene;
+			
+				IntegerGene testGene7 = new IntegerGene( defConf, 0, 10 );
+				testGene7.setAllele( new Integer( 1 ) );
+				overlaySample7[i] = testGene7;
+			
+				IntegerGene testGene8 = new IntegerGene( defConf, 0, 10 );
+				testGene8.setAllele( new Integer( 1 ) );
+				overlaySample8[i] = testGene8;
+			
+				IntegerGene testGene9 = new IntegerGene( defConf, 0, 10 );
+				testGene9.setAllele( new Integer( 1 ) );
+				overlaySample9[i] = testGene9;
+			
+			}
+		
+			// Move values into their respective Chromosomes
+			Chromosome firstChrom = new Chromosome( defConf, sample1 );
+			Chromosome secondChrom = new Chromosome( defConf, sample2 );
+			Chromosome thirdChrom = new Chromosome( defConf, sample3 );
+		
+			Chromosome overlayChrom1 = new Chromosome( defConf, overlaySample1 );
+			Chromosome overlayChrom2 = new Chromosome( defConf, overlaySample2 );
+			Chromosome overlayChrom3 = new Chromosome( defConf, overlaySample3 );
+			Chromosome overlayChrom4 = new Chromosome( defConf, overlaySample4 );
+			Chromosome overlayChrom5 = new Chromosome( defConf, overlaySample5 );
+			Chromosome overlayChrom6 = new Chromosome( defConf, overlaySample6 );
+			Chromosome overlayChrom7 = new Chromosome( defConf, overlaySample7 );
+			Chromosome overlayChrom8 = new Chromosome( defConf, overlaySample8 );
+			Chromosome overlayChrom9 = new Chromosome( defConf, overlaySample9 );
+
+			// Build an empty genetic overlay
+			Gene[] emptyOverlay = new Gene[ 10 ];
+			
+			for( int i = 0; i < emptyOverlay.length; i++ ){
+				emptyOverlay[i] = null;
+			}
+			
+			
+			// Build a partially defined overlay
+			// 
+			// Position 2 = 5
+			// Position 3 = 9
+			// Position 9 = 3
+			Gene[] partialOverlay = new Gene[ 10 ];
+			
+			for( int i = 0; i < partialOverlay.length; i++ ){
+				if( i == 2 ){
+					
+					IntegerGene testGene = new IntegerGene( defConf, 0, 10 );
+					testGene.setAllele( new Integer( 5 ) );
+					partialOverlay[i] = testGene;
+					
+				} else if( i == 3 ){
+					
+					IntegerGene testGene = new IntegerGene( defConf, 0, 10 );
+					testGene.setAllele( new Integer( 9 ) );
+					partialOverlay[i] = testGene;
+					
+				} else if( i == 9 ){
+					
+					IntegerGene testGene = new IntegerGene( defConf, 0, 10 );
+					testGene.setAllele( new Integer( 3 ) );
+					partialOverlay[i] = testGene;
+					
+				} else {
+					partialOverlay[i] = null;
+				}
+			}
+			
+			
+			// Build a completely defined overlay
+			Gene[] fullOverlay = new Gene[ 10 ];
+			
+			for( int i = 0; i < fullOverlay.length; i++ ){
+			
+				IntegerGene testGene = new IntegerGene( defConf, 0, 10 );
+				testGene.setAllele( new Integer( 10 - i ) );
+				fullOverlay[i] = testGene;
+				
+			}
+			
+						
+		
+			// ---------- TESTING SEGMENT ----------
 			// BLOCK FOR BINARY TO INTEGER CONVERSION
 			// MAXIMUM SEQUENCE LENTH IS 31 PLACES
 			System.out.println( "Binary to Integer Conversion Test" );
@@ -61,55 +210,28 @@ public class UnitTest{
 			printTestStatus( testGreyToInt( "00000000000000000000000000000000", 1 ) );
 			
 			
-			// BLOCK FOR REPAIR ALGORITHM TESTING (SANS OVERLAY)
+			// BLOCK FOR PERMUTATION REPAIR ALGORITHM TESTING (SANS OVERLAY)
 			System.out.println( "Permutation Repair Algorithm Test" );
 			System.out.println("");
 			
-			Gene[] sample1 = new Gene[ 10 ];
-			Gene[] sample2 = new Gene[ 10 ];
-			Gene[] sample3 = new Gene[ 10 ];
+			printTestStatus( testRepairAlg( firstChrom, null ) );
+			printTestStatus( testRepairAlg( secondChrom, null ) );
+			printTestStatus( testRepairAlg( thirdChrom, null ) );
 			
-			// Build a correct permutation for first test
-			for( int i = 0; i < 10; i++ ){
-				
-				IntegerGene testGene = new IntegerGene( defConf, 0, 10 );
-				
-				testGene.setAllele( new Integer( i ) );
-								   
-				sample1[i] = testGene;
-				
-			}
 			
-			// Build a sequence with one repeated value (8) for the second test
-			for( int i = 0; i < 10; i++ ){
-				
-				IntegerGene testGene = new IntegerGene( defConf, 0, 10 );
-				
-				testGene.setAllele( new Integer( i % 9 ) );
-				
-				sample2[i] = testGene;
-				
-			}
+			// BLOCK FOR PERMUTATION REPAIR ALGORITHM TESTING WITH OVERLAYS
+			System.out.println( "Permutation Repair Algorithm Test With Overlays" );
+			System.out.println("");
 			
-			// Build a sequence of all repeated values (1) for the third test
-			for( int i = 0; i < 10; i++ ){
-				
-				IntegerGene testGene = new IntegerGene( defConf, 0, 10 );
-				
-				testGene.setAllele( new Integer( 1 ) );
-				
-				sample3[i] = testGene;
-				
-			}
-			
-			// Move values into their respective Chromosomes
-			Chromosome firstChrom = new Chromosome( defConf, sample1 );
-			Chromosome secondChrom = new Chromosome( defConf, sample2 );
-			Chromosome thirdChrom = new Chromosome( defConf, sample3 );
-			
-			printTestStatus( testRepairAlg( firstChrom ) );
-			printTestStatus( testRepairAlg( secondChrom) );
-			printTestStatus( testRepairAlg( thirdChrom ) );
+			printTestStatus( testRepairAlg( overlayChrom1, null ) );
+			printTestStatus( testRepairAlg( overlayChrom2, null ) );
+			printTestStatus( testRepairAlg( overlayChrom3, null ) );
+			printTestStatus( testRepairAlg( overlayChrom4, null ) );
+			printTestStatus( testRepairAlg( overlayChrom5, null ) );
+			printTestStatus( testRepairAlg( overlayChrom6, null ) );
+			printTestStatus( testRepairAlg( overlayChrom7, null ) );
+			printTestStatus( testRepairAlg( overlayChrom8, null ) );
+			printTestStatus( testRepairAlg( overlayChrom9, null ) );
 			
 			
 			// FINAL REPORTING BLOCK
@@ -286,10 +408,14 @@ public class UnitTest{
 	}
 	
 	// Function to test the permutation repair algorithm
-	public static boolean testRepairAlg( IChromosome in ){
+	public static boolean testRepairAlg( IChromosome in, Gene[] overlay ){
 		
-		// Fix the sequence
-		in = SupportFunctions.repairPermutation( in );
+		// Fix the sequence using the correct method
+		if( overlay == null ){
+			in = SupportFunctions.repairPermutation( in );
+		} else {
+			in = SupportFunctions.repairPermutation( in, overlay );
+		}
 		
 		boolean didWork = true;
 		

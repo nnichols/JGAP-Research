@@ -287,7 +287,7 @@ public class SupportFunctions{
 	
 	// Takes a permutation and corrects is 
 	// This version will not disrupt a given genetic overlay
-	// Most of the code is the same as above
+	// Most of the code is the same as the method above
 	public static IChromosome repairPermutation( IChromosome given, Gene[] overlay ){
 		
 		try{
