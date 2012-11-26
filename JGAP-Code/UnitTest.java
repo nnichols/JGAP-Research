@@ -85,7 +85,7 @@ public class UnitTest{
 				
 				IntegerGene testGene = new IntegerGene( defConf, 0, 10 );
 				
-				testGene.setAllele( new Integer( (i + 1) % 9 ) );
+				testGene.setAllele( new Integer( i % 9 ) );
 				
 				sample2[i] = testGene;
 				
