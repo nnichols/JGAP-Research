@@ -120,7 +120,7 @@ For most applications, the described genetic operators function correctly unmodi
 
 As we can see in Figure-\ref{PRA-Fig}, the resultant individual now contains two instances of both 2 and 9, and lacks both a 7 and an 8. Thus, we need a repair algorithm can be used to correct this example, and maintain the given genetic overlay. We have implemented a permutation repair algorithm capable of working on genetic sequences with and without genetic overlays.
 
-At a high level, the simple repair algorithm iterates through a genetic sequence and counts how often each value is used. On the second pass, we check each value to see if it has been used exactly once in the permutation. If this is true, then we advance to the next allele. Otherwise, we replace it with the closest value not in the permutation. With this structure, we maintain the invariant that the genetic subsequence from the beginning up to the point we are operating on is a valid permutation.
+The simple repair algorithm iterates through a genetic sequence and counts how often each value is used. On the second pass, we check each value to see if it has been used exactly once in the permutation. If this is true, then we advance to the next allele. Otherwise, we replace it with the closest value not in the permutation. With this structure, we maintain the invariant that the genetic subsequence from the beginning up to the point we are operating on is a valid permutation.
 
 With a small extension, this algorithm allows us to deal with genetic sequemces based off of genetic overlays in a similar matter. We need only skip over the values in the genetic overlay, and use the pre-exsisting algorithm for the undefined portions of the overlay. The extended permutation repair algorithm is fully defined in Figure-\ref{PRA-Alg}. When defined genetic overlays are not in use, this algorithm can be given an empty overlay and it will run in the same fashion as the simple algorithm. In order to guarantee that we both do not disturb a given genetic overlay and that our end result is a permutation, we must require that every genetic overlay is a permutation. This constraint is feasible in practice, and we show that no elitist schema overlay will ever contain a duplicated value if the population consists of permutations only.
 
@@ -135,42 +135,43 @@ To begin, let $e$ be an elitist schema overlay created from a population $P$. It
 %
 \begin{algorithm}
 	\SetAlgoLined
-	\KwData{A genetic sequence, \emph{seq}, of permutable values and a genetic overlay, \emph{g}} \SetKwData{Seq}{seq} \SetKwData{Value}{value} \SetKwData{Use}{use} \SetKwData{aye}{i} \SetKwData{jay}{j} \SetKwData{gee}{g} \SetKwData{Undef}{undefined}
+	\KwData{A genetic sequence, \emph{seq}, of permutable values and a genetic overlay, \emph{g}} \SetKwData{Seq}{seq} \SetKwData{Value}{value} \SetKwData{Use}{use} \SetKwData{aye}{i} \SetKwData{jay}{j} \SetKwData{gee}{g} \SetKwData{Isdef}{defined}
 	\KwResult{\emph{seq}, with values that form a permutation.}
 	\BlankLine
 
 	\tcp{Find out how many times each value is used in \Seq}
 	\For{$ \Value \in \Seq $}{
-		$\Use [ \Value ]  \gets \Use[ \Value ] + 1 $ \;
+		$\Use [ \Value ]  \gets \Use[ \Value ] + 1 $ 
 	}
 	
 	\BlankLine
 	\tcp{Correct the sequence}
 	\For{ $\aye \gets 0$ \KwTo $\Seq.length$}{
 
-		$\Value \gets \Seq[ \aye ]$	\;	
+		$\Value \gets \Seq[ \aye ]$		
 
 		
 		\tcp{Only check undefined locations in the overlay}
-		\If{ $ \gee[ \aye ] = \Undef $ }{ 
+		\If{ $ \gee[ \aye ] = \Isdef $ }{ 
+			continue
+		}
 		\BlankLine
 
-			\tcp{Check if the value has been reused}
-			\If{ $ \Use[ \Value ] > 1 $ }{ 
-			\BlankLine
+		\tcp{Check if the value has been reused}
+		\If{ $ \Use[ \Value ] > 1 $ }{ 
+		\BlankLine
 			
-				\tcp{Find an unused value}
-				\For{ $\jay \gets 0$ \KwTo $\Use.length$}{
-				\BlankLine
+			\tcp{Find an unused value}
+			\For{ $\jay \gets 0$ \KwTo $\Use.length$}{
+			\BlankLine
 				
-					\tcp{Update the usage array and genetic sequence}
-					\If{ $\Use[ \jay ] = 0$ }{
+				\tcp{Update the usage array and genetic sequence}
+				\If{ $\Use[ \jay ] = 0$ }{
 
-						$\Seq[ \aye ] \gets \jay $\;
-						$\Use[ \jay ] \gets 1$ \;
-						$\Use[ \Value ] \gets \Use[ \Value ] - 1 $ \;
-						break \;	
-					}
+					$\Seq[ \aye ] \gets \jay $ \\
+					$\Use[ \jay ] \gets 1$  \\
+					$\Use[ \Value ] \gets \Use[ \Value ] - 1 $ \\
+					break 	
 				}
 			}
 		}
@@ -187,15 +188,12 @@ The result of applying the permutation repair algorithm on a genetic sequence an
 
 To prove this theorem via strong induction, we shall begin with the base case of genetic sequences of length 1. Since neither a genetic sequence nor a genetic overlay of length 1 can have any duplicated values, we are done. 
 
-Now we assume that the permutation repair algorithm will work on any genetic sequence and genetic overlay of length $k$, and will return a $k$-permutation of $n$ with the genetic overlay intact. From here, we show that the case of $k + 1 \leq n$ follows. We must consider the three following cases:
+Now we assume that the permutation repair algorithm will work on any genetic sequence and genetic overlay of length $k$, and will return a $k$-permutation of $n$ with the genetic overlay intact. From here, we show that the case of $k \leq n$ follows. We must consider the following cases:
 \begin{enumerate}
 \item The genetic overlay is defined for all values. 
 If this is true, then by the constraint of the algorithm, the genetic overlay must be a permutation. Thus, the sequence resulting from the genetic overlay's application will have identical values to the genetic overlay. Thus, the sequence is already a permutation, and we are done.
 
-\item The genetic overlay is defined for no values. 
-To begin, consider the subsequence formed by taking the first $k$ values of the given genetic sequence. By the inductive hypothesis, we can use the permutation repair algorithm to change this into a $k$-permutation of $n$ elements. Since $k < n$, there must exist an element $c$ that does not appear in the first $k$ values. If the $k + 1$st value is already set to a unique element, we are done. Else, we can change the $k + 1$st value to $c$ and be done.
-
-\item The genetic overlay is defined for $j$ values, where $0 < j < k + 1$. 
+\item The genetic overlay is defined for $j$ values, where $0 \leq j \leq k $. 
 Consider the subsequence formed by taking an arbitrary $k$ values of the given genetic sequence in order, such that the position \emph{not} selected, $d$, does not appear in the genetic overlay. By the inductive hypothesis, we can use the permutation repair algorithm to change this into a $k$-permutation of $n$ elements. Since $k < n$, there must exist an element $c$ that does not appear in the other $k$ values. If the $d$th value is already set to a unique element, we are done. Else, we can change the $d$th value to $c$ and be done.
 \end{enumerate}
 
