@@ -174,10 +174,7 @@ public class SupportFunctions{
 	public static IChromosome repairPermutation( IChromosome given ){
 		
 		try{
-		
-			// Build a new genetic sequence to use
-			Gene[] newGenome = new Gene[ given.size() ];
-		
+	
 			// Extract the genetic sequence
 			Gene[] permutation = given.getGenes();
 		
@@ -189,91 +186,86 @@ public class SupportFunctions{
 		
 			// Flood with 0s
 			for( int i = 0; i < valuesUsed.length; i++ ){
-			valuesUsed[i] = 0;
-		}
+				valuesUsed[i] = 0;
+			}
 		
 		
 			// Fill the array with how often a given index has been used
 			for( int i = 0; i < permutation.length; i++ ){
 		
-			// Get the current Gene
-			IntegerGene currentGene = (IntegerGene) permutation[i];
+				// Get the current Gene
+				IntegerGene currentGene = (IntegerGene) permutation[i];
 			
-			// Get that gene's value
-			int currentValue = currentGene.intValue();
+				// Get that gene's value
+				int currentValue = currentGene.intValue();
 			
-			// Make a note if the sequence is not a permutation
-			if( valuesUsed[ currentValue ] != 0 ){
-				isPermutation = false;
+				// Make a note if the sequence is not a permutation
+				if( valuesUsed[ currentValue ] != 0 ){
+					isPermutation = false;
+				}
+			
+				// Update how much this value has been used
+				valuesUsed[ currentValue ] = valuesUsed[ currentValue ] + 1;			
 			}
 			
-			// Update how much this value has been used
-			valuesUsed[ currentValue ] = valuesUsed[ currentValue ] + 1;			
-		}
-		
-		
+			
 			// Return the sequence unaltered if it is a permutation
 			// Else, repair it first
 			if( isPermutation ){
 		
-			return given;
+					return given;
 		
-		} else {
+			} else {
 			
-			// Iterate through the entire genetic sequence
-			for( int i = 0; i < permutation.length; i++ ){
+				// Iterate through the entire genetic sequence
+				for( int i = 0; i < permutation.length; i++ ){
 				
-				// Get the current Gene
-				IntegerGene currentGene = (IntegerGene) permutation[i];
-				
-				// Get that gene's value
-				int currentValue = currentGene.intValue();
+					// Get the current Gene
+					IntegerGene currentGene = (IntegerGene) permutation[i];
 			
-				// Test and see if this gene value has been used multiple times
-				// If it has, we need to change it
-				if( valuesUsed[ currentValue ] != 1 ) {
+					// Get that gene's value
+					int currentValue = currentGene.intValue();
+		
+					// Test and see if this gene value has been used multiple times
+					// If it has, we need to change it
+					if( valuesUsed[ currentValue ] > 1 ) {
+				
+						for( int j = 0; j < permutation.length; j++ ){
 					
-					// Update valuesUsed
-					valuesUsed[ currentValue ] = valuesUsed[ currentValue ] - 1;
-
-					for( int j = 0; j < permutation.length; j++ ){
-						
-						currentValue = (currentValue + 1) % permutation.length;
-						
-						// We have found an unused value
-						if( valuesUsed[ currentValue ] == 0 ) {
+							// We have found an unused value
+							if( valuesUsed[ j ] == 0 ) {
 							
-							// Create a new Integer to store the new point
-							Integer newVal = new Integer( currentValue );
+								// Create a new Integer to store the new point
+								Integer newVal = new Integer( j );
 							
-							// Update the current gene
-							IntegerGene newGene = new IntegerGene( given.getConfiguration(), 0, given.size() );
-							newGene.setAllele( newVal );
-							newGenome[i] = newGene;
+								// Update the current gene
+								IntegerGene newGene = new IntegerGene( given.getConfiguration(), 0, given.size() );
+								newGene.setAllele( newVal );
+								permutation[i] = newGene;
 							
-							// Update valuesUsed and leave the loop
-							valuesUsed[ newVal.intValue() ] = valuesUsed[ newVal.intValue() ] + 1;
-							break;
+								// Update valuesUsed and leave the loop
+								valuesUsed[ newVal.intValue() ] = valuesUsed[ newVal.intValue() ] + 1;
+								valuesUsed[ currentValue ] = valuesUsed[ currentValue ] - 1;
+								break;
 							
+							}
 						}
+					
+					} else {
+					
+						// Update the current gene
+						IntegerGene newGene = new IntegerGene( given.getConfiguration(), 1, given.size() + 1);
+						newGene.setAllele( new Integer( currentValue ) );
+						permutation[i] = newGene;	
+					
 					}
-					
-				} else {
-					
-					// Update the current gene
-					IntegerGene newGene = new IntegerGene( given.getConfiguration(), 1, given.size() + 1);
-					newGene.setAllele( new Integer( currentValue ) );
-					newGenome[i] = newGene;	
-					
-				}
 				
+				}
+					
+				Chromosome returned = new Chromosome( given.getConfiguration(), permutation );
+				return returned;
+			
 			}
-			
-			Chromosome returned = new Chromosome( given.getConfiguration(), newGenome );
-
-			return returned;
-			
-		}
 			
 		} catch ( Exception e ) {
 			System.err.println( e.getMessage() );

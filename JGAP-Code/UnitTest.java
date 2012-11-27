@@ -56,62 +56,52 @@ public class UnitTest{
 			// Build a correct permutation for first test of each type
 			for( int i = 0; i < 10; i++ ){
 			
-				IntegerGene testGene = new IntegerGene( defConf, 0, 10 );
-				testGene.setAllele( new Integer( i ) );
-				sample1[i] = testGene;
+				sample1[i] = new IntegerGene( defConf, 0, 10 );
+				sample1[i].setAllele( new Integer( i ) );
 			
-				IntegerGene testGene1 = new IntegerGene( defConf, 0, 10 );
-				testGene1.setAllele( new Integer( i ) );
-				overlaySample1[i] = testGene1;
+				overlaySample1[i] = new IntegerGene( defConf, 0, 10 );
+				overlaySample1[i].setAllele( new Integer( i ) );
 			
-				IntegerGene testGene2 = new IntegerGene( defConf, 0, 10 );
-				testGene2.setAllele( new Integer( i ) );
-				overlaySample2[i] = testGene2;
-			
-				IntegerGene testGene3 = new IntegerGene( defConf, 0, 10 );
-				testGene3.setAllele( new Integer( i ) );
-				overlaySample3[i] = testGene3;
+				overlaySample2[i] = new IntegerGene( defConf, 0, 10 );
+				overlaySample2[i].setAllele( new Integer( i ) );
+
+				overlaySample3[i] = new IntegerGene( defConf, 0, 10 );
+				overlaySample3[i].setAllele( new Integer( i ) );
 			
 			}
 		
-			// Build a sequence with one repeated value (8) for the second test
+			// Build a sequence with one repeated value (0) for the second test
 			for( int i = 0; i < 10; i++ ){
 			
-				IntegerGene testGene = new IntegerGene( defConf, 0, 10 );
-				testGene.setAllele( new Integer( (i % 9) ) );
-				sample2[i] = testGene;
-			
-				IntegerGene testGene4 = new IntegerGene( defConf, 0, 10 );
-				testGene4.setAllele( new Integer( (i % 9) ) );
-				overlaySample4[i] = testGene4;
-			
-				IntegerGene testGene5 = new IntegerGene( defConf, 0, 10 );
-				testGene5.setAllele( new Integer( (i % 9) ) );
-				overlaySample5[i] = testGene5;
-			
-				IntegerGene testGene6 = new IntegerGene( defConf, 0, 10 );
-				testGene6.setAllele( new Integer( (i % 9) ) );
-				overlaySample6[i] = testGene6;
+				int j = i % 9;
+				
+				sample2[i] = new IntegerGene( defConf, 0, 9 );
+				sample2[i].setAllele( new Integer( j ) );
+
+				overlaySample4[i] = new IntegerGene( defConf, 0, 9 );
+				overlaySample4[i].setAllele( new Integer( j ) );
+
+				overlaySample5[i] = new IntegerGene( defConf, 0, 9 );
+				overlaySample5[i].setAllele( new Integer( j ) );
+
+				overlaySample6[i] = new IntegerGene( defConf, 0, 9 );
+				overlaySample6[i].setAllele( new Integer( j ) );
 			}
 		
 			// Build a sequence of all repeated values (1) for the third test
 			for( int i = 0; i < 10; i++ ){
+
+				sample3[i] = new IntegerGene( defConf, 0, 10 );
+				sample3[i].setAllele( new Integer( 1 ) );
 			
-				IntegerGene testGene = new IntegerGene( defConf, 0, 10 );
-				testGene.setAllele( new Integer( 1 ) );
-				sample3[i] = testGene;
-			
-				IntegerGene testGene7 = new IntegerGene( defConf, 0, 10 );
-				testGene7.setAllele( new Integer( 1 ) );
-				overlaySample7[i] = testGene7;
-			
-				IntegerGene testGene8 = new IntegerGene( defConf, 0, 10 );
-				testGene8.setAllele( new Integer( 1 ) );
-				overlaySample8[i] = testGene8;
-			
-				IntegerGene testGene9 = new IntegerGene( defConf, 0, 10 );
-				testGene9.setAllele( new Integer( 1 ) );
-				overlaySample9[i] = testGene9;
+				overlaySample7[i] = new IntegerGene( defConf, 0, 10 );
+				overlaySample7[i].setAllele( new Integer( 1 ) );
+
+				overlaySample8[i] = new IntegerGene( defConf, 0, 10 );
+				overlaySample8[i].setAllele( new Integer( 1 ) );
+
+				overlaySample9[i] = new IntegerGene( defConf, 0, 10 );
+				overlaySample9[i].setAllele( new Integer( 1 ) );
 			
 			}
 		
@@ -131,7 +121,7 @@ public class UnitTest{
 			Chromosome overlayChrom9 = new Chromosome( defConf, overlaySample9 );
 
 			// Build an empty genetic overlay
-			Gene[] emptyOverlay = new Gene[ 10 ];
+			IntegerGene[] emptyOverlay = new IntegerGene[ 10 ];
 			
 			for( int i = 0; i < emptyOverlay.length; i++ ){
 				emptyOverlay[i] = null;
@@ -142,8 +132,8 @@ public class UnitTest{
 			// 
 			// Position 2 = 5
 			// Position 3 = 9
-			// Position 9 = 3
-			Gene[] partialOverlay = new Gene[ 10 ];
+			// Position 8 = 3
+			IntegerGene[] partialOverlay = new IntegerGene[ 10 ];
 			
 			for( int i = 0; i < partialOverlay.length; i++ ){
 				if( i == 2 ){
@@ -158,7 +148,7 @@ public class UnitTest{
 					testGene.setAllele( new Integer( 9 ) );
 					partialOverlay[i] = testGene;
 					
-				} else if( i == 9 ){
+				} else if( i == 7 ){
 					
 					IntegerGene testGene = new IntegerGene( defConf, 0, 10 );
 					testGene.setAllele( new Integer( 3 ) );
@@ -171,7 +161,7 @@ public class UnitTest{
 			
 			
 			// Build a completely defined overlay
-			Gene[] fullOverlay = new Gene[ 10 ];
+			IntegerGene[] fullOverlay = new IntegerGene[ 10 ];
 			
 			for( int i = 0; i < fullOverlay.length; i++ ){
 			
@@ -223,15 +213,15 @@ public class UnitTest{
 			System.out.println( "Permutation Repair Algorithm Test With Overlays" );
 			System.out.println("");
 			
-			printTestStatus( testRepairAlg( overlayChrom1, null ) );
-			printTestStatus( testRepairAlg( overlayChrom2, null ) );
-			printTestStatus( testRepairAlg( overlayChrom3, null ) );
-			printTestStatus( testRepairAlg( overlayChrom4, null ) );
-			printTestStatus( testRepairAlg( overlayChrom5, null ) );
-			printTestStatus( testRepairAlg( overlayChrom6, null ) );
-			printTestStatus( testRepairAlg( overlayChrom7, null ) );
-			printTestStatus( testRepairAlg( overlayChrom8, null ) );
-			printTestStatus( testRepairAlg( overlayChrom9, null ) );
+			printTestStatus( testRepairAlg( applyOverlay( overlayChrom1, emptyOverlay ), emptyOverlay ) );
+			printTestStatus( testRepairAlg( applyOverlay( overlayChrom2, partialOverlay ), partialOverlay ) );
+			printTestStatus( testRepairAlg( applyOverlay( overlayChrom3, fullOverlay ), fullOverlay ) );
+			printTestStatus( testRepairAlg( applyOverlay( overlayChrom4, emptyOverlay ), emptyOverlay ) );
+			printTestStatus( testRepairAlg( applyOverlay( overlayChrom5, partialOverlay ), partialOverlay ) );
+			printTestStatus( testRepairAlg( applyOverlay( overlayChrom6, fullOverlay ), fullOverlay ) );
+			printTestStatus( testRepairAlg( applyOverlay( overlayChrom7, emptyOverlay ), emptyOverlay ) );
+			printTestStatus( testRepairAlg( applyOverlay( overlayChrom8, partialOverlay ), partialOverlay ) );
+			printTestStatus( testRepairAlg( applyOverlay( overlayChrom9, fullOverlay ), fullOverlay ) );
 			
 			
 			// FINAL REPORTING BLOCK
@@ -462,6 +452,41 @@ public class UnitTest{
 		// Leave a blank line and increment the testCount
 		System.out.println("");
 		testCount++;
+		
+	}
+	
+	// Functio to apply an overlay to a chromosome
+	public static IChromosome applyOverlay( IChromosome in, IntegerGene[] overlay ){
+		
+		// Errors may be thrown
+		try{
+		
+			Gene[] currentGenes = in.getGenes();
+		
+			// Iterate through the overlay
+			for( int i = 0; i < overlay.length; i++ ){
+			
+				// Operate only on defined values
+				if( overlay[ i ] != null ){
+				
+					// Pass along the allele
+					IntegerGene currentGene = (IntegerGene) currentGenes[ i ];
+					
+					Integer newVal = new Integer( overlay[ i ].intValue() );
+					
+					currentGene.setAllele( newVal );
+				
+				}
+			}
+		
+			in.setGenes( currentGenes );
+		
+		} catch ( Exception e ) {
+			System.err.println( "The overlay could not be applied. " + e.getMessage() );
+			System.exit( 0 );
+		}
+		
+		return in;
 		
 	}
 	
