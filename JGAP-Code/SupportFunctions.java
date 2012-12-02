@@ -160,7 +160,7 @@ public class SupportFunctions{
 		for( int i = 0; i < in.length; i++ ){
 		
 			// Compute the value the current position
-			evaluations[i] = lowerBound + ( (double) in[i] ) * fraction; 
+			evaluations[i] = lowerBound + (( (double) in[i] ) * fraction); 
 			
 		}
 		

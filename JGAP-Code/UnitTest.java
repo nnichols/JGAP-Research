@@ -171,6 +171,21 @@ public class UnitTest{
 				
 			}
 			
+			
+			// Build tests for int-double conversions
+			int[] intDubTest1 = {1};
+			int[] intDubTest2 = {63};
+			int[] intDubTest3 = {25};
+			int[] intDubTest4 = {1, 1023, 512};
+			
+			// Build the solutions for the int-double conversions
+			// Math was figured out with Wolfram Alpha
+			double[] intDubSolutions1 = { (-29.0)/(31.0) };
+			double[] intDubSolutions2 = { 1.0 };
+			double[] intDubSolutions3 = { (-77.0)/(127.0) };
+			double[] intDubSolutions4 = { (-5105.0)/(1023.0), (5.0), (5.0)/(1023.0) };
+			
+			
 						
 		
 			// ---------- TESTING SEGMENT ----------
@@ -222,6 +237,13 @@ public class UnitTest{
 			printTestStatus( testRepairAlg( applyOverlay( overlayChrom7, emptyOverlay ), emptyOverlay ) );
 			printTestStatus( testRepairAlg( applyOverlay( overlayChrom8, partialOverlay ), partialOverlay ) );
 			printTestStatus( testRepairAlg( applyOverlay( overlayChrom9, fullOverlay ), fullOverlay ) );
+			
+			
+			// BLOCK FOR INT-DOUBLE DOMAIN CONVERSION
+			printTestStatus( testIntDouble( intDubTest1, -1.0, 1.0, 5, intDubSolutions1 ) );
+			printTestStatus( testIntDouble( intDubTest2, -1.0, 1.0, 6, intDubSolutions2 ) );
+			printTestStatus( testIntDouble( intDubTest3, -1.0, 1.0, 7, intDubSolutions3 ) );
+			printTestStatus( testIntDouble( intDubTest4, -5.0, 5.0, 10, intDubSolutions4 ) );
 			
 			
 			// FINAL REPORTING BLOCK
@@ -430,6 +452,30 @@ public class UnitTest{
 		}
 		
 		return didWork;
+		
+	}
+	
+	// Function to test the discretization of reals
+	public static boolean testIntDouble( int[] inVals, double lowerBound, double upperBound, int blocks, double[] comparison ){
+	
+		boolean succeeded = true;
+		
+		// Get the results of applying our algorithm
+		double[] results = SupportFunctions.intToDoubleDomain( inVals, lowerBound, upperBound, blocks );
+		
+		// Compare the results
+		for( int i = 0; i < comparison.length; i++ ){
+		
+			System.out.printf( "%f was expected and %f was returned%n", results[ i ], comparison[ i ] );
+			
+			// Note if we have a mismatch (excluding the computational error bound)
+			if( Math.abs( results[ i ] - comparison[ i ]) < 0.0 ){
+				succeeded = false;
+			}
+			
+		}
+		
+		return succeeded;
 		
 	}
 	
