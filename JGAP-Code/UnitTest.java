@@ -166,7 +166,7 @@ public class UnitTest{
 			for( int i = 0; i < fullOverlay.length; i++ ){
 			
 				IntegerGene testGene = new IntegerGene( defConf, 0, 10 );
-				testGene.setAllele( new Integer( 10 - i ) );
+				testGene.setAllele( new Integer( 9 - i ) );
 				fullOverlay[i] = testGene;
 				
 			}
@@ -400,12 +400,8 @@ public class UnitTest{
 	// Function to test the permutation repair algorithm
 	public static boolean testRepairAlg( IChromosome in, Gene[] overlay ){
 		
-		// Fix the sequence using the correct method
-		if( overlay == null ){
-			in = SupportFunctions.repairPermutation( in );
-		} else {
-			in = SupportFunctions.repairPermutation( in, overlay );
-		}
+		// Fix the sequence 
+		in = SupportFunctions.repairPermutation( in, overlay );
 		
 		boolean didWork = true;
 		

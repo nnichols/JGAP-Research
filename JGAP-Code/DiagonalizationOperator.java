@@ -168,7 +168,7 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 			
 			// If they are permutations, fix them first
 			if( isPermutation){
-				newAddition = SupportFunctions.repairPermutation( newAddition );
+				newAddition = SupportFunctions.repairPermutation( newAddition, null );
 			}
 			
 			candidateChromosomes.add( newAddition );
