@@ -94,7 +94,7 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 	
 		ArrayList<Gene[]> parents = new ArrayList<Gene[]>();
 		
-		// Get a sample Gene[] to determine where to split
+		
 		// Add the values to the parent array
 		for( int l = 0; l < parentList.size(); l++ ) {
 			IChromosome sampleParent = parentList.get(l);
@@ -105,6 +105,7 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 			
 		}
 		
+		// Get a sample Gene[] to determine where to split
 		Gene[] sample = parents.get(0);
 		
 		// Distance between splitting loci
