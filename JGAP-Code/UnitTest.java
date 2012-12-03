@@ -10,7 +10,7 @@
  *     and ensure that the correct double value is returned
  *
  * Support Functions will have genetic sequences passed to them and ensure
- *     that a correct value is returned
+ *     that a correct value is returned - Finished
  *
  */
 
@@ -466,10 +466,10 @@ public class UnitTest{
 		// Compare the results
 		for( int i = 0; i < comparison.length; i++ ){
 		
-			System.out.printf( "%f was expected and %f was returned%n", results[ i ], comparison[ i ] );
+			System.out.printf( "%f was expected and %f was returned %n", results[ i ], comparison[ i ] );
 			
 			// Note if we have a mismatch (excluding the computational error bound)
-			if( Math.abs( results[ i ] - comparison[ i ]) < 0.0 ){
+			if( Math.abs( results[ i ] - comparison[ i ] ) < 0.0 ){
 				succeeded = false;
 			}
 			

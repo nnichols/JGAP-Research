@@ -35,36 +35,25 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 	}
 	
 	
-	// Constructor that takes and sets a Configuration along with an arity
-	public DiagonalizationOperator( final Configuration configuration, int newArity ) throws InvalidConfigurationException {
-		super(configuration);
-		this.arity = newArity;
-	}
-	
-	
-	// Constructor that takes and sets the Configuration, arity, and diagonalizationPercent
-	public DiagonalizationOperator( final Configuration configuration, int newArity, double newPercent ) throws InvalidConfigurationException {
-		super(configuration);
-		this.arity = newArity;
-		this.diagonalizationPercent = newPercent;
-	}
-	
-	
-	// Constructor that takes and sets the Configuration, arity, and diagonalizationPercent,
-	// and if the genetic sequence represents a permutation
-	public DiagonalizationOperator( final Configuration configuration, int newArity, double newPercent, boolean isPerm ) throws InvalidConfigurationException {
-		super(configuration);
-		this.arity = newArity;
-		this.diagonalizationPercent = newPercent;
-		this.isPermutation = isPerm;
-	}
-	
 	// Set up the Diagonalization operator with some defaults
 	// We automatically choose to use traditional crossover
 	protected void initialize(){
 		arity = 2;
 		diagonalizationPercent = 0.7;
 		isPermutation = false;
+	}
+	
+	// Setter Methods
+	public void setPermutation( boolean isPerm ){
+		this.isPermutation = isPerm;
+	}
+	
+	public void setPercent( double newPercent ){
+		this.diagonalizationPercent = newPercent;
+	}
+	
+	public void setParents( int newArity ){
+		this.arity = newArity;
 	}
 	
 	

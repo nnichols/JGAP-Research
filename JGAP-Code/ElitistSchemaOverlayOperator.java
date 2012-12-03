@@ -38,6 +38,12 @@ public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements
 		initialize();
 	}
 	
+	// Constructor that takes and sets a Configuration
+	public ElitistSchemaOverlayOperator( final Configuration configuration ) throws InvalidConfigurationException {
+		super(configuration);
+		initialize();
+	}
+	
 	// Sets up the defaults
 	// Static kValue of 5
 	// k will remain a constant
@@ -51,6 +57,20 @@ public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements
 		this.totalGenerations = -1;
 		this.generationsLeft = -1;
 	}
+	
+	// Setter Methods
+	public void setPermutation( boolean isPerm ){
+		this.isPermutation = isPerm;
+	}
+	
+	public void setPercent( double newPercent ){
+		this.applicationPercent = newPercent;
+	}
+	
+	public void setParents( int newK ){
+		this.kValue = newK;
+	}
+	
 
 	// Build and apply the ESO
 	public void operate( final Population population, final List candidateChromosomes ) {
@@ -71,7 +91,9 @@ public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements
 			for( int i = 0; i < applicationCount; i++ ){
 		
 				// Grab the current applicand
-				IChromosome nextParent = population.getChromosome( i );
+				// Note that we use the candidateChromosomes
+				// This allows us to modify the preprocessed individuals
+				IChromosome nextParent = (IChromosome) candidateChromosomes.remove( i );
 			
 				// Grab its genetic sequence
 				Gene[] currentSequence = nextParent.getGenes();
@@ -140,7 +162,7 @@ public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements
 			
 		} else {
 			
-			// The static k option is the last, so we essentially do nothing
+			// The static k option is the last, so we do nothing
 			kValue = kValue;
 			
 		}
