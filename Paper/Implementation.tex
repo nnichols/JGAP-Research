@@ -1,13 +1,65 @@
 Reviewing the literature around multi-parent genetic operators highlighted two operators: fitness-based scanning and diagonal crossover. These two strategies have shown success as multi-parent genetic operators, and are the conceptual descendants of traditional genetic operators.
 
 \subsection*{Fitness-Based Scanning}
-The first operator from the literature that has been implemented and tested is fitness-based scanning as proposed by Eiben, et al\cite{Eiben94}. The generalized form of scanning iterates through the empty genetic sequence of a child and determines its value based upon the values present in $n$ selected parents\cite{Eiben91}. Fitness-based scanning makes a roulette wheel selection to choose each allele. At each allele, the probability that a parent, from the population $S$, named $i$ with a fitness value of $f(i)$, will donate its allele to the child's genetic sequence has probability $P(i)$ as described below\cite{Eiben94}: 
+The first operator from the literature that has been implemented and tested is fitness-based scanning as proposed by Eiben, et al\cite{Eiben94}. The generalized form of scanning iterates through the empty genetic sequence of a child and determines its value based upon the values present in $n$ selected parents\cite{Eiben91}. Fitness-based scanning makes a roulette wheel selection to choose each allele. This procedure is further demonstrated in Figure-\ref{FBScan} At each allele, the probability that a parent, from the population $S$, named $i$ with a fitness value of $f(i)$, will donate its allele to the child's genetic sequence has probability $P(i)$ as described below\cite{Eiben94}: 
 
 \[ P(i) = \frac{f(i)}{\sum\limits_{i \in S} f(i)} \]
 
 \noindent Thus, the expected number of alleles inherited from a parent $i$ is $E(i)$\cite{Eiben94}:
 
 \[ E(i) = P(i) *(\text{ Chromosome length }) \]
+
+
+%
+% FB-Scan Code
+%
+\begin{algorithm}
+	\SetAlgoLined
+	\KwData{ \emph{Parents}, a set of $n$ parent genetic sequences} 
+
+\SetKwData{Parents}{Parents} \SetKwData{Value}{value} \SetKwData{aye}{i} \SetKwData{jay}{j} \SetKwData{pee}{p} \SetKwData{child}{child} \SetKwData{select}{select} \SetKwData{wheel}{wheel} \SetKwData{TotalFitness}{TotalFitness}\SetKwData{size}{size}\SetKwData{SP}{SelectedParent}
+	
+\KwResult{A new genetic sequence \emph{child}}
+	\BlankLine
+
+	\tcp{Calculate the \TotalFitness of \Parents}
+	\For{$\aye \gets 0$ \KwTo $\Parents.\size$}{
+
+		$\TotalFitness\gets \TotalFitness + \Parents[\aye].getFitnessValue()$
+	}
+
+	\BlankLine
+	\tcp{Build the roulette wheel}
+	$\wheel[0] \gets \Parents[0].getFitnessValue() / \TotalFitness$ \\
+	\For{$\aye \gets 1$ \KwTo $\Parents.\size$}{
+
+		$\wheel[\aye] \gets \wheel[\aye - 1] + \Parents[\aye].getFitnessValue() / \TotalFitness$
+	}
+
+	\BlankLine
+	\tcp{Build the new genetic sequence}
+	\For{$\aye \gets 0$ \KwTo $\child.length$}{
+
+		$\select \gets $Random(0,1) \\
+		
+		\BlankLine
+		\tcp{Find which parent we selected}
+		\For{$\jay \gets 0$ \KwTo $\Parents.\size$}{
+
+			\BlankLine
+			\If{$\wheel[\jay] >= \select$}{
+     	                     	$\SP \gets \Parents[\jay]$ \\
+				break
+			}
+		}	
+		$\child[\aye] \gets \SP[\aye]$
+
+	}
+				
+
+	\caption{Fitness Based Scanning Pseudocode}
+	\label{FBScan}
+\end{algorithm}
 
 \subsection*{Diagonal Crossover}
 Traditional crossover takes two genetic sequences, chooses a splitting point, and swaps the portions after that point to create two new genetic sequences. \emph{Diagonal crossover} was introduced by Eiben, et al. to extend the concept of crossover into the realm of multi-parent genetic operators\cite{Eiben03}. A diagonal crossover of arity $n$ can be described easily. Take $n$ individuals from a population, select $n-1$ crossover points, and create $n$ children by selecting one segment from each piece of the genetic sequences given\cite{Eiben95}. Figure-\ref{DC-Fig} depicts how this would work\cite{Eiben95}:

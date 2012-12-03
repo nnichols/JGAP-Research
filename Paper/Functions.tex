@@ -122,7 +122,9 @@ As we can see in Figure-\ref{PRA-Fig}, the resultant individual now contains two
 
 The simple repair algorithm iterates through a genetic sequence and counts how often each value is used. On the second pass, we check each value to see if it has been used exactly once in the permutation. If this is true, then we advance to the next allele. Otherwise, we replace it with the closest value not in the permutation. With this structure, we maintain the invariant that the genetic subsequence from the beginning up to the point we are operating on is a valid permutation.
 
-With a small extension, this algorithm allows us to deal with genetic sequemces based off of genetic overlays in a similar matter. We need only skip over the values in the genetic overlay, and use the pre-exsisting algorithm for the undefined portions of the overlay. The extended permutation repair algorithm is fully defined in Figure-\ref{PRA-Alg}. When defined genetic overlays are not in use, this algorithm can be given an empty overlay and it will run in the same fashion as the simple algorithm. In order to guarantee that we both do not disturb a given genetic overlay and that our end result is a permutation, we must require that every genetic overlay is a permutation. This constraint is feasible in practice, and we show that no elitist schema overlay will ever contain a duplicated value if the population consists of permutations only.
+With a small extension, this algorithm allows us to deal with genetic sequemces based off of genetic overlays in a similar matter. We need only skip over the values in the genetic overlay, and use the pre-exsisting algorithm for the undefined portions of the overlay. The extended permutation repair algorithm is fully defined in Figure-\ref{PRA-Alg}. 
+
+When defined genetic overlays are not in use, this algorithm can be given an empty overlay and it will run in the same fashion as the simple algorithm. In order to guarantee that we both do not disturb a given genetic overlay and that our end result is a permutation, we must require that every genetic overlay is a permutation. This constraint is feasible in practice, and we show that no elitist schema overlay will ever contain a duplicated value if the population consists of permutations only.
 
 \begin{thm}
 An elitist schema overlay will never contain a duplicated element, given that all members of the population are $k$-permutations of $n$ elements where k $\leq$ n.
@@ -177,7 +179,7 @@ To begin, let $e$ be an elitist schema overlay created from a population $P$. It
 		}
 	}
 
-	\caption{The Permutation Repair Algorithm}
+	\caption{Permutation Repair Algorithm Pseudocode}
 	\label{PRA-Alg}
 \end{algorithm}
 
