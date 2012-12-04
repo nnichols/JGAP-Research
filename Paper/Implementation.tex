@@ -1,7 +1,7 @@
-Reviewing the literature around multi-parent genetic operators highlighted two operators: fitness-based scanning and diagonal crossover. These two strategies have shown success as multi-parent genetic operators, and are the conceptual descendants of traditional genetic operators.
+The literature concerning multi-parent genetic operators highlighted two central operators: fitness-based scanning and diagonal crossover. These two strategies have shown success as multi-parent genetic operators, and are the direct conceptual descendants of traditional genetic operators.
 
 \subsection*{Fitness-Based Scanning}
-The first operator from the literature that has been implemented and tested is fitness-based scanning as proposed by Eiben, et al\cite{Eiben94}. The generalized form of scanning iterates through the empty genetic sequence of a child and determines its value based upon the values present in $n$ selected parents\cite{Eiben91}. Fitness-based scanning makes a roulette wheel selection to choose each allele. This procedure is further demonstrated in Figure-\ref{FBScan} At each allele, the probability that a parent, from the population $S$, named $i$ with a fitness value of $f(i)$, will donate its allele to the child's genetic sequence has probability $P(i)$ as described below\cite{Eiben94}: 
+The first operator from the literature that has been implemented and tested is fitness-based scanning as proposed by Eiben, et al\cite{Eiben94}. The generalized form of scanning iterates through the empty genetic sequence of a child and determines its value based upon the values present in $n$ selected parents\cite{Eiben91}. Fitness-based scanning makes a roulette wheel selection to choose each allele. This procedure is further demonstrated in Figure-\ref{FBScan}. At each allele, the probability that a parent, from the population $S$, named $i$ with a fitness value of $f(i)$, will donate its allele to the child's genetic sequence has probability $P(i)$ as described below\cite{Eiben94}: 
 
 \[ P(i) = \frac{f(i)}{\sum\limits_{i \in S} f(i)} \]
 
@@ -57,7 +57,7 @@ The first operator from the literature that has been implemented and tested is f
 	}
 				
 
-	\caption{Fitness Based Scanning Pseudocode}
+	\caption{Pseudocode for Fitness Based Scanning}
 	\label{FBScan}
 \end{algorithm}
 
@@ -84,4 +84,4 @@ $d_1$ & $c_2$ & $b_3$ & $a_4$ & $\text{ child d }$ 	\\ \hline
 \label{DC-Fig}
 \end{figure} 
 
-The rationale behind expanding this operator was to increase the disruptiveness, and by extension the explorativity, of Genetic Algorithms\cite{Eiben97}. This meant that the population would have to have a large degree of similar genetic sequences before the search would narrow and converge\cite{Eiben95}. It should also be noted that in the special case of $n = 2$ is identical to traditional 1-point crossover\cite{Eiben95}.
+The rationale behind expanding this operator was to increase the disruptiveness, and by extension the explorativity, of traditional crossover\cite{Eiben97}. This meant that the population would need a large degree of similar genetic sequences before the search would narrow and converge\cite{Eiben95}. It should also be noted that in the special case of $n = 2$ is identical to traditional 1-point crossover\cite{Eiben95}.
