@@ -73,7 +73,7 @@ public class DeJongSphereFunction extends FitnessFunction {
 		} else {
 			translatedValues = SupportFunctions.booleanChromosomeToInt( target, this.dimension, this.dimensionLength );
 		}
-		
+				
 		// Use this information to build an array of doubles that represents
 		// the actual point encoded by our genetic sequence
 		double[] dimensionValues = SupportFunctions.intToDoubleDomain( translatedValues, -bound, bound, this.dimensionLength );

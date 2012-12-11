@@ -25,7 +25,7 @@ public class UnitTest{
 
 	static int testCount;
 	static int failures;
-	static final double EPSILON = 0.000000001;
+	static final double EPSILON = 0.000001;
 	
 	public static void main( String[] args ){
 		
@@ -187,6 +187,51 @@ public class UnitTest{
 			double[] intDubSolutions4 = { (-5105.0)/(1023.0), (5.0), (5.0)/(1023.0) };
 			
 			
+			// Build Tests for Fitness Function (Mathematical!)
+			Gene[] fitnessTest1 = new Gene[ 64 ];
+			Gene[] fitnessTest2 = new Gene[ 64 ];
+			Gene[] fitnessTest3 = new Gene[ 64 ];
+			
+			// Build an all 0 and an all 1 genome
+			for( int i = 0; i < fitnessTest1.length; i++ ){
+			
+				BooleanGene trueGene = new BooleanGene( defConf, true );
+				BooleanGene falseGene = new BooleanGene( defConf, false );
+				
+				fitnessTest1[i] = trueGene;
+				fitnessTest2[i] = falseGene;
+				
+			}
+						
+			// Build a genome of values [32767 - 32768 - 32767 - 32768]
+			for( int i = 0; i < 4; i++ ){
+				for( int j = 0; j < 16; j++ ){
+					
+					// Make a value of 32767 (0111 1111 1111 1111)
+					if( i % 2 == 0 ){
+						
+						fitnessTest3[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, false ) : new BooleanGene( defConf, true );
+						
+					// Make a value of 32768 (1000 0000 0000 0000)
+					} else {
+						
+						fitnessTest3[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, true ) : new BooleanGene( defConf, false );
+						
+					}
+				}
+			}
+			
+			Chromosome fitnessChrom1 = new Chromosome( defConf, fitnessTest1 );
+			Chromosome fitnessChrom2 = new Chromosome( defConf, fitnessTest2 );
+			Chromosome fitnessChrom3 = new Chromosome( defConf, fitnessTest3 );
+			
+			// DeJong Function + results (Evaluated w/ Wolfram Alpha)
+			DeJongSphereFunction testDeJongSphere = new DeJongSphereFunction( 4, 16, false );
+			double DeJongSphere1 = 104.8576;
+			double DeJongSphere2 = 104.8576;
+			double DeJongSphere3 = 2.44148125057 * Math.pow( 10, -8 );
+			
+			
 						
 		
 			// ---------- TESTING SEGMENT ----------
@@ -241,10 +286,21 @@ public class UnitTest{
 			
 			
 			// BLOCK FOR INT-DOUBLE DOMAIN CONVERSION
+			System.out.println( "Continuous To Discrete Domain Test" );
+			System.out.println("");
 			printTestStatus( testIntDouble( intDubTest1, -1.0, 1.0, 5, intDubSolutions1 ) );
 			printTestStatus( testIntDouble( intDubTest2, -1.0, 1.0, 6, intDubSolutions2 ) );
 			printTestStatus( testIntDouble( intDubTest3, -1.0, 1.0, 7, intDubSolutions3 ) );
 			printTestStatus( testIntDouble( intDubTest4, -5.0, 5.0, 10, intDubSolutions4 ) );
+			
+			// BLOCK FOR INT-DOUBLE DOMAIN CONVERSION
+			System.out.println( "Continuous To Discrete Domain Test" );
+			System.out.println("");
+			printTestStatus( testFitnessFunction( testDeJongSphere.evaluate( fitnessChrom1 ), DeJongSphere1 ) );
+			printTestStatus( testFitnessFunction( testDeJongSphere.evaluate( fitnessChrom2 ), DeJongSphere2 ) );
+			printTestStatus( testFitnessFunction( testDeJongSphere.evaluate( fitnessChrom3 ), DeJongSphere3 ) );
+			
+			
 			
 			
 			// FINAL REPORTING BLOCK
@@ -480,6 +536,17 @@ public class UnitTest{
 		
 	}
 	
+	// Function to test fitness functions
+	public static boolean testFitnessFunction( double result, double expected ){
+		
+		boolean compareResult = compareDouble( result, expected, EPSILON );
+		
+		System.out.printf( "%f was expected and %f was returned %n", expected, result );
+		
+		return compareResult;
+		
+	}
+	
 	// Function to print result of each test
 	public static void printTestStatus( boolean passMarker ){
 	
@@ -535,28 +602,16 @@ public class UnitTest{
 	
 	// Function to compare two doubles
 	public static boolean compareDouble( double first, double second, double epsilon ){
-		
-		// Do a zero check 
-		if( first != 0.0 || second != 0.0 ){
 			
-			double ratio = first / second;
+		double ratio = first / second;
 
-			// Make sure our ration is within +- epsilon of 1.0
-			if( ratio >= (1.0 - epsilon) && ratio <= (1.0 + epsilon) ){
-				return true;
-			} else {
-				return false;
-			}
-
+		// Make sure our ration is within +- epsilon of 1.0
+		if( ratio >= (1.0 - epsilon) && ratio <= (1.0 + epsilon) ){
+			return true;
 		} else {
-
-			// See if our comparison is out of our epsilon bounds
-			if( Math.abs( first - second ) > epsilon ){
-				return false;
-			} else {
-				return true;
-			}
+			return false;
 		}
+
 	}
 	
 }
