@@ -25,6 +25,7 @@ public class UnitTest{
 
 	static int testCount;
 	static int failures;
+	static final double EPSILON = 0.000000001;
 	
 	public static void main( String[] args ){
 		
@@ -469,7 +470,7 @@ public class UnitTest{
 			System.out.printf( "%f was expected and %f was returned %n", results[ i ], comparison[ i ] );
 			
 			// Note if we have a mismatch (excluding the computational error bound)
-			if( Math.abs( results[ i ] - comparison[ i ] ) < 0.0 ){
+			if( !compareDouble( results[ i ], comparison[ i ], EPSILON) ){
 				succeeded = false;
 			}
 			
@@ -530,6 +531,32 @@ public class UnitTest{
 		
 		return in;
 		
+	}
+	
+	// Function to compare two doubles
+	public static boolean compareDouble( double first, double second, double epsilon ){
+		
+		// Do a zero check 
+		if( first != 0.0 || second != 0.0 ){
+			
+			double ratio = first / second;
+
+			// Make sure our ration is within +- epsilon of 1.0
+			if( ratio >= (1.0 - epsilon) && ratio <= (1.0 + epsilon) ){
+				return true;
+			} else {
+				return false;
+			}
+
+		} else {
+
+			// See if our comparison is out of our epsilon bounds
+			if( Math.abs( first - second ) > epsilon ){
+				return false;
+			} else {
+				return true;
+			}
+		}
 	}
 	
 }
