@@ -4,7 +4,7 @@ The selection phase of Genetic Algorithms determines the probability of a given 
 Genetic Overlay - A genetic operator which modifies an individual's genetic sequence to match the specified alleles of a given schema, while leaving the unspecified alleles at their original values. 
 \end{overlay}
 
-Figure-\ref{GO-Fig} has an example of a genetic overlay that operates upon binary genetic sequences. The \emph{defining length} of a schema is defined to be the number of specified values in an overlay, in the case of the provided example, we have the value $4$.
+Figure \ref{GO-Fig} has an example of a genetic overlay that operates upon binary genetic sequences. The \emph{defining length} of a schema is defined to be the number of specified values in an overlay, in the case of the provided example, we have the value $4$.
 
 \begin{figure}[h!]
 \centering 
@@ -39,7 +39,7 @@ To define this formally, let $P = \{p_1,p_2,\ldots,p_n\}$ be a set of $n$ indivi
    \right.
 \end{displaymath} 
 
-Figure-\ref{ESO-Fig} demonstrates what this process looks like for $k = 3$.
+\noindent Figure \ref{ESO-Fig} demonstrates what this process looks like for $k = 3$.
 
 \begin{figure}[h!]
 \centering 
@@ -64,13 +64,13 @@ Thus, our schema will only have specified values where every individual in $T$ h
    \right.
 \end{displaymath} 
 
-This is further explained in figure-\ref{ESO-apl}, which implements the elitist schema overlay created in figure-\ref{ESO-Fig}.
+\noindent This is further explained in Figure \ref{ESO-apl}, which implements the elitist schema overlay created in Figure \ref{ESO-Fig}.
 
 \begin{figure}[h!]
 \centering 
 \begin{align*}
-\text{Elitist Schema Overlay} &:   -1~0--0~1-0			\\  
-\text{Unmodified Individual} &: 1~0~0~1~1~0~1~1~1	\\		
+\text{Unmodified Individual} &: 1~0~0~1~1~0~1~1~1	\\	
+\text{Elitist Schema Overlay} &:   -1~0--0~1-0			\\  	
 \text{Resultant Individual} &: 1~1~0~1~1~0~1~1~0
 \end{align*}
 \caption{Application of an Elitist Schema Overlay}
@@ -79,7 +79,7 @@ This is further explained in figure-\ref{ESO-apl}, which implements the elitist 
 
 At this point, we may continue to apply genetic operators to $P$ or $C$ as need be, or continue to the next generation. If our best performing individuals all have the same values at various alleles, this may hint that these assignments are correlated with success. Thus, it would be reasonable to search the neighborhood of this partial solution more thoroughly. 
 
-Figure-\ref{ESO-Fig} demonstrates how elitist schema overlays are constructed, and figure-\ref{ESO-apl} demonstrates the result of its application. It should be noted that the members of the set $P$ can be selected from the unmodified population or from the population resulting from the application of any other genetic operator. This was done intentionally to explore the behavior of elitist schema overlays as both a mutative and reproductive genetic operator. 
+Figure \ref{ESO-Fig} demonstrates how elitist schema overlays are constructed, and Figure \ref{ESO-apl} demonstrates the result of its application. It should be noted that the members of the set $P$ can be selected from the unmodified population or from the population resulting from the application of any other genetic operator. This was done intentionally to explore the behavior of elitist schema overlays as both a mutative and reproductive genetic operator. 
 
 Admittedly, the effects of this method will depend greatly upon our choice of $k$. For instance, the choice $k = 1$ will replace every individual that has the genetic overlay applied with the highest ranked member of the population. This is problematic, since it will instantly lead us to convergence. Likewise, a large value of $k$ will greatly reduce the probability that $t_1[i] = t_2[i] = \ldots = t_k[i]$ is true. This would lead us to checking a large number of alleles and, in the likeliest case, doing little to nothing with that information.
 

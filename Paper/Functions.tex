@@ -55,7 +55,7 @@ The Griewank function is known for its multi-modality and also has its global mi
  % Encoding
  %
  \subsubsection*{Encoding}
-Genetic sequences have traditionally been encoded as both traditional binary strings and \emph{Binary Reflective Gray Codes} \cite{Whitley97}. Gray Codes are modified interpretations of bitstrings that minimize the variation in representation of adjacent values \cite{Back93}. In the traditional binary system, the unsigned values of $2^n$ and $2^n - 1$ have no bits in common over the first $n$ places, even though their values only differ by $1$. In a Gray Coding, all adjacent values differ by exactly one bit \cite{Michalewicz98}. Given a bitstring $a = a_1 a_2 \ldots a_n$, we can described the translation between traditional binary strings and Binary Reflective Gray Codes mathematically. The traditional binary bitstring $a$ can be rewritten as a Binary Reflective Gray Code bitstring $b =  b_1 b_2 \ldots b_n$ with the following function \cite{Back93}:
+Genetic sequences have traditionally been encoded as both traditional binary strings and \emph{Binary Reflective Gray Codes} \cite{Whitley97}. Gray Codes are modified interpretations of bit strings that minimize the variation in representation of adjacent values \cite{Back93}. In the traditional binary system, the unsigned values of $2^n$ and $2^n - 1$ have no bits in common over the first $n$ places, even though their values only differ by $1$. In a Gray Coding, all adjacent values differ by exactly one bit \cite{Michalewicz98}. Given a bit string $a = a_1 a_2 \ldots a_n$, we can described the translation between traditional binary strings and Binary Reflective Gray Codes mathematically. The traditional binary bit string $a$ can be rewritten as a Binary Reflective Gray Code bit string $b =  b_1 b_2 \ldots b_n$ with the following function \cite{Back93}:
 
 \begin{displaymath}
    b_i = \left\{
@@ -66,7 +66,7 @@ Genetic sequences have traditionally been encoded as both traditional binary str
    \right.
 \end{displaymath} 
 
-Likewise, we can translate between a Binary Reflective Gray Code bitstring $b$ to the traditional binary bitstring $a$ with this procedure \cite{Back93}:
+Likewise, we can translate between a Binary Reflective Gray Code bit string $b$ to the traditional binary bit string $a$ with this procedure \cite{Back93}:
 
 \begin{displaymath}
    a_i = \left\{
@@ -77,7 +77,7 @@ Likewise, we can translate between a Binary Reflective Gray Code bitstring $b$ t
    \right.
 \end{displaymath} 
 
-To describe continuous domains, like those in the test functions presented, we must map our genetic sequences of discrete values to the real numbers. Suppose we wish to operate on a variable $x$ whose domain $D = [a,b] \subseteq \mathbb{R}$, and that we require $k$ decimal places of precision for $x$. To accomplish this, we need to parition $D$ into $10^k(b - a)$ ranges of equivalent length. So we find the smallest $n \in \mathbb{N}$ such that $10^k(b - a) \leq 2^n - 1$. To assign values to $x$ given a genetic sequence $g$ and a decoding function $d$, which takes a genetic sequence and evaluates it to its decimal equivalent \cite{Michalewicz98}:
+To describe continuous domains, like those in the test functions presented, we must map our genetic sequences of discrete values to the real numbers. Suppose we wish to operate on a variable $x$ whose domain $D = [a,b] \subseteq \mathbb{R}$, and that we require $k$ decimal places of precision for $x$. To accomplish this, we need to partition $D$ into $10^k(b - a)$ ranges of equivalent length. So we find the smallest $n \in \mathbb{N}$ such that $10^k(b - a) \leq 2^n - 1$. To assign values to $x$ given a genetic sequence $g$ and a decoding function $d$, which takes a genetic sequence and evaluates it to its decimal equivalent \cite{Michalewicz98}:
 \[ x = a + d(g) \left( \frac{b-a}{2^n - 1} \right) \]
 
 %
@@ -90,19 +90,19 @@ The 0-1 Knapsack Problem is an NP-Hard optimization problem. Let $X$ be the set 
 \[ max\big( \sum\limits_{i = 1}^{n} b_ix_i \big) \text{ where } \sum\limits_{i = 1}^{n} c_ix_i \leq L \]
 
 \subsubsection*{Encoding}
-The  0-1 Knapsack Problem is typically also represented with bitstrings, but these are not evaluated in the same manner as those for continuous domains. For a genetic sequence $g = g_1 g_2 \ldots g_n$, each $g_i$, where $1 \leq i \leq n$, represents the value of the corresponding $x_i$ in the item set $X$ for a given instance of the problem. 
+The  0-1 Knapsack Problem is typically also represented with bit strings, but these are not evaluated in the same manner as those for continuous domains. For a genetic sequence $g = g_1 g_2 \ldots g_n$, each $g_i$, where $1 \leq i \leq n$, represents the value of the corresponding $x_i$ in the item set $X$ for a given instance of the problem. 
 
 %
 % TSP
 %
 \subsection*{Traveling Salesman Problem}
 \subsubsection*{Definition}
-The Traveling Salesman Problem from Graph Theory is another NP-Hard problem. Let $V$ be a set of verticies $v_1, v_2, \ldots v_r$ of a graph $G$. The set of edges $E$ is defined such that each $e_i \in E$ is an ordered tuple of the form $(v_j,v_k), j \not = k$ where $v_j,v_k \in V$ are the veriticies that $e_i$ connects. For each $e_n \in E$, there is an associated $w_n \in W$ where $w_n$ is a positive real number that is the weight of the edge $e_n$. The goal of a given Travelling Salesman Problem instance is to find the Hamiltonian Circuit that has the minimum total weight. In other words, we must find a series of edges $T = e_{1},e_{2},\ldots,e_{n}$ such that minimizes the following\cite{Haxhimusa11}:
+The Traveling Salesman Problem from Graph Theory is another NP-Hard problem. Let $V$ be a set of vertices $v_1, v_2, \ldots v_r$ of a graph $G$. The set of edges $E$ is defined such that each $e_i \in E$ is an ordered tuple of the form $(v_j,v_k), j \not = k$ where $v_j,v_k \in V$ are the vertices that $e_i$ connects. For each $e_n \in E$, there is an associated $w_n \in W$ where $w_n$ is a positive real number that is the weight of the edge $e_n$. The goal of a given Traveling Salesman Problem instance is to find the Hamiltonian Circuit that has the minimum total weight. In other words, we must find a series of edges $T = e_{1},e_{2},\ldots,e_{n}$ such that minimizes the following\cite{Haxhimusa11}:
 \[\sum\limits_{e_{i} \in T} w_{i}\]
 \noindent Where $w_{i}$ is the weight of the edge $e_{i}$.
 
 \subsubsection*{Encoding}
-Permutation based problems, like the Travelling Salesman Problem, break away from the tradition of utilizing binary values to build genetic sequences. Na\"{\i}ve bitstring representations create long genetic sequences that commonly encode infeasible solutions, those that do not meet the constraints of the problem instance, or incorrect genetic sequences, those that are not permutations \cite{Potvin96}. To help correct this, Travelling Salesman Problems of size $n$ can be encoded as a sequence of integers from the set $\{1, 2, \ldots, n\}$ to minimize the length of the genetic sequences. Another common optimization is to fix a single point in all cyclic permutations to reduce the number of representations of an identical solution. 
+Permutation based problems, like the Traveling Salesman Problem, break away from the tradition of utilizing binary values to build genetic sequences. Na\"{\i}ve bit string representations create long genetic sequences that commonly encode infeasible solutions, those that do not meet the constraints of the problem instance, or incorrect genetic sequences, those that are not permutations \cite{Potvin96}. To help correct this, Traveling Salesman Problems of size $n$ can be encoded as a sequence of integers from the set $\{1, 2, \ldots, n\}$ to minimize the length of the genetic sequences. Another common optimization is to fix a single point in all cyclic permutations to reduce the number of representations of an identical solution. 
 
 \subsubsection*{Permutation Repair Algorithm}
 For most applications, the described genetic operators will function correctly unmodified; however, for permutation based problems that allow for only one instance of a given value, like the Traveling Salesman Problem, a slight change is necessary. For instance, the application of an overlay might leave identical values in multiple positions in the genetic sequence. Many genetic operators have this effect, and two main solutions are utilized in practice: New genetic operators tailored to these problems, and repair algorithms\cite{Larranaga99}. To keep our choice of operators consistent, we have devised a repair algorithm to use in every necessary case.
@@ -117,9 +117,9 @@ For most applications, the described genetic operators will function correctly u
 \label{PRA-Fig}
 \end{figure}
 
-As we can see in Figure-\ref{PRA-Fig}, the resultant individual now contains two instances of both 2 and 9. Thus, we need a repair algorithm can be used to correct this example, while maintaining the given genetic overlay. 
+As we can see in Figure \ref{PRA-Fig}, the resultant individual now contains two instances of both 2 and 9. Thus, we need a repair algorithm can be used to correct this example, while maintaining the given genetic overlay. 
 
-Our repair algorithm, whose pseudocode can be found in figure-\ref{PRA-Alg}, iterates through a genetic sequence and counts how often each value is used. On the second pass, we check each value to see if it has been used exactly once in the permutation. If this is true, then we advance to the next allele. We will also skip alleles that are defined in the given genetic overlay. If neither of these conditions are true, we replace the current allele with a value that is not already in the permutation. With this structure, we maintain the invariant that the genetic subsequence from the beginning up to the point we are operating on is a valid permutation.
+Our repair algorithm, whose pseudocode can be found in Figure \ref{PRA-Alg}, iterates through a genetic sequence and counts how often each value is used. On the second pass, we check each value to see if it has been used exactly once in the permutation. If this is true, then we advance to the next allele. We will also skip alleles that are defined in the given genetic overlay. If neither of these conditions are true, we replace the current allele with a value that is not already in the permutation. With this structure, we maintain the invariant that the genetic subsequence from the beginning up to the point we are operating on is a valid permutation.
 
 In order to guarantee that we both do not disturb a given genetic overlay and that our end result is a permutation, we must require that every genetic overlay is a permutation. This constraint is feasible in practice, and we have proven that no elitist schema overlay will ever contain a duplicated value if the population consists of permutations only.
 
@@ -127,7 +127,7 @@ In order to guarantee that we both do not disturb a given genetic overlay and th
 An elitist schema overlay will never contain a duplicated element, given that all members of the population are $k$-permutations of $n$ elements where k $\leq$ n.
 \end{thm}
 
-To begin, let $e$ be an elitist schema overlay created from a population $P$. It is given that $\forall p \in P$, $p$ must be a $k$-permutation of $n$ elements. Thus, the $x$ most fit individuals in $P$ must also be permutations. Since each of these individuals is a permuataion, none of them may contain duplicate values. By the definition of an elitist schema overlay, $e$ will only be defined for the matching alleles of the $x$ most fit members of $P$. Since none of these members can have duplicate values, $e$ cannot have duplicate values either.
+To begin, let $e$ be an elitist schema overlay created from a population $P$. It is given that $\forall p \in P$, $p$ must be a $k$-permutation of $n$ elements. Thus, the $x$ most fit individuals in $P$ must also be permutations. Since each of these individuals is a permuatation, none of them may contain duplicate values. By the definition of an elitist schema overlay, $e$ will only be defined for the matching alleles of the $x$ most fit members of $P$. Since none of these members can have duplicate values, $e$ cannot have duplicate values either.
 
 %
 % Permutation Repair Algorithm Code
@@ -202,4 +202,14 @@ Consider the subsequence formed by taking an arbitrary $k$ values of the given g
 
 \subsection*{NK-Landscapes}
 
-Since multi-parent recombination operators have had success on NK-Landscapes in previous studies, we will test each genetic operator on several NK-Landscapes of varying size and ruggedness\cite{Eiben96,Skellett05}. Definitions from current research for these problems and several of their characteristics can be found below\cite{molga05,Skellett05,yang10}.
+NK-Landscapes are mathematical models that have appeared in many disciplines, and finding the global minimum or maximum of one of these models has been demonstrated to be in NP-Complete\cite{Weinberger96}. Since multi-parent genetic operators have had success on NK-Landscapes in previous studies, we will test each genetic operator on several NK-Landscapes of varying size and ruggedness\cite{Eiben96,Skellett05}. 
+
+NK-Landscapes assign values to bit strings of length $N$ by applying a function $f$ to each allele and its $K$ neighbors\cite{Kauffman93}. A string $S$, consisting of the bits $b_1,b_2,\ldots,b_N$ has a fitness value $V$ defined to be:
+
+\[ V = \sum\limits_{i = 0}^{N} f(S,i) \]
+
+The function $f$ takes the string and evaluates the necessary number of bits using the function $g$.
+
+\[ f(S,i) = g(b_i, b_{(i+1) \bmod{N}}, \ldots, b_{(i+K) \bmod{N}}) \]
+
+Larger values of $K$ increase the ruggedness of a model by increasing the interplay between the bits, and lower values of $K$ make for smoother landscapes \cite{Kauffman93}.
