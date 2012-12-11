@@ -83,7 +83,7 @@ public class DeJongEllipsoidFunction extends FitnessFunction {
 		// Compute the sum of each value squared
 		for( int i = 0; i < dimensionValues.length; i++ ){
 		
-			runningSum = runningSum + ( (double) i * Math.pow( dimensionValues[i], 2 ));
+			runningSum = runningSum + ( (i+1) * Math.pow( dimensionValues[i], 2 ));
 			
 		}
 		

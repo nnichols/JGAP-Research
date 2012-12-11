@@ -25,7 +25,7 @@ public class UnitTest{
 
 	static int testCount;
 	static int failures;
-	static final double EPSILON = 0.000001;
+	static final double EPSILON = 0.0001;
 	
 	public static void main( String[] args ){
 		
@@ -191,6 +191,12 @@ public class UnitTest{
 			Gene[] fitnessTest1 = new Gene[ 64 ];
 			Gene[] fitnessTest2 = new Gene[ 64 ];
 			Gene[] fitnessTest3 = new Gene[ 64 ];
+			Gene[] fitnessTest4 = new Gene[ 64 ];
+			Gene[] fitnessTest5 = new Gene[ 64 ];
+			Gene[] fitnessTest6 = new Gene[ 64 ];
+			Gene[] fitnessTest7 = new Gene[ 64 ];
+			Gene[] fitnessTest8 = new Gene[ 64 ];
+			Gene[] fitnessTest9 = new Gene[ 64 ];
 			
 			// Build an all 0 and an all 1 genome
 			for( int i = 0; i < fitnessTest1.length; i++ ){
@@ -200,6 +206,12 @@ public class UnitTest{
 				
 				fitnessTest1[i] = trueGene;
 				fitnessTest2[i] = falseGene;
+				
+				fitnessTest4[i] = trueGene;
+				fitnessTest5[i] = falseGene;
+				
+				fitnessTest7[i] = trueGene;
+				fitnessTest8[i] = falseGene;
 				
 			}
 						
@@ -211,11 +223,15 @@ public class UnitTest{
 					if( i % 2 == 0 ){
 						
 						fitnessTest3[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, false ) : new BooleanGene( defConf, true );
+						fitnessTest6[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, false ) : new BooleanGene( defConf, true );
+						fitnessTest9[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, false ) : new BooleanGene( defConf, true );
 						
 					// Make a value of 32768 (1000 0000 0000 0000)
 					} else {
 						
 						fitnessTest3[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, true ) : new BooleanGene( defConf, false );
+						fitnessTest6[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, false ) : new BooleanGene( defConf, true );
+						fitnessTest9[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, false ) : new BooleanGene( defConf, true );
 						
 					}
 				}
@@ -224,13 +240,30 @@ public class UnitTest{
 			Chromosome fitnessChrom1 = new Chromosome( defConf, fitnessTest1 );
 			Chromosome fitnessChrom2 = new Chromosome( defConf, fitnessTest2 );
 			Chromosome fitnessChrom3 = new Chromosome( defConf, fitnessTest3 );
+			Chromosome fitnessChrom4 = new Chromosome( defConf, fitnessTest4 );
+			Chromosome fitnessChrom5 = new Chromosome( defConf, fitnessTest5 );
+			Chromosome fitnessChrom6 = new Chromosome( defConf, fitnessTest6 );
+			Chromosome fitnessChrom7 = new Chromosome( defConf, fitnessTest7 );
+			Chromosome fitnessChrom8 = new Chromosome( defConf, fitnessTest8 );
+			Chromosome fitnessChrom9 = new Chromosome( defConf, fitnessTest9 );
 			
-			// DeJong Function + results (Evaluated w/ Wolfram Alpha)
+			// DeJong Sphere Function + results (Evaluated w/ Wolfram Alpha)
 			DeJongSphereFunction testDeJongSphere = new DeJongSphereFunction( 4, 16, false );
 			double DeJongSphere1 = 104.8576;
 			double DeJongSphere2 = 104.8576;
 			double DeJongSphere3 = 2.44148125057 * Math.pow( 10, -8 );
 			
+			// DeJong Ellipse Function + results (Evaluated w/ Wolfram Alpha)
+			DeJongEllipsoidFunction testDeJongEllipsoid = new DeJongEllipsoidFunction( 4, 16, false );
+			double DeJongEllipse1 = 262.144;
+			double DeJongEllipse2 = 262.144;
+			double DeJongEllipse3 = 6.103703 * Math.pow( 10, -8 );
+			
+			// Sum of Powers Function + results (Evaluated w/ Wolfram Alpha)
+			SumOfPowersFunction testPowersFunction = new SumOfPowersFunction( 4, 16, false );
+			double powers1 = 4.0;
+			double powers2 = 4.0;
+			double powers3 = 2.32834 * Math.pow( 10, -10 );
 			
 						
 		
@@ -293,14 +326,29 @@ public class UnitTest{
 			printTestStatus( testIntDouble( intDubTest3, -1.0, 1.0, 7, intDubSolutions3 ) );
 			printTestStatus( testIntDouble( intDubTest4, -5.0, 5.0, 10, intDubSolutions4 ) );
 			
-			// BLOCK FOR INT-DOUBLE DOMAIN CONVERSION
-			System.out.println( "Continuous To Discrete Domain Test" );
+			
+			// BLOCK FOR DeJong SPHERE FUNCTION
+			System.out.println( "DeJong HyperSphere Function Test" );
 			System.out.println("");
 			printTestStatus( testFitnessFunction( testDeJongSphere.evaluate( fitnessChrom1 ), DeJongSphere1 ) );
 			printTestStatus( testFitnessFunction( testDeJongSphere.evaluate( fitnessChrom2 ), DeJongSphere2 ) );
 			printTestStatus( testFitnessFunction( testDeJongSphere.evaluate( fitnessChrom3 ), DeJongSphere3 ) );
 			
 			
+			// BLOCK FOR DeJong ELLIPSOID FUNCTION
+			System.out.println( "DeJong Hyper-Ellipsoid Function Test" );
+			System.out.println("");
+			printTestStatus( testFitnessFunction( testDeJongEllipsoid.evaluate( fitnessChrom4 ), DeJongEllipse1 ) );
+			printTestStatus( testFitnessFunction( testDeJongEllipsoid.evaluate( fitnessChrom5 ), DeJongEllipse2 ) );
+			printTestStatus( testFitnessFunction( testDeJongEllipsoid.evaluate( fitnessChrom6 ), DeJongEllipse3 ) );			
+			
+			
+			// BLOCK FOR SUM OF POWERS FUNCTION
+			System.out.println( "Sum Of Increasing Powers Function Test" );
+			System.out.println("");
+			printTestStatus( testFitnessFunction( testPowersFunction.evaluate( fitnessChrom7 ), powers1 ) );
+			printTestStatus( testFitnessFunction( testPowersFunction.evaluate( fitnessChrom8 ), powers2 ) );
+			printTestStatus( testFitnessFunction( testPowersFunction.evaluate( fitnessChrom9 ), powers3 ) );			
 			
 			
 			// FINAL REPORTING BLOCK
