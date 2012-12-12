@@ -76,17 +76,12 @@ public class MichaelwiczFunction extends FitnessFunction {
 		// the actual point encoded by our genetic sequence
 		double[] dimensionValues = SupportFunctions.intToDoubleDomain( translatedValues, lowerBound, upperBound, this.dimensionLength );
 		
-		double value = computeForValue( dimensionValues[0] ) + computeForValue( dimensionValues[1] );
+		double x = dimensionValues[0];
+		double y = dimensionValues[1];
+		
+		double value = (Math.sin( x ) * -1.0) * ( Math.pow( Math.sin( (x * x) / Math.PI ), 20.0));
+		value = value + (Math.sin( y ) * -1.0) * ( Math.pow( Math.sin( (2.0 * y * y) / Math.PI ), 20.0));
 		
 		return value;
-	}
-	
-	
-	// Compute the function value for one variable
-	private static double computeForValue( double in ){
-		
-		double sinVal = (Math.sin( in ) * -1.0) * ( Math.pow( Math.sin( (in * in) / Math.PI ), 20.0));
-		
-		return sinVal;
 	}
 }
