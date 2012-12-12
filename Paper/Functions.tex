@@ -136,8 +136,17 @@ To begin, let $e$ be an elitist schema overlay created from a population $P$. It
 %
 \begin{algorithm}
 	\SetAlgoLined
-	\KwData{A genetic sequence, \emph{seq}, of permutable values and a genetic overlay, \emph{g}} \SetKwData{Seq}{seq} \SetKwData{Value}{value} \SetKwData{Use}{use} \SetKwData{aye}{i} \SetKwData{jay}{j} \SetKwData{gee}{g} \SetKwData{Isdef}{defined}
-	\KwResult{\emph{seq}, with values that form a permutation.}
+	\SetKwInOut{Input}{input} 
+	\SetKwInOut{Output}{output}
+	\Input{A genetic sequence, \emph{seq}, of permutable values and a genetic overlay, \emph{g}} 
+	\SetKwData{Seq}{seq} 
+	\SetKwData{Value}{value} 
+	\SetKwData{Use}{use} 
+	\SetKwData{aye}{i} 
+	\SetKwData{jay}{j} 
+	\SetKwData{gee}{g} 
+	\SetKwData{Isdef}{defined}
+	\Output{\emph{seq}, with values that form a permutation.}
 	\BlankLine
 
 	\tcp{Find out how many times each value is used in \Seq}

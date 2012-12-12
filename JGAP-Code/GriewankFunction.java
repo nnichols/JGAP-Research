@@ -94,7 +94,7 @@ public class GriewankFunction extends FitnessFunction {
 		// Compute Cos(x/i^(1/2))
 		for( int i = 0; i < dimensionValues.length; i++ ){
 			
-			runningProduct = runningProduct * Math.cos( dimensionValues[i] / Math.sqrt( i ) );
+			runningProduct = runningProduct * Math.cos( dimensionValues[i] / Math.sqrt( i + 1 ) );
 			
 		}
 		

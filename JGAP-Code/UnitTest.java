@@ -197,6 +197,9 @@ public class UnitTest{
 			Gene[] fitnessTest7 = new Gene[ 64 ];
 			Gene[] fitnessTest8 = new Gene[ 64 ];
 			Gene[] fitnessTest9 = new Gene[ 64 ];
+			Gene[] fitnessTest10 = new Gene[ 64 ];
+			Gene[] fitnessTest11 = new Gene[ 64 ];
+			Gene[] fitnessTest12 = new Gene[ 64 ];
 			
 			// Build an all 0 and an all 1 genome
 			for( int i = 0; i < fitnessTest1.length; i++ ){
@@ -213,6 +216,9 @@ public class UnitTest{
 				fitnessTest7[i] = trueGene;
 				fitnessTest8[i] = falseGene;
 				
+				fitnessTest10[i] = trueGene;
+				fitnessTest11[i] = falseGene;
+				
 			}
 						
 			// Build a genome of values [32767 - 32768 - 32767 - 32768]
@@ -225,13 +231,15 @@ public class UnitTest{
 						fitnessTest3[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, false ) : new BooleanGene( defConf, true );
 						fitnessTest6[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, false ) : new BooleanGene( defConf, true );
 						fitnessTest9[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, false ) : new BooleanGene( defConf, true );
+						fitnessTest12[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, false ) : new BooleanGene( defConf, true );
 						
 					// Make a value of 32768 (1000 0000 0000 0000)
 					} else {
 						
 						fitnessTest3[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, true ) : new BooleanGene( defConf, false );
-						fitnessTest6[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, false ) : new BooleanGene( defConf, true );
-						fitnessTest9[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, false ) : new BooleanGene( defConf, true );
+						fitnessTest6[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, true ) : new BooleanGene( defConf, false );
+						fitnessTest9[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, true ) : new BooleanGene( defConf, false );
+						fitnessTest12[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, true ) : new BooleanGene( defConf, false );
 						
 					}
 				}
@@ -246,24 +254,33 @@ public class UnitTest{
 			Chromosome fitnessChrom7 = new Chromosome( defConf, fitnessTest7 );
 			Chromosome fitnessChrom8 = new Chromosome( defConf, fitnessTest8 );
 			Chromosome fitnessChrom9 = new Chromosome( defConf, fitnessTest9 );
+			Chromosome fitnessChrom10 = new Chromosome( defConf, fitnessTest10 );
+			Chromosome fitnessChrom11 = new Chromosome( defConf, fitnessTest11 );
+			Chromosome fitnessChrom12 = new Chromosome( defConf, fitnessTest12 );
 			
 			// DeJong Sphere Function + results (Evaluated w/ Wolfram Alpha)
 			DeJongSphereFunction testDeJongSphere = new DeJongSphereFunction( 4, 16, false );
 			double DeJongSphere1 = 104.8576;
 			double DeJongSphere2 = 104.8576;
-			double DeJongSphere3 = 2.44148125057 * Math.pow( 10, -8 );
+			double DeJongSphere3 = 2.44148125057 * Math.pow( 10.0, -8.0 );
 			
 			// DeJong Ellipse Function + results (Evaluated w/ Wolfram Alpha)
 			DeJongEllipsoidFunction testDeJongEllipsoid = new DeJongEllipsoidFunction( 4, 16, false );
 			double DeJongEllipse1 = 262.144;
 			double DeJongEllipse2 = 262.144;
-			double DeJongEllipse3 = 6.103703 * Math.pow( 10, -8 );
+			double DeJongEllipse3 = 6.103703 * Math.pow( 10.0, -8.0 );
 			
 			// Sum of Powers Function + results (Evaluated w/ Wolfram Alpha)
 			SumOfPowersFunction testPowersFunction = new SumOfPowersFunction( 4, 16, false );
 			double powers1 = 4.0;
 			double powers2 = 4.0;
-			double powers3 = 2.32834 * Math.pow( 10, -10 );
+			double powers3 = 2.32834 * Math.pow( 10.0, -10.0 );
+			
+			// Griewank Function + results (Evaluated w/ Wolfram Alpha)
+			GriewankFunction testGriewankFunction = new GriewankFunction( 4, 16, false );
+			double griewank1 = 361.01465247;
+			double griewank2 = 361.01465247;
+			double griewank3 = 8.7395 * Math.pow( 10.0, -5.0 );
 			
 						
 		
@@ -348,7 +365,15 @@ public class UnitTest{
 			System.out.println("");
 			printTestStatus( testFitnessFunction( testPowersFunction.evaluate( fitnessChrom7 ), powers1 ) );
 			printTestStatus( testFitnessFunction( testPowersFunction.evaluate( fitnessChrom8 ), powers2 ) );
-			printTestStatus( testFitnessFunction( testPowersFunction.evaluate( fitnessChrom9 ), powers3 ) );			
+			printTestStatus( testFitnessFunction( testPowersFunction.evaluate( fitnessChrom9 ), powers3 ) );					
+			
+			
+			// BLOCK FOR GRIEWANK FUNCTION
+			System.out.println( "Griewank Function Test" );
+			System.out.println("");
+			printTestStatus( testFitnessFunction( testGriewankFunction.evaluate( fitnessChrom10 ), griewank1 ) );
+			printTestStatus( testFitnessFunction( testGriewankFunction.evaluate( fitnessChrom11 ), griewank2 ) );
+			printTestStatus( testFitnessFunction( testGriewankFunction.evaluate( fitnessChrom12 ), griewank3 ) );		
 			
 			
 			// FINAL REPORTING BLOCK
