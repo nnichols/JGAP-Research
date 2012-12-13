@@ -83,7 +83,7 @@ public class RastriginFunction extends FitnessFunction {
 		// Compute the sum of each value squared
 		for( int i = 0; i < dimensionValues.length; i++ ){
 		
-			runningSum = runningSum + Math.pow( dimensionValues[i], 2 ) - (10.0 * Math.cos( 2.0 * dimensionValues[i] * Math.PI ));
+			runningSum = runningSum + Math.pow( dimensionValues[i], 2.0 ) - (10.0 * Math.cos( 2.0 * dimensionValues[i] * Math.PI ));
 			
 		}
 		

@@ -200,6 +200,12 @@ public class UnitTest{
 			Gene[] fitnessTest10 = new Gene[ 64 ];
 			Gene[] fitnessTest11 = new Gene[ 64 ];
 			Gene[] fitnessTest12 = new Gene[ 64 ];
+			Gene[] fitnessTest13 = new Gene[ 64 ];
+			Gene[] fitnessTest14 = new Gene[ 64 ];
+			Gene[] fitnessTest15 = new Gene[ 64 ];
+			Gene[] fitnessTest16 = new Gene[ 64 ];
+			Gene[] fitnessTest17 = new Gene[ 64 ];
+			Gene[] fitnessTest18 = new Gene[ 64 ];
 			
 			// Build an all 0 and an all 1 genome
 			for( int i = 0; i < fitnessTest1.length; i++ ){
@@ -219,6 +225,12 @@ public class UnitTest{
 				fitnessTest10[i] = trueGene;
 				fitnessTest11[i] = falseGene;
 				
+				fitnessTest13[i] = trueGene;
+				fitnessTest14[i] = falseGene;
+				
+				fitnessTest16[i] = trueGene;
+				fitnessTest17[i] = falseGene;
+				
 			}
 						
 			// Build a genome of values [32767 - 32768 - 32767 - 32768]
@@ -232,6 +244,8 @@ public class UnitTest{
 						fitnessTest6[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, false ) : new BooleanGene( defConf, true );
 						fitnessTest9[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, false ) : new BooleanGene( defConf, true );
 						fitnessTest12[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, false ) : new BooleanGene( defConf, true );
+						fitnessTest15[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, false ) : new BooleanGene( defConf, true );
+						fitnessTest18[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, false ) : new BooleanGene( defConf, true );
 						
 					// Make a value of 32768 (1000 0000 0000 0000)
 					} else {
@@ -240,7 +254,9 @@ public class UnitTest{
 						fitnessTest6[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, true ) : new BooleanGene( defConf, false );
 						fitnessTest9[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, true ) : new BooleanGene( defConf, false );
 						fitnessTest12[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, true ) : new BooleanGene( defConf, false );
-						
+						fitnessTest15[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, true ) : new BooleanGene( defConf, false );
+						fitnessTest18[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, true ) : new BooleanGene( defConf, false );
+		
 					}
 				}
 			}
@@ -257,6 +273,12 @@ public class UnitTest{
 			Chromosome fitnessChrom10 = new Chromosome( defConf, fitnessTest10 );
 			Chromosome fitnessChrom11 = new Chromosome( defConf, fitnessTest11 );
 			Chromosome fitnessChrom12 = new Chromosome( defConf, fitnessTest12 );
+			Chromosome fitnessChrom13 = new Chromosome( defConf, fitnessTest13 );
+			Chromosome fitnessChrom14 = new Chromosome( defConf, fitnessTest14 );
+			Chromosome fitnessChrom15 = new Chromosome( defConf, fitnessTest15 );
+			Chromosome fitnessChrom16 = new Chromosome( defConf, fitnessTest16 );
+			Chromosome fitnessChrom17 = new Chromosome( defConf, fitnessTest17 );
+			Chromosome fitnessChrom18 = new Chromosome( defConf, fitnessTest18 );
 			
 			// DeJong Sphere Function + results (Evaluated w/ Wolfram Alpha)
 			DeJongSphereFunction testDeJongSphere = new DeJongSphereFunction( 4, 16, false );
@@ -281,6 +303,18 @@ public class UnitTest{
 			double griewank1 = 361.01465247;
 			double griewank2 = 361.01465247;
 			double griewank3 = 8.7395 * Math.pow( 10.0, -5.0 );
+			
+			// Rastrigin Function + results (Evaluated w/ Wolfram Alpha)
+			RastriginFunction testRastriginFunction = new RastriginFunction( 4, 16, false );
+			double rastrigin1 = 115.698855;
+			double rastrigin2 = 115.698855;
+			double rastrigin3 = 4.84371 * Math.pow( 10.0, -6.0 );
+			
+			// Rosenbrock Function + results (Evaluated w/ Wolfram Alpha)
+			RosenbrockFunction testRosenbrockFunction = new RosenbrockFunction( 4, 16, false );
+			double rosenbrock1 = 120048.0;
+			double rosenbrock2 = 270108.0;
+			double rosenbrock3 = 3.000154;
 			
 						
 		
@@ -373,7 +407,23 @@ public class UnitTest{
 			System.out.println("");
 			printTestStatus( testFitnessFunction( testGriewankFunction.evaluate( fitnessChrom10 ), griewank1 ) );
 			printTestStatus( testFitnessFunction( testGriewankFunction.evaluate( fitnessChrom11 ), griewank2 ) );
-			printTestStatus( testFitnessFunction( testGriewankFunction.evaluate( fitnessChrom12 ), griewank3 ) );		
+			printTestStatus( testFitnessFunction( testGriewankFunction.evaluate( fitnessChrom12 ), griewank3 ) );						
+			
+			
+			// BLOCK FOR RASTRIGIN FUNCTION
+			System.out.println( "Rastrigin Function Test" );
+			System.out.println("");
+			printTestStatus( testFitnessFunction( testRastriginFunction.evaluate( fitnessChrom13 ), rastrigin1 ) );
+			printTestStatus( testFitnessFunction( testRastriginFunction.evaluate( fitnessChrom14 ), rastrigin2 ) );
+			printTestStatus( testFitnessFunction( testRastriginFunction.evaluate( fitnessChrom15 ), rastrigin3 ) );						
+			
+			
+			// BLOCK FOR ROSENBROCK FUNCTION
+			System.out.println( "Rosenbrock Function Test" );
+			System.out.println("");
+			printTestStatus( testFitnessFunction( testRosenbrockFunction.evaluate( fitnessChrom16 ), rosenbrock1 ) );
+			printTestStatus( testFitnessFunction( testRosenbrockFunction.evaluate( fitnessChrom17 ), rosenbrock2 ) );
+			printTestStatus( testFitnessFunction( testRosenbrockFunction.evaluate( fitnessChrom18 ), rosenbrock3 ) );		
 			
 			
 			// FINAL REPORTING BLOCK
@@ -638,7 +688,7 @@ public class UnitTest{
 		
 	}
 	
-	// Functio to apply an overlay to a chromosome
+	// Function to apply an overlay to a chromosome
 	public static IChromosome applyOverlay( IChromosome in, IntegerGene[] overlay ){
 		
 		// Errors may be thrown
