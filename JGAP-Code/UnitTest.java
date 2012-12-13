@@ -207,6 +207,17 @@ public class UnitTest{
 			Gene[] fitnessTest17 = new Gene[ 64 ];
 			Gene[] fitnessTest18 = new Gene[ 64 ];
 			
+			// 2 Dimensional Fitness Function Genomes
+			Gene[] fitnessTest19 = new Gene[ 32 ];
+			Gene[] fitnessTest20 = new Gene[ 32 ];
+			Gene[] fitnessTest21 = new Gene[ 32 ];
+			Gene[] fitnessTest22 = new Gene[ 32 ];
+			Gene[] fitnessTest23 = new Gene[ 32 ];
+			Gene[] fitnessTest24 = new Gene[ 32 ];
+			Gene[] fitnessTest25 = new Gene[ 32 ];
+			Gene[] fitnessTest26 = new Gene[ 32 ];
+			Gene[] fitnessTest27 = new Gene[ 32 ];
+			
 			// Build an all 0 and an all 1 genome
 			for( int i = 0; i < fitnessTest1.length; i++ ){
 			
@@ -231,6 +242,19 @@ public class UnitTest{
 				fitnessTest16[i] = trueGene;
 				fitnessTest17[i] = falseGene;
 				
+				// Build 2-dimensional cases
+				if( i < 32 ){
+					
+					fitnessTest19[i] = trueGene;
+					fitnessTest20[i] = falseGene;
+					
+					fitnessTest22[i] = trueGene;
+					fitnessTest23[i] = falseGene;
+					
+					fitnessTest25[i] = trueGene;
+					fitnessTest26[i] = falseGene;
+					
+				}
 			}
 						
 			// Build a genome of values [32767 - 32768 - 32767 - 32768]
@@ -258,9 +282,27 @@ public class UnitTest{
 						fitnessTest18[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, true ) : new BooleanGene( defConf, false );
 		
 					}
+					
+					// Build 2-Dimensional Cases
+					if( i < 2 ){
+						if( i == 0 ){
+							
+							fitnessTest21[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, false ) : new BooleanGene( defConf, true );
+							fitnessTest24[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, false ) : new BooleanGene( defConf, true );
+							fitnessTest27[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, false ) : new BooleanGene( defConf, true );
+							
+						} else {
+							
+							fitnessTest21[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, true ) : new BooleanGene( defConf, false );
+							fitnessTest24[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, true ) : new BooleanGene( defConf, false );
+							fitnessTest27[(i * 16) + j] = (j == 0) ? new BooleanGene( defConf, true ) : new BooleanGene( defConf, false );
+							
+						}
+					}
 				}
 			}
 			
+			// Build chromosomes for n-dimensional fitness function testing
 			Chromosome fitnessChrom1 = new Chromosome( defConf, fitnessTest1 );
 			Chromosome fitnessChrom2 = new Chromosome( defConf, fitnessTest2 );
 			Chromosome fitnessChrom3 = new Chromosome( defConf, fitnessTest3 );
@@ -279,6 +321,17 @@ public class UnitTest{
 			Chromosome fitnessChrom16 = new Chromosome( defConf, fitnessTest16 );
 			Chromosome fitnessChrom17 = new Chromosome( defConf, fitnessTest17 );
 			Chromosome fitnessChrom18 = new Chromosome( defConf, fitnessTest18 );
+			
+			// 2-Dimension fitness function chromosomes
+			Chromosome fitnessChrom19 = new Chromosome( defConf, fitnessTest19 );
+			Chromosome fitnessChrom20 = new Chromosome( defConf, fitnessTest20 );
+			Chromosome fitnessChrom21 = new Chromosome( defConf, fitnessTest21 );
+			Chromosome fitnessChrom22 = new Chromosome( defConf, fitnessTest22 );
+			Chromosome fitnessChrom23 = new Chromosome( defConf, fitnessTest23 );
+			Chromosome fitnessChrom24 = new Chromosome( defConf, fitnessTest24 );
+			Chromosome fitnessChrom25 = new Chromosome( defConf, fitnessTest25 );
+			Chromosome fitnessChrom26 = new Chromosome( defConf, fitnessTest26 );
+			Chromosome fitnessChrom27 = new Chromosome( defConf, fitnessTest27 );
 			
 			// DeJong Sphere Function + results (Evaluated w/ Wolfram Alpha)
 			DeJongSphereFunction testDeJongSphere = new DeJongSphereFunction( 4, 16, false );
@@ -315,6 +368,26 @@ public class UnitTest{
 			double rosenbrock1 = 120048.0;
 			double rosenbrock2 = 270108.0;
 			double rosenbrock3 = 3.000154;
+			
+			// --- 2-Dimensional Cases --- \\
+			// Michaelwicz Function + results (Evaluated w/ Wolfram Alpha)
+			// We have calculated the necessary values and included the offset
+			MichaelwiczFunction testMichaelwiczFunction = new MichaelwiczFunction( 16, false );
+			double michaelwicz1 = 0.8608717 + 10.0;
+			double michaelwicz2 = 0.0 + 10.0;
+			double michaelwicz3 = -0.099931 + 10.0;
+			
+			// Camel Function + results (Evaluated w/ Wolfram Alpha)
+			CamelFunction testCamelFunction = new CamelFunction( 16, false );
+			double camel1 = 194.9 + 10.0;
+			double camel2 = 194.9 + 10.0;
+			double camel3 = 1.07105 * Math.pow( 10.0, -8.0 ) + 10.0;
+			
+			// Schubert Function + results (Evaluated w/ Wolfram Alpha)
+			SchubertFunction testSchubertFunction = new SchubertFunction( 16, false );
+			double schubert1 = 0.282154;
+			double schubert2 = 0.136144;
+			double schubert3 = 34.533745;
 			
 						
 		
@@ -423,7 +496,31 @@ public class UnitTest{
 			System.out.println("");
 			printTestStatus( testFitnessFunction( testRosenbrockFunction.evaluate( fitnessChrom16 ), rosenbrock1 ) );
 			printTestStatus( testFitnessFunction( testRosenbrockFunction.evaluate( fitnessChrom17 ), rosenbrock2 ) );
-			printTestStatus( testFitnessFunction( testRosenbrockFunction.evaluate( fitnessChrom18 ), rosenbrock3 ) );		
+			printTestStatus( testFitnessFunction( testRosenbrockFunction.evaluate( fitnessChrom18 ), rosenbrock3 ) );						
+			
+			
+			// BLOCK FOR MICHAELWICZ FUNCTION
+			System.out.println( "Michaelwicz 2-D Function Test" );
+			System.out.println("");
+			printTestStatus( testFitnessFunction( testMichaelwiczFunction.evaluate( fitnessChrom19 ), michaelwicz1 ) );
+			printTestStatus( testFitnessFunction( testMichaelwiczFunction.evaluate( fitnessChrom20 ), michaelwicz2 ) );
+			printTestStatus( testFitnessFunction( testMichaelwiczFunction.evaluate( fitnessChrom21 ), michaelwicz3 ) );						
+			
+			
+			// BLOCK FOR CAMEL FUNCTION
+			System.out.println( "Camel Function Test" );
+			System.out.println("");
+			printTestStatus( testFitnessFunction( testCamelFunction.evaluate( fitnessChrom22 ), camel1 ) );
+			printTestStatus( testFitnessFunction( testCamelFunction.evaluate( fitnessChrom23 ), camel2 ) );
+			printTestStatus( testFitnessFunction( testCamelFunction.evaluate( fitnessChrom24 ), camel3 ) );						
+			
+			
+			// BLOCK FOR Schubert FUNCTION
+			System.out.println( "Schubert Function Test" );
+			System.out.println("");
+			printTestStatus( testFitnessFunction( testSchubertFunction.evaluate( fitnessChrom25 ), schubert1 ) );
+			printTestStatus( testFitnessFunction( testSchubertFunction.evaluate( fitnessChrom26 ), schubert2 ) );
+			printTestStatus( testFitnessFunction( testSchubertFunction.evaluate( fitnessChrom27 ), schubert3 ) );		
 			
 			
 			// FINAL REPORTING BLOCK

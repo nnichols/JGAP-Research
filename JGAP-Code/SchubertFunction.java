@@ -20,7 +20,7 @@ public class SchubertFunction extends FitnessFunction {
 	
 	// Constructor that builds an instance of k dimensions
 	// each with n bits used to define the dimension
-	public SchubertFunction( int newDimension, int newDomain, boolean coding ){
+	public SchubertFunction( int newDomain, boolean coding ){
 		this.dimension = 2;
 		this.dimensionLength = newDomain;
 		this.isGreyCoded = coding;

@@ -22,7 +22,7 @@ public class CamelFunction extends FitnessFunction {
 	
 	// Constructor that builds an instance of k dimensions
 	// each with n bits used to define the dimension
-	public CamelFunction( int newDimension, int newDomain, boolean coding ){
+	public CamelFunction( int newDomain, boolean coding ){
 		this.dimension = 2;
 		this.dimensionLength = newDomain;
 		this.isGreyCoded = coding;
@@ -82,7 +82,7 @@ public class CamelFunction extends FitnessFunction {
 		double[] xDouble = SupportFunctions.intToDoubleDomain( xVal, xLowerBound, xUpperBound, this.dimensionLength );
 		double[] yDouble = SupportFunctions.intToDoubleDomain( yVal, yLowerBound, yUpperBound, this.dimensionLength );
 		
-		double xPart = (4.0 * Math.pow( xDouble[0], 2 )) + (2.1 * Math.pow( xDouble[0], 4 )) + (Math.pow( xDouble[0], 6 ) / 3.0);
+		double xPart = (4.0 * Math.pow( xDouble[0], 2 )) - (2.1 * Math.pow( xDouble[0], 4 )) + (Math.pow( xDouble[0], 6 ) / 3.0);
 		double yPart = xDouble[0] * yDouble[0] + (4.0 * Math.pow( yDouble[0], 2 )) + (4.0 * Math.pow( yDouble[0], 4 ));
 		
 		double value = xPart + yPart;
