@@ -82,6 +82,8 @@ public class MichaelwiczFunction extends FitnessFunction {
 		double value = (Math.sin( x ) * -1.0) * ( Math.pow( Math.sin( (x * x) / Math.PI ), 20.0));
 		value = value + (Math.sin( y ) * -1.0) * ( Math.pow( Math.sin( (2.0 * y * y) / Math.PI ), 20.0));
 		
-		return value;
+		// Since the minimum is negative, and FitnessFunctions can't return negative values
+		// We add an offset of 10.0 to every evaluation
+		return value + 10.0;
 	}
 }

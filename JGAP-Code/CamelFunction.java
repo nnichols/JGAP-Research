@@ -87,6 +87,8 @@ public class CamelFunction extends FitnessFunction {
 		
 		double value = xPart + yPart;
 		
-		return value;
+		// Since the minimum is negative, and FitnessFunctions can't return negative values
+		// We add an offset of 10.0 to every evaluation
+		return value + 10.0;
 	}
 }
