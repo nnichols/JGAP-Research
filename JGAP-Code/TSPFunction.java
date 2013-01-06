@@ -16,6 +16,7 @@ public class TSPFunction extends FitnessFunction {
 
 	private int cities;
 	private AdjacencyMatrix instance;
+	private static final double PENALTYWEIGHT = 2.0;
 	
 	// Constructor that builds an instance of given a file path
 	public TSPFunction( String filepath ){
@@ -76,7 +77,40 @@ public class TSPFunction extends FitnessFunction {
 	// Genetic sequence must consist of dimension IntegerGenes
 	public double evaluate( IChromosome target ){
 		
-		return 0.0;	
+		// Build an array of the path
+		int[] path = new int[ this.cities + 1 ];
+		
+		// Include 0 as first position to account for circularity of permuttions
+		path[0] = 0;
+
+		// Get the genetic sequence
+		Gene[] tour = target.getGenes();
+
+		// Put the tour into the path array
+		// we use the value + 1 to account for the zero we added earlier
+		for( int i = 0; i < cities; i++ ){
+			IntegerGene currentGene = (IntegerGene) tour[i];
+			path[i + 1] = currentGene.intValue() + 1;
+		}
+
+
+		double fitness = 0.0;
+		
+		// Score our cycle by summing paths
+		// Valid: 0 <= Path weight <= 1
+		// Invlaid: PENALTYWEIGHT
+		for( int i = 0; i < cities + 1; i++ ){
+			double edgeWeight = instance.getWeight( path[i], path[(i + 1) % (cities + 1)] );
+
+			// Check if edge exists
+			if( edgeWeight > 0.0 ){
+				fitness = fitness + edgeWeight;
+			} else {
+				fitness = fitness + PENALTYWEIGHT;
+			}
+		}
+
+		return fitness;	
 
 	}
 }
