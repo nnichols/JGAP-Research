@@ -378,6 +378,7 @@ public class UnitTest{
 			double michaelwicz3 = -0.099931 + 10.0;
 			
 			// Camel Function + results (Evaluated w/ Wolfram Alpha)
+			// Offset added to account for negative fitness scores
 			CamelFunction testCamelFunction = new CamelFunction( 16, false );
 			double camel1 = 194.9 + 10.0;
 			double camel2 = 194.9 + 10.0;
