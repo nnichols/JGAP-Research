@@ -33,6 +33,7 @@ public class TSPFunction extends FitnessFunction {
 			// Read the number of edges
 			int edgeCount = inFile.nextInt();
 
+
 			// Build the AdjacencyMatrix
 			instance = new AdjacencyMatrix( cities );
 
@@ -79,7 +80,7 @@ public class TSPFunction extends FitnessFunction {
 	// Performs the evaluation of a given individual
 	// Genetic sequence must consist of dimension IntegerGenes
 	public double evaluate( IChromosome target ){
-		
+		 
 		// Build an array of the path
 		int[] path = new int[ this.cities + 1 ];
 		
@@ -91,7 +92,7 @@ public class TSPFunction extends FitnessFunction {
 
 		// Put the tour into the path array
 		// we use the value + 1 to account for the zero we added earlier
-		for( int i = 0; i < cities; i++ ){
+		for( int i = 0; i < cities - 1; i++ ){
 			IntegerGene currentGene = (IntegerGene) tour[i];
 			path[i + 1] = currentGene.intValue() + 1;
 		}
@@ -102,7 +103,7 @@ public class TSPFunction extends FitnessFunction {
 		// Score our cycle by summing paths
 		// Valid: 0 <= Path weight <= 1
 		// Invlaid: PENALTYWEIGHT
-		for( int i = 0; i < cities + 1; i++ ){
+		for( int i = 0; i < cities; i++ ){
 			double edgeWeight = instance.getWeight( path[i], path[(i + 1) % (cities + 1)] );
 
 			// Check if edge exists
@@ -112,7 +113,7 @@ public class TSPFunction extends FitnessFunction {
 				fitness = fitness + PENALTYWEIGHT;
 			}
 		}
-
+		
 		return fitness;	
 
 	}

@@ -490,15 +490,15 @@ public class UnitTest{
 
 			// KnapsackFunction + results (Evaluated w/ Google Calculator)
 			KnapsackFunction testKnapsackFunction = new KnapsackFunction( "./Test-Cases/KnapsackTest.txt" );
-			double knapsack1 = (double) 7 - 2.7;
-			double knapsack2 = (double) 7;
-			double knapsack3 = (double) 7 - 4.0 + 2.0;	
+			double knapsack1 = (double) 7;
+			double knapsack2 = (double) 7 - 3.0 + 2.0;
+			double knapsack3 = (double) 7 - 1.6;	
 
 			// NKFunction + results (Evaluated w/ Google Calculator)
 			NKFunction testNKFunction = new NKFunction( "./Test-Cases/NKTest.txt" );
-			double nk1 = 3.5;
-			double nk2 = 5.6;
-			double nk3 = 3.1;
+			double nk1 = (double) 7 - 3.5;
+			double nk2 = (double) 7 - 5.6;
+			double nk3 = (double) 7 - 4.4;
 
 
 			// ---------- TESTING SEGMENT ----------
