@@ -42,6 +42,9 @@ public class NKFunction extends FitnessFunction {
 				values.put( new Integer(nextBitString), new Double(nextValue) ); 
 			}
 
+			// Close Resources
+			inFile.close();
+
 		// Exception handling and exiting
 		} catch ( Exception e ) {
 			System.err.println( "A fatal error occured" );

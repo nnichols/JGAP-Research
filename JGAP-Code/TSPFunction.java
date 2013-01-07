@@ -45,6 +45,9 @@ public class TSPFunction extends FitnessFunction {
 				instance.addEdge( city1, city2, weight );
 			}
 
+			// Close resources
+			inFile.close();
+
 		// Exception handling and exiting
 		} catch ( Exception e ) {
 			System.err.println( "A fatal error occured" );

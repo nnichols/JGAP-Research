@@ -48,6 +48,9 @@ public class KnapsackFunction extends FitnessFunction {
 				benefits[i] = nextBenefit;
 			}
 
+			// Close resources
+			inFile.close();
+
 		// Exception handling and exiting
 		} catch ( Exception e ) {
 			System.err.println( "A fatal error occured" );
