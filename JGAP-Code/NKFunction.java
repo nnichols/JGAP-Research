@@ -34,7 +34,7 @@ public class NKFunction extends FitnessFunction {
 			this.k = inFile.nextInt();
 
 			// Add each evaluation (bitstring, result) in the file
-			for( int i = 0; i < Math.pow( 2.0, (double) k); i++ ){
+			for( int i = 0; i < (int) Math.pow( 2.0, (double) k); i++ ){
 				
 				int nextBitString = inFile.nextInt( 2 );
 				double nextValue = inFile.nextDouble();

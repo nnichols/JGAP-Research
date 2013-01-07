@@ -95,7 +95,7 @@ public class KnapsackFunction extends FitnessFunction {
 
 		// Adjust our score if we surpased the weight limit
 		if( runningWeight > weightLimit ){
-			score = score + 2.0 * ( runningWeight - weightLimit );
+			score = score + PENALTYWEIGHT * ( runningWeight - weightLimit );
 		}
 		
 		return score;

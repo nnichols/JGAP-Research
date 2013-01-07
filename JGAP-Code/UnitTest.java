@@ -217,6 +217,17 @@ public class UnitTest{
 			Gene[] fitnessTest25 = new Gene[ 32 ];
 			Gene[] fitnessTest26 = new Gene[ 32 ];
 			Gene[] fitnessTest27 = new Gene[ 32 ];
+
+			// NP-Complete Fitness Function Genomes
+			Gene[] fitnessTest28 = new Gene[ 4 ];
+			Gene[] fitnessTest29 = new Gene[ 4 ];
+			Gene[] fitnessTest30 = new Gene[ 4 ];
+			Gene[] fitnessTest31 = new Gene[ 7 ];
+			Gene[] fitnessTest32 = new Gene[ 7 ];
+			Gene[] fitnessTest33 = new Gene[ 7 ];
+			Gene[] fitnessTest34 = new Gene[ 7 ];
+			Gene[] fitnessTest35 = new Gene[ 7 ];
+			Gene[] fitnessTest36 = new Gene[ 7 ];
 			
 			// Build an all 0 and an all 1 genome
 			for( int i = 0; i < fitnessTest1.length; i++ ){
@@ -301,7 +312,76 @@ public class UnitTest{
 					}
 				}
 			}
+
+			// TSP Genetic Sequences
+			// Tour 1 (test28) = 0 1 2 3
+			// Tour 2 (test29) = 3 0 1 2
+			// Tour 3 (test30) = 1 3 0 2
+			// Value of 1
+			IntegerGene tspZeroGene = new IntegerGene( defConf );
+			tspZeroGene.setAllele( new Integer( 0 ) );
+
+			IntegerGene tspOneGene = new IntegerGene( defConf );
+			tspOneGene.setAllele( new Integer( 1 ) );
+
+			IntegerGene tspTwoGene = new IntegerGene( defConf );
+			tspTwoGene.setAllele( new Integer( 2 ) );
+
+			IntegerGene tspThreeGene = new IntegerGene( defConf );
+			tspThreeGene.setAllele( new Integer( 3 ) );
 			
+			// Build the tours
+			fitnessTest28[0] = tspZeroGene;
+			fitnessTest28[1] = tspOneGene;
+			fitnessTest28[2] = tspTwoGene;
+			fitnessTest28[3] = tspThreeGene;
+
+			fitnessTest29[0] = tspThreeGene;
+			fitnessTest29[1] = tspZeroGene;
+			fitnessTest29[2] = tspOneGene;
+			fitnessTest29[3] = tspTwoGene;
+
+			fitnessTest30[0] = tspOneGene;
+			fitnessTest30[1] = tspThreeGene;
+			fitnessTest30[2] = tspZeroGene;
+			fitnessTest30[3] = tspTwoGene;
+
+
+			// NK / Knapsack 0000000 / 1111111 sequences
+			for( int i = 0; i < 7; i++ ){
+			
+				BooleanGene trueGene = new BooleanGene( defConf, true );
+				BooleanGene falseGene = new BooleanGene( defConf, false );
+
+				fitnessTest31[i] = falseGene;
+				fitnessTest34[i] = falseGene;
+	
+				fitnessTest32[i] = trueGene;
+				fitnessTest35[i] = trueGene;
+
+			}
+
+			// Build special Knapsack and NK cases
+			BooleanGene npTrueGene = new BooleanGene( defConf, true );
+			BooleanGene npFalseGene = new BooleanGene( defConf, false );
+
+			fitnessTest33[0] = npTrueGene;
+			fitnessTest33[1] = npTrueGene;
+			fitnessTest33[2] = npTrueGene;
+			fitnessTest33[3] = npFalseGene;
+			fitnessTest33[4] = npTrueGene;
+			fitnessTest33[5] = npTrueGene;
+			fitnessTest33[6] = npFalseGene;
+
+			fitnessTest36[0] = npFalseGene;
+			fitnessTest36[1] = npFalseGene;
+			fitnessTest36[2] = npTrueGene;
+			fitnessTest36[3] = npFalseGene;
+			fitnessTest36[4] = npTrueGene;
+			fitnessTest36[5] = npTrueGene;
+			fitnessTest36[6] = npFalseGene;
+
+
 			// Build chromosomes for n-dimensional fitness function testing
 			Chromosome fitnessChrom1 = new Chromosome( defConf, fitnessTest1 );
 			Chromosome fitnessChrom2 = new Chromosome( defConf, fitnessTest2 );
@@ -332,6 +412,17 @@ public class UnitTest{
 			Chromosome fitnessChrom25 = new Chromosome( defConf, fitnessTest25 );
 			Chromosome fitnessChrom26 = new Chromosome( defConf, fitnessTest26 );
 			Chromosome fitnessChrom27 = new Chromosome( defConf, fitnessTest27 );
+
+			// NP-Complete fitness function chromosomes
+			Chromosome fitnessChrom28 = new Chromosome( defConf, fitnessTest28 );
+			Chromosome fitnessChrom29 = new Chromosome( defConf, fitnessTest29 );
+			Chromosome fitnessChrom30 = new Chromosome( defConf, fitnessTest30 );
+			Chromosome fitnessChrom31 = new Chromosome( defConf, fitnessTest31 );
+			Chromosome fitnessChrom32 = new Chromosome( defConf, fitnessTest32 );
+			Chromosome fitnessChrom33 = new Chromosome( defConf, fitnessTest33 );
+			Chromosome fitnessChrom34 = new Chromosome( defConf, fitnessTest34 );
+			Chromosome fitnessChrom35 = new Chromosome( defConf, fitnessTest35 );
+			Chromosome fitnessChrom36 = new Chromosome( defConf, fitnessTest36 );
 			
 			// DeJong Sphere Function + results (Evaluated w/ Wolfram Alpha)
 			DeJongSphereFunction testDeJongSphere = new DeJongSphereFunction( 4, 16, false );
@@ -389,9 +480,27 @@ public class UnitTest{
 			double schubert1 = 0.282154;
 			double schubert2 = 0.136144;
 			double schubert3 = 34.533745;
-			
-						
-		
+
+			// --- NP-Complete Cases --- \\
+			// TSPFunction + results (Evaluated w/ Google Calculator)
+			TSPFunction testTSPFunction = new TSPFunction( "./Test-Cases/TSPTest.txt" );
+			double tsp1 = 1.5;
+			double tsp2 = 3.6;
+			double tsp3 = 8.6;
+
+			// KnapsackFunction + results (Evaluated w/ Google Calculator)
+			KnapsackFunction testKnapsackFunction = new KnapsackFunction( "./Test-Cases/KnapsackTest.txt" );
+			double knapsack1 = (double) 7 - 2.7;
+			double knapsack2 = (double) 7;
+			double knapsack3 = (double) 7 - 4.0 + 2.0;	
+
+			// NKFunction + results (Evaluated w/ Google Calculator)
+			NKFunction testNKFunction = new NKFunction( "./Test-Cases/NKTest.txt" );
+			double nk1 = 3.5;
+			double nk2 = 5.6;
+			double nk3 = 3.1;
+
+
 			// ---------- TESTING SEGMENT ----------
 			// BLOCK FOR BINARY TO INTEGER CONVERSION
 			// MAXIMUM SEQUENCE LENTH IS 31 PLACES
@@ -521,7 +630,31 @@ public class UnitTest{
 			System.out.println("");
 			printTestStatus( testFitnessFunction( testSchubertFunction.evaluate( fitnessChrom25 ), schubert1 ) );
 			printTestStatus( testFitnessFunction( testSchubertFunction.evaluate( fitnessChrom26 ), schubert2 ) );
-			printTestStatus( testFitnessFunction( testSchubertFunction.evaluate( fitnessChrom27 ), schubert3 ) );		
+			printTestStatus( testFitnessFunction( testSchubertFunction.evaluate( fitnessChrom27 ), schubert3 ) );
+
+
+			// BLOCK FOR TSP FUNCTION
+			System.out.println( "Traveling Salesman Problem Function Test" );
+			System.out.println("");
+			printTestStatus( testFitnessFunction( testTSPFunction.evaluate( fitnessChrom28 ), tsp1 ) );
+			printTestStatus( testFitnessFunction( testTSPFunction.evaluate( fitnessChrom29 ), tsp2 ) );
+			printTestStatus( testFitnessFunction( testTSPFunction.evaluate( fitnessChrom30 ), tsp3 ) );		
+			
+
+			// BLOCK FOR Knapsack FUNCTION
+			System.out.println( "Knapsack Problem Function Test" );
+			System.out.println("");
+			printTestStatus( testFitnessFunction( testKnapsackFunction.evaluate( fitnessChrom31 ), knapsack1 ) );
+			printTestStatus( testFitnessFunction( testKnapsackFunction.evaluate( fitnessChrom32 ), knapsack2 ) );
+			printTestStatus( testFitnessFunction( testKnapsackFunction.evaluate( fitnessChrom33 ), knapsack3 ) );		
+			
+
+			// BLOCK FOR NK-Landscape FUNCTION
+			System.out.println( "NK-Landscape Function Test" );
+			System.out.println("");
+			printTestStatus( testFitnessFunction( testNKFunction.evaluate( fitnessChrom34 ), nk1 ) );
+			printTestStatus( testFitnessFunction( testNKFunction.evaluate( fitnessChrom35 ), nk2 ) );
+			printTestStatus( testFitnessFunction( testNKFunction.evaluate( fitnessChrom36 ), nk3 ) );		
 			
 			
 			// FINAL REPORTING BLOCK
