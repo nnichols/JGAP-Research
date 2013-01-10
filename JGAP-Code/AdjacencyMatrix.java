@@ -32,11 +32,42 @@ public class AdjacencyMatrix {
 	public void addEdge( int city1, int city2, double pathWeight ){
 		this.weights[city1][city2] = pathWeight;
 		this.weights[city2][city1] = pathWeight;
+		edges++;
 	}
 
 	
 	// Get the weight of a given edge
 	public double getWeight( int city1, int city2 ){
 		return weights[city1][city2];
+	}
+	
+	// Get the number of edges
+	public int getEdges(){
+		return edges;
+	}
+	
+	// Check if an edge between two given nodes exists
+	public boolean hasEdge( int city1, int city2 ){
+	
+		if( weights[city1][city2] != -1 ){
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	// Find the degree of a node
+	public int getDegree( int target ){
+		
+		int degree = 0;
+		
+		for( int i = 0; i < cities; i++ ){
+			if( weights[target][i] != -1.0 ){
+				degree++;
+			}
+		}
+		
+		return degree;
 	}
 }
