@@ -278,7 +278,9 @@ public class MCP{
 		// Problem characteristics
 		// 1 - 6: int dimensions, int dimensionLength
 		// 7 - 9: int dimensionLength
-		// 10 - 11: String filePath
+		// 10 - 11: String filePath, int dimension
+		// Extra parm for NP-Complete problems needed for generating appropriate
+		// sample chromosomes
 		if( problemNumber >= 1 && problemNumber <= 6 ){
 			
 			dimensions = Integer.parseInt( arguments[5] );
@@ -291,6 +293,7 @@ public class MCP{
 		} else if(  problemNumber >= 10 && problemNumber <= 12 ){
 			
 			filePath = arguments[5];
+			dimensions = Integer.parseInt( arguments[6] );
 			
 		} else {
 			
