@@ -501,6 +501,32 @@ public class UnitTest{
 			double nk3 = (double) 7 - 4.4;
 
 
+			// Configuration and Operators for genetics testing
+			Configuration xOverConfig = new Configuration();
+			xOverConfig.setEventManager( new EventManager() );
+
+			Configuration fbScanConfig = new Configuration();
+			fbScanConfig.setEventManager( new EventManager() );
+
+			Configuration esoConfig = new Configuration();
+			esoConfig.setEventManager( new EventManager() );
+
+			DiagonalizationOperator diag = new DiagonalizationOperator( xOverConfig );
+			diag.setPermutation( false );
+			diag.setPercent( 1.0 );
+			diag.setParents( 4 );
+
+			FitnessBasedScanningOperator fbscan = new FitnessBasedScanningOperator( fbScanConfig );
+			fbscan.setPermutation( false );
+			fbscan.setPercent( 1.0 );
+			fbscan.setParents( 4 );
+
+			ElitistSchemaOverlayOperator eso = new ElitistSchemaOverlayOperator( esoConfig );
+			eso.setPermutation( false );
+			eso.setPercent( 1.0 );
+			eso.setParents( 2 );
+
+
 			// ---------- TESTING SEGMENT ----------
 			// BLOCK FOR BINARY TO INTEGER CONVERSION
 			// MAXIMUM SEQUENCE LENTH IS 31 PLACES

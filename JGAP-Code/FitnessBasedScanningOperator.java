@@ -63,7 +63,7 @@ public class FitnessBasedScanningOperator extends BaseGeneticOperator implements
 		// Get the current random generator
 		RandomGenerator generator = getConfiguration().getRandomGenerator();
 		
-		// Perform each diagonalization
+		// Perform each operation
 		for( int i = 0; i < populationSize; i++ ){
 			
 			// Grab our parent chromosomes and
@@ -102,13 +102,13 @@ public class FitnessBasedScanningOperator extends BaseGeneticOperator implements
 		
 			while( fitnessIterator.hasNext() ){
 			
-			// Get the next parent
-			IChromosome nextParent = fitnessIterator.next();
+				// Get the next parent
+				IChromosome nextParent = fitnessIterator.next();
 			
-			// Update the total fitness
-			totalFitness += nextParent.getFitnessValue();
+				// Update the total fitness
+				totalFitness += nextParent.getFitnessValue();
 			
-		}
+			}
 		
 			// Build the roulette wheel
 			Iterator<IChromosome> rouletteIterator = parentList.iterator();
@@ -116,24 +116,26 @@ public class FitnessBasedScanningOperator extends BaseGeneticOperator implements
 		
 			while( rouletteIterator.hasNext() ){
 			
-			// Get the next parent
-			IChromosome nextParent = rouletteIterator.next();
+				// Get the next parent
+				IChromosome nextParent = rouletteIterator.next();
 			
-			// Update the next cell with respect to the previous one
-			if( index > 0 ){
-				rouletteWheel[ index ] = rouletteWheel[ index - 1 ] + ( nextParent.getFitnessValue() / totalFitness );
-			} else {
-				rouletteWheel[ index ] = nextParent.getFitnessValue() / totalFitness;
-			}
+				// Update the next cell with respect to the previous one
+				if( index > 0 ){
+					rouletteWheel[ index ] = rouletteWheel[ index - 1 ] + ( nextParent.getFitnessValue() / totalFitness );
+				} else {
+					rouletteWheel[ index ] = nextParent.getFitnessValue() / totalFitness;
+				}
 						  
-			// Update the index
-			index++;
+				// Update the index
+				index++;
 			
-		}
+			}	
 		
-			// Build a new Gene[] to utilize
-			Gene[] child = new Gene[ parentList.get(0).size() ];
-		
+
+
+			// Copy over a Gene[]
+			Gene[] child = parentList.get(0).getGenes();
+	
 			// Iterate through the sequences to build the child
 			for( int i = 0; i < child.length; i++ ){
 		
@@ -160,10 +162,13 @@ public class FitnessBasedScanningOperator extends BaseGeneticOperator implements
 				}
 			
 				// Update the child's value at the current position
-				child[i].setAllele( nextParent.getGene(i).getAllele() );
-			
+				Gene newVal = nextParent.getGene(i);
+
+				child[i].setAllele( newVal.getAllele() );
+			 
 			}
 		
+
 			// Add the new individual to the population
 			IChromosome newIndividual = parentList.get( 0 );
 			newIndividual.setGenes( child );
@@ -171,6 +176,7 @@ public class FitnessBasedScanningOperator extends BaseGeneticOperator implements
 			
 		} catch ( Exception e ) {
 			System.err.println( e.getMessage() );
+			System.exit(0);
 		}
 				
 	}
