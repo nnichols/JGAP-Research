@@ -28,6 +28,7 @@ public class GriewankFunction extends FitnessFunction {
 	public GriewankFunction(){
 		this.dimension = 1;
 		this.dimensionLength = 10;
+		this.isGreyCoded = true;
 	}
 	
 	

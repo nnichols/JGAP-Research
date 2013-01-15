@@ -28,6 +28,7 @@ public class SumOfPowersFunction extends FitnessFunction {
 	public SumOfPowersFunction(){
 		this.dimension = 1;
 		this.dimensionLength = 10;
+		this.isGreyCoded = true;
 	}
 	
 	

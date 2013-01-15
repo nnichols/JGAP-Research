@@ -28,6 +28,7 @@ public class RosenbrockFunction extends FitnessFunction {
 	public RosenbrockFunction(){
 		this.dimension = 1;
 		this.dimensionLength = 10;
+		this.isGreyCoded = true;
 	}
 	
 	

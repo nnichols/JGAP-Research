@@ -30,6 +30,7 @@ public class SchubertFunction extends FitnessFunction {
 	public SchubertFunction(){
 		this.dimension = 2;
 		this.dimensionLength = 10;
+		this.isGreyCoded = true;
 	}
 	
 	

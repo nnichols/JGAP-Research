@@ -11,26 +11,26 @@ import org.jgap.impl.*;
 public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements Comparable{
 
 	// The k-value for the ESO 
-	private int kValue;
+	private static int kValue;
 	
 	// An integer switch that determines the method by which k will be changed over time
 	// A value of 0 implies that k is a constant
 	// A value of 1 implies that k will be chosen randomly
 	// A value of 2 implies that k will be chosen by a function of the generations remaining
 	// All other values will imply the same as a value of "0" 
-	private int kMethod;
+	private static int kMethod;
 	
 	// The total number of generations that will be run
-	private int totalGenerations;
+	private static int totalGenerations;
 	
 	// The number of generations remaining
-	private int generationsLeft;
+	private static int generationsLeft;
 	
 	// The percent of the population to which this operator will be applied
-	private double applicationPercent;
+	private static double applicationPercent;
 	
 	// Indicate if this genetic sequence is a permutation or not
-	private boolean isPermutation;
+	private static boolean isPermutation;
 	
 	// Arguementless Constructor that grabs configuration from the Genotype
 	public ElitistSchemaOverlayOperator() throws InvalidConfigurationException {
@@ -71,10 +71,21 @@ public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements
 		this.kValue = newK;
 	}
 	
+	public void setMethod( int newMethod ){
+		this.kMethod = newMethod;
+	}
+	
+	public void setGenerations( int genCount ){
+		this.generationsLeft = genCount;
+	}
+	
 
 	// Build and apply the ESO
 	public void operate( final Population population, final List candidateChromosomes ) {
 
+		// Udpate the value of k
+		this.updateK( population );
+		
 		// setGenes can throw exception, so we'll catch it if we can
 		try{
 		

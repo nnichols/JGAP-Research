@@ -32,6 +32,7 @@ public class CamelFunction extends FitnessFunction {
 	public CamelFunction(){
 		this.dimension = 2;
 		this.dimensionLength = 10;
+		this.isGreyCoded = true;
 	}
 	
 	

@@ -28,6 +28,7 @@ public class RastriginFunction extends FitnessFunction {
 	public RastriginFunction(){
 		this.dimension = 1;
 		this.dimensionLength = 10;
+		this.isGreyCoded = true;
 	}
 	
 	

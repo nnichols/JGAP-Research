@@ -27,7 +27,8 @@ public class DeJongEllipsoidFunction extends FitnessFunction {
 	// Default constructor
 	public DeJongEllipsoidFunction(){
 		this.dimension = 1;
-		this.dimensionLength = 10;
+		this.dimensionLength = 10;		
+		this.isGreyCoded = true;
 	}
 	
 	

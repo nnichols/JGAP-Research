@@ -30,6 +30,7 @@ public class MichaelwiczFunction extends FitnessFunction {
 	public MichaelwiczFunction(){
 		this.dimension = 2;
 		this.dimensionLength = 10;
+		this.isGreyCoded = true;
 	}
 	
 	

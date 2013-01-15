@@ -37,6 +37,8 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 	
 	// Set up the Diagonalization operator with some defaults
 	// We automatically choose to use traditional crossover
+	//
+	// 70% Crossover rate consistent with Eiben
 	protected void initialize(){
 		arity = 2;
 		diagonalizationPercent = 0.7;
