@@ -13,7 +13,7 @@ import org.jgap.impl.*;
 import java.io.*;
 import java.util.Scanner;
 
-public class KnapsackFunction extends FitnessFunction {
+public class KnapsackFunction extends FitnessFunction implements Reportable{
 
 	private int items;
 	private double weightLimit;
@@ -99,5 +99,10 @@ public class KnapsackFunction extends FitnessFunction {
 		}
 		
 		return score;
+	}
+	
+	// Report on a Chromosomes success
+	public void report( IChromosome target ){
+		System.out.println( evaluate( target ) );
 	}
 }

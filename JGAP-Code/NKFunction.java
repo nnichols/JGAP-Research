@@ -10,7 +10,7 @@ import org.jgap.impl.*;
 import java.io.*;
 import java.util.*;
 
-public class NKFunction extends FitnessFunction {
+public class NKFunction extends FitnessFunction implements Reportable{
 
 	private int n,k;
 	private HashMap<Integer, Double> values; 
@@ -105,5 +105,10 @@ public class NKFunction extends FitnessFunction {
 		}
 		
 		return score;
+	}
+	
+	// Report on a Chromosomes success
+	public void report( IChromosome target ){
+		System.out.println( evaluate( target ) );
 	}
 }

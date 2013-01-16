@@ -10,7 +10,7 @@
 import org.jgap.*;
 import org.jgap.impl.*;
 
-public class DeJongEllipsoidFunction extends FitnessFunction {
+public class DeJongEllipsoidFunction extends FitnessFunction implements Reportable{
 
 	private int dimension, dimensionLength;
 	private boolean isGreyCoded;
@@ -89,5 +89,10 @@ public class DeJongEllipsoidFunction extends FitnessFunction {
 		}
 		
 		return runningSum;
+	}
+
+	// Report on a Chromosomes success
+	public void report( IChromosome target ){
+		System.out.println( evaluate( target ) );
 	}
 }

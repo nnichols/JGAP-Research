@@ -107,25 +107,7 @@ public class MCP{
 		FitnessFunction currentProblem = getProblem( args, config );
 		config.setFitnessFunction( currentProblem );
 		
-		/* To get the random initial population set up, we have to build
-		 * a sample Chromosome and give that to the Configuration. 
-		 * 
-		 * The sample Chromosome needs a Gene[] to know how we
-		 * want to split our genetic sequence up, and what types
-		 * of genes will be used.
-		 */
-		Gene[] sampleSequence = new Gene[ 4 ];
-		 
-		sampleSequence[0] = new IntegerGene( config, 0, 8 );  // Quarters
- 		sampleSequence[1] = new IntegerGene( config, 0, 8 );  // Dimes
- 		sampleSequence[2] = new IntegerGene( config, 0, 8 );  // Nickels
- 		sampleSequence[3] = new IntegerGene( config, 0, 8 );  // Pennies
- 		
- 		Chromosome sampleChromosome = new Chromosome( config, sampleSequence );
- 		
- 		config.setSampleChromosome( sampleChromosome );
- 		
-		
+
 		// Now we build a Genotype, which takes our sample Chromosome in the
 		// Configuration and builds a full, randomized population of the indicated size
 		Genotype population = Genotype.randomInitialGenotype( config );
@@ -153,38 +135,16 @@ public class MCP{
 		
 		
 		// Report runtime values
-		report(fittest, currentProblem, endTime - startTime);
+		reportResult(fittest, (Reportable) currentProblem, endTime - startTime);
 	}
 	
 	
 	// Output information about the run
-	public static void report( IChromosome fittest, FitnessFunction problem, long runTime ){
+	public static void reportResult( IChromosome fittest, Reportable problem, long runTime ){
 		
-		System.out.println( "The best solution contained the following: " );
-
-		System.out.println(
-  			  MinimizingMakeChangeFitnessFunction.getNumberOfCoinsAtGene(
-  			      fittest, 0 ) + " quarters." );
-
-			System.out.println(
-			    MinimizingMakeChangeFitnessFunction.getNumberOfCoinsAtGene(
-			        fittest, 1 ) + " dimes." );
-
-			System.out.println(
-			    MinimizingMakeChangeFitnessFunction.getNumberOfCoinsAtGene(
-			        fittest, 2 ) + " nickels." );
-
-			System.out.println(
-			    MinimizingMakeChangeFitnessFunction.getNumberOfCoinsAtGene(
-			        fittest, 3 ) + " pennies." );
-
-			System.out.println( "For a total of " +
-			    MinimizingMakeChangeFitnessFunction.amountOfChange(
-  			      fittest ) + " cents in " +
- 			   MinimizingMakeChangeFitnessFunction.getTotalNumberOfCoins(
-  			      fittest ) + " coins." );
+		problem.report( fittest );
   			      
-  			System.out.println( "Runtime in Milliseconds: " + runTime );
+  		System.out.println( "Runtime in Milliseconds: " + runTime );
 	}
 	
 	
@@ -288,12 +248,14 @@ public class MCP{
 			
 		} else if( problemNumber >= 7 && problemNumber <= 9 ){
 			
+			dimensions = 2;
 			dimensionLength = Integer.parseInt( arguments[5] );
 			
 		} else if(  problemNumber >= 10 && problemNumber <= 12 ){
 			
 			filePath = arguments[5];
 			dimensions = Integer.parseInt( arguments[6] );
+			dimensionLength = 1;
 			
 		} else {
 			
@@ -304,6 +266,7 @@ public class MCP{
 		
 		// Build the necessary fitness function for the problem
 		FitnessFunction currentProblem = null;
+		boolean isBooleanChrom = true;
 		
 		switch( problemNumber ){
 			case 1:
@@ -348,6 +311,7 @@ public class MCP{
 				
 			case 11:
 				currentProblem = new TSPFunction( filePath );
+				isBooleanChrom = false;
 				break;
 				
 			case 12:
@@ -359,7 +323,47 @@ public class MCP{
 				System.exit(0);
 				
 		}
+
+		// Build the matching Chromosome for our problem
+		buildSampleChromosome( config, isBooleanChrom );
 		
 		return currentProblem;
 	}
+
+
+	// Build a sample genome so the configuration can produce a random
+	// population for evolution for both Integer and Boolean Genomes
+	public static void buildSampleChromosome( Configuration config, boolean areBooleans ){
+
+		try{
+
+			int size = dimensions * dimensionLength;
+		  
+			 /* The sample Chromosome needs a Gene[] to know how we
+			  * want to split our genetic sequence up, and what types
+			  * of genes will be used.
+			  */
+			Gene[] sampleSequence = new Gene[ size ];
+			
+			// Put the needed sample gene at every point in the sequence 
+			for( int i = 0; i < size; i++ ){
+				if( areBooleans ){
+					sampleSequence[i] = new BooleanGene( config ); 
+				} else {
+					sampleSequence[i] = new IntegerGene( config, 0, size );
+				}
+			}
+ 		
+ 			Chromosome sampleChromosome = new Chromosome( config, sampleSequence );
+ 		
+ 			config.setSampleChromosome( sampleChromosome );
+
+		} catch( Exception e ){
+			System.err.println("Invalid argument");
+			System.exit(0);
+		}
+ 		
+	}
+
+
 }

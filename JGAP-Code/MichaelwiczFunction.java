@@ -11,7 +11,7 @@
 import org.jgap.*;
 import org.jgap.impl.*;
 
-public class MichaelwiczFunction extends FitnessFunction {
+public class MichaelwiczFunction extends FitnessFunction implements Reportable{
 
 	private int dimension, dimensionLength;
 	private boolean isGreyCoded;
@@ -86,5 +86,10 @@ public class MichaelwiczFunction extends FitnessFunction {
 		// Since the minimum is negative, and FitnessFunctions can't return negative values
 		// We add an offset of 10.0 to every evaluation
 		return value + 10.0;
+	}
+	
+	// Report on a Chromosomes success
+	public void report( IChromosome target ){
+		System.out.println( evaluate( target ) );
 	}
 }

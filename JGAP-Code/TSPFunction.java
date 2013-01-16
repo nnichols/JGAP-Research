@@ -12,7 +12,7 @@ import org.jgap.impl.*;
 import java.io.*;
 import java.util.Scanner;
 
-public class TSPFunction extends FitnessFunction {
+public class TSPFunction extends FitnessFunction implements Reportable{
 
 	private int cities;
 	private AdjacencyMatrix instance;
@@ -116,5 +116,10 @@ public class TSPFunction extends FitnessFunction {
 		
 		return fitness;	
 
+	}
+	
+	// Report on a Chromosomes success
+	public void report( IChromosome target ){
+		System.out.println( evaluate( target ) );
 	}
 }

@@ -10,7 +10,7 @@
 import org.jgap.*;
 import org.jgap.impl.*;
 
-public class GriewankFunction extends FitnessFunction {
+public class GriewankFunction extends FitnessFunction implements Reportable{
 
 	private int dimension, dimensionLength;
 	private boolean isGreyCoded;
@@ -102,5 +102,10 @@ public class GriewankFunction extends FitnessFunction {
 		double value = (runningSum / 4000) - runningProduct + 1;
 		
 		return value;
+	}
+	
+	// Report on a Chromosomes success
+	public void report( IChromosome target ){
+		System.out.println( evaluate( target ) );
 	}
 }
