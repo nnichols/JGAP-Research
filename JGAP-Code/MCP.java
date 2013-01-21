@@ -121,7 +121,7 @@ public class MCP{
 		 * threshold. We will time this to see how expensive evaluating
 		 * each operator is over the entire simulation.
 		 *
-		 * NOTE: Fitness values are larger for better solutions
+		 * NOTE: Fitness values are smaller for better solutions
 		 */
 		long startTime = System.currentTimeMillis();
 		
@@ -178,7 +178,7 @@ public class MCP{
 		
 		// Set up low-positive evaluation on fitness functions
 		// (Minimization tasks)
-		config.setFitnessEvaluator( new DefaultFitnessEvaluator() );
+		config.setFitnessEvaluator( new DeltaFitnessEvaluator() );
 		
 		//Build the Chromosome Pool to store the population
 		config.setChromosomePool( new ChromosomePool() );
