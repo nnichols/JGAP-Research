@@ -29,12 +29,11 @@ public class TSPGenerator{
 		
 		// Add the number of cities
 		printQueue.add( cityStr );
-		
+				
 		// Build an ArrayList to keep track of the weights for bounds checking
 		ArrayList<Double> weights = new ArrayList<Double>();
 		
-		// Iterate through every city
-		
+		// Iterate through every city		
 		for( int i = 0; i < cityCount; i++ ){
 			
 			// Make sure we only stop once we hit degree(i) > n / 2
