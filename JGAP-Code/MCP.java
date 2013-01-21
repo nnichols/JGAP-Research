@@ -4,6 +4,8 @@
  *
  * 10/16 - Set up to test default settings and get a working configuration
  *         Using all defaults for a provided problem/function
+ *
+ * 1/20 - Works for all currently defined problems
  */
  
 import org.jgap.*;

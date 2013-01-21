@@ -94,7 +94,7 @@ public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements
 			List<IChromosome> fittestIndividuals = (List<IChromosome>) population.determineFittestChromosomes( kValue );
 		
 			// Build the ESO
-			Gene[] overlay = buildOverlay( fittestIndividuals );
+			Object[] overlay = buildOverlay( fittestIndividuals );
 		
 			// Iterate through the first applicationPercent of the population
 			int applicationCount = (int) ((double) population.size() * applicationPercent);
@@ -104,7 +104,7 @@ public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements
 				// Grab the current applicand
 				// Note that we use the candidateChromosomes
 				// This allows us to modify the preprocessed individuals
-				IChromosome nextParent = (IChromosome) candidateChromosomes.remove( i );
+				IChromosome nextParent = population.getChromosome( i );
 			
 				// Grab its genetic sequence
 				Gene[] currentSequence = nextParent.getGenes();
@@ -131,7 +131,7 @@ public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements
 			}
 			
 		} catch(Exception e) {
-			System.err.println( e.getMessage() );
+		
 		}
 		
 	}
@@ -182,12 +182,12 @@ public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements
 	
 	
 	// Build an genetic overlay from the List of the fittest individuals
-	private Gene[] buildOverlay( List<IChromosome> fittestIndividuals ){
+	private Object[] buildOverlay( List<IChromosome> fittestIndividuals ){
 		
 		// Pull an example Chromosome out
 		IChromosome sample = fittestIndividuals.get(0);
 		
-		Gene[] runningOverlay = new Gene[ sample.size() ];
+		Object[] runningOverlay = new Object[ sample.size() ];
 		
 		// Flood the array with nulls
 		for( int i = 0; i < runningOverlay.length; i++ ){
@@ -217,7 +217,7 @@ public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements
 				
 				// If these values are not equal, exit the loop and print a null
 				// in this slot
-				if( currentValue.compareTo( firstValue ) != 0 ){
+				if( !currentValue.equals( firstValue ) ){
 					noMismatches = false;
 				}
 				
@@ -225,7 +225,7 @@ public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements
 			
 			// Add the matched gene to the array if no mismatches occured
 			if( noMismatches ){
-				runningOverlay[i] = firstValue;
+				runningOverlay[i] = firstValue.getAllele();
 			}
 			
 		}
