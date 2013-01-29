@@ -127,26 +127,27 @@ public class MCP{
 		
 		for( int i = 0; i < GENERATIONS; i++ ){
 			population.evolve();
+
+			// We'll grab the fittest individual to report upon
+			IChromosome fittest = population.getFittestChromosome();
+			reportResult(fittest, (Reportable) currentProblem);
 		}
+
 		
-		long endTime = System.currentTimeMillis();
+		long endTime = System.currentTimeMillis();		
+
+		// Report runtime
+		long runTime = endTime - startTime;
+		System.out.println( "Runtime in Milliseconds: " + runTime );
 		
-		
-		// We'll grab the fittest individual to report upon
-		IChromosome fittest = population.getFittestChromosome();
-		
-		
-		// Report runtime values
-		reportResult(fittest, (Reportable) currentProblem, endTime - startTime);
 	}
 	
 	
 	// Output information about the run
-	public static void reportResult( IChromosome fittest, Reportable problem, long runTime ){
+	public static void reportResult( IChromosome fittest, Reportable problem ){
 		
 		problem.report( fittest );
   			      
-  		System.out.println( "Runtime in Milliseconds: " + runTime );
 	}
 	
 	
