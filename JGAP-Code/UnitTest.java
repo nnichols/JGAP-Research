@@ -502,29 +502,67 @@ public class UnitTest{
 
 
 			// Configuration and Operators for genetics testing
-			Configuration xOverConfig = new Configuration();
-			xOverConfig.setEventManager( new EventManager() );
+			// Pulled from MCP.java, which borrows from example JGAP code
+			Configuration[] operatorConfigurations = new Configuration[3];
 
-			Configuration fbScanConfig = new Configuration();
-			fbScanConfig.setEventManager( new EventManager() );
+			operatorConfigurations[0] = new Configuration();
+			operatorConfigurations[1] = new Configuration();
+			operatorConfigurations[2] = new Configuration();
 
-			Configuration esoConfig = new Configuration();
-			esoConfig.setEventManager( new EventManager() );
+			// Build a sample genetic sequence
+			Gene[] evoSample = new Gene[ 10 ];
+			for( int i = 0; i < 10;i++ ){
+				evoSample[i] = new BooleanGene( operatorConfigurations[0] );
+				evoSample[i] = new BooleanGene( operatorConfigurations[1] );
+				evoSample[i] = new BooleanGene( operatorConfigurations[2] );
+			}
 
-			DiagonalizationOperator diag = new DiagonalizationOperator( xOverConfig );
+			for( int i = 0; i < 3; i ++ ){
+				
+				Configuration opConfig = operatorConfigurations[ i ];
+
+				Chromosome sChrom = new Chromosome( opConfig, evoSample );
+				opConfig.setSampleChromosome( sChrom );
+
+				DeJongSphereFunction DJSF = new DeJongSphereFunction( 1, 10, false );
+				opConfig.setFitnessFunction( DJSF );
+				
+				opConfig.setEventManager( new EventManager() );
+				opConfig.setPopulationSize( 4 );
+				opConfig.setBreeder( new GABreeder() );
+				opConfig.setRandomGenerator( new StockRandomGenerator() );
+				opConfig.setPreservFittestIndividual( true );
+				opConfig.setKeepPopulationSizeConstant( false);
+				opConfig.setMinimumPopSizePercent( 0 );
+				opConfig.setFitnessEvaluator( new DeltaFitnessEvaluator() );
+				opConfig.setChromosomePool( new ChromosomePool() );
+				opConfig.addNaturalSelector( new StandardPostSelector(), false );
+			}
+			
+
+			DiagonalizationOperator diag = new DiagonalizationOperator( operatorConfigurations[0] );
 			diag.setPermutation( false );
 			diag.setPercent( 1.0 );
 			diag.setParents( 4 );
+			operatorConfigurations[0].addGeneticOperator( diag );
 
-			FitnessBasedScanningOperator fbscan = new FitnessBasedScanningOperator( fbScanConfig );
+			FitnessBasedScanningOperator fbscan = new FitnessBasedScanningOperator( operatorConfigurations[1] );
 			fbscan.setPermutation( false );
 			fbscan.setPercent( 1.0 );
 			fbscan.setParents( 4 );
+			operatorConfigurations[1].addGeneticOperator( fbscan );
 
-			ElitistSchemaOverlayOperator eso = new ElitistSchemaOverlayOperator( esoConfig );
+			ElitistSchemaOverlayOperator eso = new ElitistSchemaOverlayOperator( operatorConfigurations[2] );
 			eso.setPermutation( false );
 			eso.setPercent( 1.0 );
-			eso.setParents( 2 );
+			eso.setParents( 1 );
+			eso.setMethod( 10 );
+			operatorConfigurations[2].addGeneticOperator( eso );
+
+			// Build a genotype to run 1 generation of each operator
+			Genotype pop1 = Genotype.randomInitialGenotype( operatorConfigurations[0] );
+			Genotype pop2 = Genotype.randomInitialGenotype( operatorConfigurations[1] );
+			Genotype pop3 = Genotype.randomInitialGenotype( operatorConfigurations[2] );
 
 
 			// ---------- TESTING SEGMENT ----------
@@ -680,7 +718,30 @@ public class UnitTest{
 			System.out.println("");
 			printTestStatus( testFitnessFunction( testNKFunction.evaluate( fitnessChrom34 ), nk1 ) );
 			printTestStatus( testFitnessFunction( testNKFunction.evaluate( fitnessChrom35 ), nk2 ) );
-			printTestStatus( testFitnessFunction( testNKFunction.evaluate( fitnessChrom36 ), nk3 ) );		
+			printTestStatus( testFitnessFunction( testNKFunction.evaluate( fitnessChrom36 ), nk3 ) );
+
+
+			// BLOCK FOR Genetic Operators
+			System.out.println( "Diagonalization Test" );
+			System.out.println("");		
+			pop1.evolve();
+			printPop( pop1 );
+			pop1.evolve();
+			printPop( pop1 );
+
+			System.out.println( "Fitness-Based Scanning Test" );
+			System.out.println("");		
+			pop2.evolve();
+			printPop( pop2 );
+			pop2.evolve();
+			printPop( pop2 );
+
+			System.out.println( "Elitist Schema Overlay Test" );
+			System.out.println("");		
+			pop3.evolve();
+			printPop( pop3 );
+			pop3.evolve();
+			printPop( pop3 );
 			
 			
 			// FINAL REPORTING BLOCK
@@ -993,5 +1054,21 @@ public class UnitTest{
 		}
 
 	}
-	
+
+	// Print out every chromosome in a population
+	public static void printPop( Genotype geno ){
+		
+		Population pop = geno.getPopulation();
+		List<IChromosome> chromList = pop.getChromosomes();
+
+		for( IChromosome chrom: chromList ){
+			Gene[] sequence = chrom.getGenes();
+
+			for( int i = 0; i < sequence.length; i++ ){
+				System.out.print( sequence[i].toString() + " " );
+			}
+			
+			System.out.println("");
+		}	
+	}
 }
