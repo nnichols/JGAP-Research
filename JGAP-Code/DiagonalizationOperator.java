@@ -41,7 +41,7 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 	// 70% Crossover rate consistent with Eiben
 	protected void initialize(){
 		arity = 2;
-		diagonalizationPercent = 0.7;
+		diagonalizationPercent = 0.55;
 		isPermutation = false;
 	}
 	
@@ -85,17 +85,17 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 				
 			}
 			
-			doDiagonalization( parents, candidateChromosomes );
+			doDiagonalization( parents, candidateChromosomes, population.getConfiguration() );
 		}
 	
 	}
 	
 	// Actually perform the diagonalization
 	// The swapping loci will be located every ChromosomeLength / arity alleles
-	protected void doDiagonalization( ArrayList<IChromosome> parentList, final List candidateChromosomes ){
+	protected void doDiagonalization( ArrayList<IChromosome> parentList, final List candidateChromosomes, Configuration config ){
 	
-		ArrayList<Gene[]> parents = new ArrayList<Gene[]>();
 		
+		ArrayList<Gene[]> parents = new ArrayList<Gene[]>();		
 		
 		// Add the values to the parent array
 		for( int l = 0; l < parentList.size(); l++ ) {
@@ -123,37 +123,40 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 			// genetic sequences
 			if( offset > 0 ){
 			
-				Gene[] values = new Gene[ parents.size() ];
+				Object[] values = new Object[ parents.size() ];
 			
 				// Iterate through the parents to get the genes
 				for( int l = 0; l < parents.size(); l++ ){
 			
 					Gene[] currentValues = parents.get( l );
-					values[l] = currentValues[ k ];
+					values[l] = currentValues[ k ].getAllele();
 				
 				}
 			
 				// Push the values to the new parents
 				for( int l = 0; l < parents.size(); l++ ){
 			
-					Gene[] currentParent = parents.get( l );
-				
-					// Makes sure we wrap around if the swapping depth
-					// is greater than the number of parents
-					Gene newVal = values[ ( (l + offset) % parents.size() ) ] ;
-				
-					currentParent[ k ].setAllele( newVal.getAllele() );
-											
-				
+					try{
+						
+						IChromosome modParent = parentList.get( l );
+						Gene[] currentParent = modParent.getGenes();
+						
+						// Get the value to be moved
+						Object value =  values[(l + offset) % parents.size()];
+						
+						currentParent[ k ].setAllele( value );
+						modParent.setGenes( currentParent );
+						
+					} catch( Exception e ){
+						System.err.println( e.getMessage() );
+					}
 				}
-			
 			}
-			
 		}
+		
 		
 		// Iterate through the new Chromosomes and add them to the population
 		Iterator<IChromosome> parentIterator = parentList.iterator();
-		
 		while( parentIterator.hasNext() ){
 		
 			IChromosome newAddition = parentIterator.next();
@@ -167,7 +170,6 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 			
 		}
 
-		
 	}
 	
 	
