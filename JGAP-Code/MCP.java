@@ -6,6 +6,9 @@
  *         Using all defaults for a provided problem/function
  *
  * 1/20 - Works for all currently defined problems
+ *
+ * 2/2 - Testing each genetic operator will not be possible from a single class file
+ *       This will be broken up into separate three files, one for each operator
  */
  
 import org.jgap.*;
@@ -336,7 +339,7 @@ public class MCP{
 
 	// Build a sample genome so the configuration can produce a random
 	// population for evolution for both Integer and Boolean Genomes
-	public static void buildSampleChromosome( Configuration config, boolean areBooleans ){
+	private static void buildSampleChromosome( Configuration config, boolean areBooleans ){
 
 		try{
 
