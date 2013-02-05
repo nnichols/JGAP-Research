@@ -5,8 +5,8 @@
  * All edges are of lenth x, 0.0 < x < 1.0
  * We know a Hamiltonian cycle exists because each node 
  *      will be of at least degree n / 2 (Dirac's Theorem)
- * Files are loacted at Test-Cases/tsp%nc%me%i where %n = cities, %m = edges, %i = instance
- *      e.g Test-Cases/tsp4c5e
+ * Files are loacted at Test-Cases/tsp%nc%me%i.txt where %n = cities, %m = edges, %i = instance
+ *      e.g Test-Cases/tsp4c5e1.txt
  *
  */
 
