@@ -104,7 +104,9 @@ public class TSPFunction extends FitnessFunction implements Reportable{
 		// Valid: 0 <= Path weight <= 1
 		// Invlaid: PENALTYWEIGHT
 		for( int i = 0; i < cities; i++ ){
-			double edgeWeight = instance.getWeight( path[i], path[(i + 1) % (cities + 1)] );
+		
+			int to = ((i + 1) % cities);
+			double edgeWeight = instance.getWeight( path[i], path[to] );
 
 			// Check if edge exists
 			if( edgeWeight > 0.0 ){

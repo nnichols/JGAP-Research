@@ -15,6 +15,7 @@ import org.jgap.*;
 import org.jgap.impl.*;
 import org.jgap.event.*;
 import org.jgap.util.*;
+import java.util.*;
  
 public class MCP{
 
@@ -104,7 +105,17 @@ public class MCP{
 		// Enables dynamic mutation rate, which is roughly 1 / CHROM LENGTH
 		// This matches theoretical results
 		if( mutCheck > 0 ){
-			MutationOperator mOperator = new MutationOperator( config );
+		
+			DefaultMutationRateCalculator calc = new DefaultMutationRateCalculator( config );
+		
+			MutationOperator mOperator;
+			
+			// We need a different Mutator for permutations
+			if( problemNumber != 11 ){
+				mOperator = new MutationOperator( config, calc );
+			} else {
+				mOperator = new SwappingMutationOperator( config, calc );
+			}
 			config.addGeneticOperator( mOperator );
 		}
 
@@ -117,6 +128,21 @@ public class MCP{
 		// Configuration and builds a full, randomized population of the indicated size
 		Genotype population = Genotype.randomInitialGenotype( config );
 		
+		// If we're solving the TSP, we need to make sure our genotype
+		// only consists of permutations
+		if( problemNumber == 11 ){
+			Population popObj = population.getPopulation();
+			List<IChromosome> chromList = popObj.getChromosomes();	
+			ArrayList<IChromosome> fixedChroms = new ArrayList<IChromosome>();
+		
+			// Iterate and fix
+			for( IChromosome next: chromList ){
+				IChromosome result = SupportFunctions.repairPermutation( next, null );
+				fixedChroms.add( result );
+			}	
+			
+			popObj.setChromosomes( fixedChroms );
+		}
 		
 		/* Now we iterate for through our generations, or we can use the
 		 * getFittestChromosome method on our population to check and
@@ -344,6 +370,7 @@ public class MCP{
 		try{
 
 			int size = dimensions * dimensionLength;
+		
 		  
 			 /* The sample Chromosome needs a Gene[] to know how we
 			  * want to split our genetic sequence up, and what types
@@ -356,7 +383,7 @@ public class MCP{
 				if( areBooleans ){
 					sampleSequence[i] = new BooleanGene( config ); 
 				} else {
-					sampleSequence[i] = new IntegerGene( config, 0, size );
+					sampleSequence[i] = new IntegerGene( config, 0, size - 1);
 				}
 			}
  		
