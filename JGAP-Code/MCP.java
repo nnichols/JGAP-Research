@@ -115,6 +115,9 @@ public class MCP{
 				mOperator = new MutationOperator( config, calc );
 			} else {
 				mOperator = new SwappingMutationOperator( config, calc );
+
+				// Let JGAP know we're handling permutation cycles on our own
+				((SwappingMutationOperator) mOperator).setStartOffset( 0 );
 			}
 			config.addGeneticOperator( mOperator );
 		}
@@ -371,6 +374,11 @@ public class MCP{
 
 			int size = dimensions * dimensionLength;
 		
+			// Make sure our genome is of the appropriate length if we're 
+			// solving for a TSP instance
+			if( problemNumber == 11 ){
+				size = size - 1;
+			}
 		  
 			 /* The sample Chromosome needs a Gene[] to know how we
 			  * want to split our genetic sequence up, and what types
@@ -383,7 +391,8 @@ public class MCP{
 				if( areBooleans ){
 					sampleSequence[i] = new BooleanGene( config ); 
 				} else {
-					sampleSequence[i] = new IntegerGene( config, 0, size - 1);
+					// We use (size - 1) since ranges are inclusive 
+					sampleSequence[i] = new IntegerGene( config, 0, size - 1 );
 				}
 			}
  		

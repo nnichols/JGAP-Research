@@ -38,6 +38,8 @@ public class AdjacencyMatrix {
 	
 	// Get the weight of a given edge
 	public double getWeight( int city1, int city2 ){
+		city1 = (city1 == cities) ? (city1 - 1) : city1;
+		city2 = (city2 == cities) ? (city2 - 1) : city2;
 		return weights[city1][city2];
 	}
 	
