@@ -162,7 +162,7 @@ public class MCP{
 
 			// We'll grab the fittest individual to report upon
 			IChromosome fittest = population.getFittestChromosome();
-			reportResult(fittest, (Reportable) currentProblem);
+			reportResult(fittest, population.getPopulation().getChromosomes(), (Reportable) currentProblem);
 		}
 
 		
@@ -176,8 +176,23 @@ public class MCP{
 	
 	
 	// Output information about the run
-	public static void reportResult( IChromosome fittest, Reportable problem ){
+	public static void reportResult( IChromosome fittest, List<IChromosome> genes, Reportable problem ){
+
+		int count = 0;
+		double runningSum = 0.0;
 		
+		// Find the average fitness value
+		for( IChromosome next : genes ){
+			runningSum = runningSum + problem.evaluate( next );
+			count++;
+		}
+
+		runningSum = runningSum / ((double) count);
+
+		// Print average fitness and a space
+		System.out.print(runningSum + " ");
+
+		// Print out the fittest individual, and advance a line		
 		problem.report( fittest );
   			      
 	}
