@@ -160,7 +160,10 @@ public class MCP{
 		for( int i = 0; i < GENERATIONS; i++ ){
 			population.evolve();
 
-			// We'll grab the fittest individual to report upon
+			// We'll grab the fittest individual to report upon and print the generation number
+			int cleanGen = i + 1;
+			System.out.print( cleanGen + " " );
+
 			IChromosome fittest = population.getFittestChromosome();
 			reportResult(fittest, population.getPopulation().getChromosomes(), (Reportable) currentProblem);
 		}
@@ -180,11 +183,23 @@ public class MCP{
 
 		int count = 0;
 		double runningSum = 0.0;
+		double mostFitValue;
+		boolean hasConverged = true;
 		
+		// Find the maximum fitness
+		mostFitValue = problem.evaluate( fittest );
+
 		// Find the average fitness value
 		for( IChromosome next : genes ){
-			runningSum = runningSum + problem.evaluate( next );
+			
+			double temp = problem.evaluate( next );			
+			runningSum = runningSum + temp;
 			count++;
+
+			// Determine if all values to this point have been the same
+			if( temp != mostFitValue){
+				hasConverged = false;
+			}
 		}
 
 		runningSum = runningSum / ((double) count);
@@ -192,8 +207,13 @@ public class MCP{
 		// Print average fitness and a space
 		System.out.print(runningSum + " ");
 
-		// Print out the fittest individual, and advance a line		
-		problem.report( fittest );
+		// Print out the fittest individual, and advance a line	
+		// Also, print if we have converged		
+		if( hasConverged ){	
+			System.out.println( mostFitValue + " X" );
+		} else {
+			System.out.println( mostFitValue );
+		}
   			      
 	}
 	

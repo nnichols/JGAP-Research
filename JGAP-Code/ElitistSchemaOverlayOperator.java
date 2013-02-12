@@ -77,6 +77,7 @@ public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements
 	
 	public void setGenerations( int genCount ){
 		this.generationsLeft = genCount;
+		this.totalGenerations = genCount;
 	}
 	
 
