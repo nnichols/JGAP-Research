@@ -41,6 +41,20 @@ public class MCP{
 		
 	public static void main(String[] args) throws Exception{
 			
+		// Switches for extra reporting
+		boolean fullReporting = false;
+		boolean timeReporting = false;
+		
+		// Check if extra flags have been appended
+		for( int i = 0; i < args.length; i++ ){
+			
+			if( args[i].equals( "f" ) ){
+				fullReporting = true;
+			} else if( args[i].equals( "t") ){
+				timeReporting = true;
+			}
+		}
+		
 		// Set up a Configuration, which drives evolution
 		Configuration config = configurationSetup();
 		
@@ -160,20 +174,25 @@ public class MCP{
 		for( int i = 0; i < GENERATIONS; i++ ){
 			population.evolve();
 
-			// We'll grab the fittest individual to report upon and print the generation number
-			int cleanGen = i + 1;
-			System.out.print( cleanGen + " " );
+			// Only report when needed
+			if( fullReporting || i == (GENERATIONS - 1) ){
+				// We'll grab the fittest individual to report upon and print the generation number
+				int cleanGen = i + 1;
+				System.out.print( cleanGen + "," );
 
-			IChromosome fittest = population.getFittestChromosome();
-			reportResult(fittest, population.getPopulation().getChromosomes(), (Reportable) currentProblem);
+				IChromosome fittest = population.getFittestChromosome();
+				reportResult(fittest, population.getPopulation().getChromosomes(), (Reportable) currentProblem);
+			}
 		}
 
 		
 		long endTime = System.currentTimeMillis();		
 
-		// Report runtime
-		long runTime = endTime - startTime;
-		System.out.println( "Runtime in Milliseconds: " + runTime );
+		// Report runtime if needed
+		if( timeReporting ){
+			long runTime = endTime - startTime;
+			System.out.println( runTime );
+		}
 		
 	}
 	
@@ -204,15 +223,15 @@ public class MCP{
 
 		runningSum = runningSum / ((double) count);
 
-		// Print average fitness and a space
-		System.out.print(runningSum + " ");
+		// Print average fitness, a comma, and the highest fitness
+		System.out.print(runningSum + "," + mostFitValue);
 
 		// Print out the fittest individual, and advance a line	
 		// Also, print if we have converged		
 		if( hasConverged ){	
-			System.out.println( mostFitValue + " X" );
+			System.out.println(",C");
 		} else {
-			System.out.println( mostFitValue );
+			System.out.println(",X");
 		}
   			      
 	}

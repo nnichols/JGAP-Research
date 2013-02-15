@@ -32,6 +32,9 @@ public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements
 	// Indicate if this genetic sequence is a permutation or not
 	private static boolean isPermutation;
 	
+	// Keep the latest defining length of the ESO
+	private static int definingLength = 0;
+	
 	// Arguementless Constructor that grabs configuration from the Genotype
 	public ElitistSchemaOverlayOperator() throws InvalidConfigurationException {
 		super(Genotype.getStaticConfiguration());
@@ -78,6 +81,12 @@ public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements
 	public void setGenerations( int genCount ){
 		this.generationsLeft = genCount;
 		this.totalGenerations = genCount;
+	}
+	
+	// Getter Method
+	// Return the latest defining length of the ESO
+	public int getDefiningLength(){
+		return this.definingLength;
 	}
 	
 
@@ -185,6 +194,8 @@ public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements
 	// Build an genetic overlay from the List of the fittest individuals
 	private Object[] buildOverlay( List<IChromosome> fittestIndividuals ){
 		
+		this.definingLength = 0;
+		
 		// Pull an example Chromosome out
 		IChromosome sample = fittestIndividuals.get(0);
 		
@@ -227,6 +238,7 @@ public class ElitistSchemaOverlayOperator extends BaseGeneticOperator implements
 			// Add the matched gene to the array if no mismatches occured
 			if( noMismatches ){
 				runningOverlay[i] = firstValue.getAllele();
+				this.definingLength++;
 			}
 			
 		}
