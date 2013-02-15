@@ -26,36 +26,20 @@ public class NKGenerator{
 		Random generator = new Random( System.currentTimeMillis() );
 
 		// Build every instance
-		// WARNING - THIS WILL TAKE A LOT OF TIME
 		for( int inst = 0; inst < instCount; inst++ ){
 		
 			// Keep track of all of the Strings that we'll need to print
 			// (A kludge, but it makes life easier with the file structure)
 			ArrayList<String> printQueue = new ArrayList<String>();
+			
+			// Generate seed
+			long seed = generator.nextLong();
 		
-			// Add the n and k values
+			// Add the n, k, and seed values
 			printQueue.add( nStr );
 			printQueue.add( kStr );
-
-			// Find how many values we must generate
-			int valuesToGenerate = (int) Math.pow( 2.0, (double) k );
-		
-			// Iterate through every value to build
-			// WARNING: THIS WILL TAKE O(2^n)		
-			for( int i = 0; i < valuesToGenerate; i++ ){
-			
-				double newWeight = generator.nextDouble();
-
-				StringBuilder printLine = new StringBuilder();
-			
-				// Value must be in binary
-				printLine.append( Integer.toString(i, 2) );
-				printLine.append( " " );
-				printLine.append( newWeight );
-					
-				printQueue.add( printLine.toString() );
+			printQueue.add( Long.toString( seed ) );
 	
-			}
 
 			// Print out everything to a file
 			try{

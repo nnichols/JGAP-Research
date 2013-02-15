@@ -15,44 +15,40 @@ public class NKFunction extends FitnessFunction implements Reportable{
 	private int n,k;
 	private HashMap<Integer, Double> values; 
 
-	// Constructor that builds an instance of given a file path
+	
+	// Constructor that uses a random seed from a file, and values for n and k
 	public NKFunction( String filepath ){
-		
-		// Build the HashMap
-		values = new HashMap<Integer, Double>();
-
+	
 		// Catch any exceptions for file i/o
 		try{
 
 			// Build a scanner to read the given file
 			Scanner inFile = new Scanner( new BufferedReader( new FileReader( filepath )));
-
+			
 			// Read the length of each string
 			this.n = inFile.nextInt();
 
 			// Read the interpolation value
 			this.k = inFile.nextInt();
-
-			// Add each evaluation (bitstring, result) in the file
-			for( int i = 0; i < (int) Math.pow( 2.0, (double) k); i++ ){
-				
-				int nextBitString = inFile.nextInt( 2 );
-				double nextValue = inFile.nextDouble();
 			
-				values.put( new Integer(nextBitString), new Double(nextValue) ); 
+			// Get the random seed and set up the generator
+			long seed = inFile.nextLong();
+			Random generator = new Random( seed );
+		
+			// Build the HashMap
+			values = new HashMap<Integer, Double>();
+		
+			// Add each evaluation (bitstring, result) to the Map
+			for( int i = 0; i < (int) Math.pow( 2.0, (double) k); i++ ){
+					values.put( new Integer(i), new Double( generator.nextDouble() ) );
 			}
-
-			// Close Resources
-			inFile.close();
-
-		// Exception handling and exiting
-		} catch ( Exception e ) {
+			
+		} catch( Exception e ){
 			System.err.println( "A fatal error occured" );
 			System.err.println( e.getMessage() );
 			System.exit(0);
 		}
 	}
-	
 	
 	// Getter methods
 	public int getN(){
