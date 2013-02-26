@@ -96,7 +96,7 @@ public class TSPGenerator{
 			// Print out everything to a file
 			try{
 			
-				BufferedWriter outStream = new BufferedWriter( new FileWriter( "/share/data/nnichols/jgap_instances/tsp" + cityCount + "c" + instance.getEdges() + "e" + currentInstance + ".txt" ));
+				BufferedWriter outStream = new BufferedWriter( new FileWriter( "/share/data/nnichols/jgap_instances/tsp" + cityCount + "c" + currentInstance + ".txt" ));
 			
 				// Iterate through printQueue
 				for( String line : printQueue ){
