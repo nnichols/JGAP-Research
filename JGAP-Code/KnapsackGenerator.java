@@ -55,7 +55,7 @@ public class KnapsackGenerator{
 			// Print out everything to a file
 			try{
 			
-				BufferedWriter outStream = new BufferedWriter( new FileWriter( "./Test-Cases/knapsack" + itemCount + "i" + inst + ".txt" ));
+				BufferedWriter outStream = new BufferedWriter( new FileWriter( "/share/data/nnichols/jgap_instances/knapsack" + itemCount + "i" + inst + ".txt" ));
 			
 				// Iterate through printQueue
 				for( String line : printQueue ){

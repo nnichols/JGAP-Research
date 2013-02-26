@@ -44,7 +44,7 @@ public class NKGenerator{
 			// Print out everything to a file
 			try{
 			
-				BufferedWriter outStream = new BufferedWriter( new FileWriter( "./Test-Cases/nk" + n + "n" + k + "k" + inst + ".txt" ));
+				BufferedWriter outStream = new BufferedWriter( new FileWriter( "/share/data/nnichols/jgap_instances/nk" + n + "n" + k + "k" + inst + ".txt" ));
 			
 				// Iterate through printQueue
 				for( String line : printQueue ){
