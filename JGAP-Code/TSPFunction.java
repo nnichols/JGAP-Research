@@ -16,7 +16,7 @@ public class TSPFunction extends FitnessFunction implements Reportable{
 
 	private int cities;
 	private AdjacencyMatrix instance;
-	private static final double PENALTYWEIGHT = 2.0;
+	private static final double PENALTYWEIGHT = 5.0;
 	
 	// Constructor that builds an instance of given a file path
 	public TSPFunction( String filepath ){

@@ -19,7 +19,7 @@ public class KnapsackFunction extends FitnessFunction implements Reportable{
 	private double weightLimit;
 	private double[] weights;
 	private double[] benefits;		
-	private static final double PENALTYWEIGHT = 2.0;
+	private static final double PENALTYWEIGHT = 5.0;
 
 	// Constructor that builds an instance of given a file path
 	public KnapsackFunction( String filepath ){
