@@ -40,7 +40,7 @@ public class NKFunction extends FitnessFunction implements Reportable{
 		
 			// Add each evaluation (bitstring, result) to the Map
 			for( int i = 0; i < (int) Math.pow( 2.0, (double) k); i++ ){
-					values.put( new Integer(i), new Double( generator.nextDouble() ) );
+					values.put( new Integer(i), new Double( Math.abs( generator.nextDouble() ) ) );
 			}
 			
 		} catch( Exception e ){

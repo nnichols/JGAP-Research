@@ -77,7 +77,7 @@ public class SchubertFunction extends FitnessFunction implements Reportable{
 		// the actual point encoded by our genetic sequence
 		double[] dimensionValues = SupportFunctions.intToDoubleDomain( translatedValues, lowerBound, upperBound, this.dimensionLength );
 		
-		double value = computeForValue( dimensionValues[0] ) * computeForValue( dimensionValues[1] );
+		double value = (computeForValue( dimensionValues[0] ) * computeForValue( dimensionValues[1] )) + 100.0;
 		
 		return value;
 	}
