@@ -108,14 +108,12 @@ Permutation based problems, like the Traveling Salesman Problem, break away from
 
 \subsubsection*{Permutation Repair Algorithm}
 For most applications, the described genetic operators will function correctly unmodified; however, for permutation based problems that allow for only one instance of a given allele, like the Traveling Salesman Problem, a slight change is necessary. For instance, the application of an overlay might leave identical values in multiple positions in the genetic sequence. Many genetic operators have this effect, and two main solutions are utilized in practice: New genetic operators tailored to these problems, and repair algorithms\cite{Larranaga99}. To keep our choice of operators consistent, we have devised a repair algorithm to use in every necessary case.
-\begin{displaymath}
-\centering 
+ 
 \begin{align*}
 \text{Genetic Overlay} &:   -1~3--6~2-9				\\
 \text{New Individual} &: 2~1~3~4~5~7~6~8~9			\\		
 \text{Resultant Individual} &: {\color{myred}2}~{\color{mygreen}1}~3~4~5~6~{\color{myred}2}~{\color{mygreen}1}~9
 \end{align*}
-\end{displaymath}
 
 As we can see above, the resultant individual now contains two instances of both 2 and 1. Thus, we need a repair algorithm can be used to correct this example, while maintaining the given genetic overlay. 
 
@@ -133,7 +131,6 @@ To begin, let $e$ be an elitist schema overlay created from a population $P$. It
 % Permutation Repair Algorithm Code
 %
 \begin{algorithm}
-%	\SetAlgoLined
 	\SetKwInOut{Input}{input} 
 	\SetKwInOut{Output}{output}
 	\Input{A genetic sequence, \emph{seq}, of permutable values and a genetic overlay, \emph{g}} 
