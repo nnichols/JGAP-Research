@@ -6,26 +6,26 @@ Genetic Overlay - A genetic operator which modifies an individual's genetic sequ
 
 The following is an example of a genetic overlay that operates upon binary genetic sequences. The \emph{defining length} of a schema is defined to be the number of specified values in an overlay, in the case of the provided example, we have the value $4$.
 
-\begin{figure}[h!]
+\begin{displaymath}
 \centering 
 \begin{align*}
 \text{Initial Individual} &: {\color{myred}0~1~0~0~1~0} 		\\
 \text{Genetic Overlay} &: {\color{myblue}1-0~1-0}				\\
-\text{Resultant Individual} &: {\color{myblue}1}~{\color{myred}1}~{\color{myblue}0~1}~{\color{myred}1}~{\color{myblue}0}			
+\text{Resultant Individual} &: {\color{myblue}1}~{\color{myred}1}~{\color{myblue}0~1}~{\color{myred}1}~{\color{myblue}0}	
 \end{align*}
-\end{figure}
+\end{displaymath}
 
 
-This operator allows us to quickly give a set of individuals very similar genetic sequences, thus allowing us to search the neighborhood of the provided schema. The choice and density of the schema that we use is very important. If our schema is very dense, i.e. it consists of mostly specified alleles, then the population will converge very quickly. Early convergence is problematic because it lessens the probability that the optimal solution has been found\cite{Deb99}. Likewise, a very sparse schema will spend excess computation cycles applying very few changes. Additionally, we want to ensure that our schema consists of alleles that yield high fitness values. Each of these factors must be carefully considered when developing a strategy for creating genetic overlays. 
+This operator allows us to quickly give a set of individuals very similar genetic sequences, thus allowing us to search the neighborhood of the provided schema. The choice and density of the schema that we use is very important. If our schema is very dense, i.e. it consists of mostly specified alleles, then the population will converge very quickly. Early convergence is problematic because it lessens the probability that the optimal solution has been found \cite{Deb99}. Likewise, a very sparse schema will spend excess computation cycles applying very few changes. Additionally, we want to ensure that our schema consists of alleles that yield high fitness values. Each of these factors must be carefully considered when developing a strategy for creating genetic overlays. 
 
 \subsection*{Elitist Schema Overlays}
-There are many reasonable methodologies that we could utilize to build effective genetic overlays. The central focus of this paper is the use of \emph{elitist schema overlays}, and they are conceptually defined below.
+There are many reasonable methodologies that we could utilize to build effective genetic overlays. The central focus of this paper is the use of \emph{elitist schema overlays}, and they are defined below.
 
 \begin{overlay}
 Elitist Schema Overlay - A genetic overlay that is built from the matching alleles of the elite sub-population.
 \end{overlay}
 
-To define this formally, let $P = \{p_1,p_2,\ldots,p_n\}$ be a set of $n$ individuals selected for recombination. Consider $T=\{t_1,t_2,\ldots,t_k\}$ as the set of the $k$ individuals with the highest fitness rankings in $P$. We will now construct the genetic overlay, named $s$, from the genetic sequences in $T$. We want our genetic overlay to  have specified values only where every individual in $T$ has the same value at that same position. The notations $s[i], t[i], \text{ and } p_j[i]$ represent the value, or lack-thereof in the case of the schema, at position $i$. 
+To define this formally, let $P = \{p_1,p_2,\ldots,p_n\}$ be a set of $n$ individuals selected for recombination. Consider $T=\{t_1,t_2,\ldots,t_k\}$ as the set of the $k$ individuals with the highest fitness rankings in $P$. We will now construct the genetic overlay, named $s$, from the genetic sequences in $T$. We want our genetic overlay to  have specified values only where every individual in $T$ has the same value at that same position. The notations $s[i], t[i]_j, \text{ and } p[i]$ represent the value, or lack-thereof in the case of the schema, at position $i$. 
  
  \begin{displaymath}
    s[i] = \left\{
@@ -38,7 +38,7 @@ To define this formally, let $P = \{p_1,p_2,\ldots,p_n\}$ be a set of $n$ indivi
 
 \noindent Below is an example for $k = 3$.
 
-\begin{figure}[h!]
+\begin{displaymath}
 \centering 
 \begin{align*}
 \text{Elite Individual 1} &: 0~1~0~0~1~0~1~1~0 			\\
@@ -46,18 +46,18 @@ To define this formally, let $P = \{p_1,p_2,\ldots,p_n\}$ be a set of $n$ indivi
 \text{Elite Individual 3} &: 1~1~0~1~1~0~1~1~0 			\\  
 \text{Resultant Genetic Overlay} &:   -1~0--0~1-0			
 \end{align*}
-\end{figure}
+\end{displaymath}
 
 From here, we will apply $s$ as a genetic overlay to each individual in $P$. An apllication of the example elitist schema overlay created before can be seen below:
 
-\begin{figure}[h!]
+\begin{displaymath}
 \centering 
 \begin{align*}
 \text{Unmodified Individual} &: {\color{myred}1~0~0~1~1~0~1~1~1}		\\	
 \text{Elitist Schema Overlay} &:   {\color{myblue}-1~0--0~1-0	}		\\  	
 \text{Resultant Individual} &:  {\color{myred}1}~{\color{myblue}1~0}~ {\color{myred}1~1}~{\color{myblue}0~1}~ {\color{myred}1}~{\color{myblue}0}
 \end{align*}
-\end{figure}
+\end{displaymath}
 
 At this point, we may continue to apply additional genetic operators to $P$ as need be, or continue to the next generation. If our best performing individuals all have the same values at various alleles, this may hint that these assignments are correlated with success. Thus, it would be reasonable to search the neighborhood of this partial solution more thoroughly. 
 
