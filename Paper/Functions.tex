@@ -1,56 +1,56 @@
 Improvements to Genetic Algorithms are frequently compared based upon their abilities to solve various benchmark numerical functions and real world problems like the Traveling Salesman and Job Scheduling problems\cite{molga05}. In order to get a good grasp on the general behavior of elitist schemata overlays in comparison to the other tested operators, we have chosen a variety of problems from both of these fields. 
 
-Our research found a set of common minimization functions used as benchmarks of the performance of new Genetic Algorithms\cite{Deb99,Eiben95,Tsutsui99}. These functions should give us a picture of how well our algorithm compares to more traditional ones. In order to make some reasoning about the behavior of elitist schemata overlays on real world problems, we will also test performance on several instances of the Knapsack and Traveling Salesman problems. Finally, each of the genetic operators will be ran on several NK-Landscapes, a common testing tool for Genetic Algorithms.
+Our research found a set of common minimization functions used as benchmarks of the performance of new Genetic Algorithms\cite{Deb99,Eiben95,Tsutsui99}. These functions should give us a picture of how well our algorithm compares to more traditional ones. In order to make some reasoning about the behavior of elitist schemata overlays on real world problems, we will also test performance on several instances of the Knapsack and Traveling Salesman problems. Finally, each of the genetic operators will be run on several NK-Landscapes, a common testing tool for Genetic Algorithms.
 
 \subsection*{Minimization Functions}
 \subsubsection*{Definitions}
 
-The functions below display a wide array of properties as a group that will test each of the behavior of the genetic operators in different ways. By varying levels of ruggedness, how much values differ from those in their neighborhood, and deceptiveness, the number of local optima, we get a broad picture how our operators will behave under certain conditions.
+The functions below display a wide array of properties as a group that will test each of the behavior of the genetic operators in different ways. By varying levels of ruggedness, how much values differ from those in their neighborhood, and deceptiveness, the number of local optima, we get a broad picture how our operators will behave under certain conditions. The definitions for each of these numerical optimization problems can be found in the literature \cite{molga05,yang10}.
 
 %
 % De Jong Sphere Definition
 %
-The sphere De Jong function is both convex and unimodal with a global minimum of $0$ located at $(0,0,\ldots,0)$. The n-dimensional version of the sphere function is as defined\cite{molga05,yang10}:
+The sphere De Jong function is both convex and unimodal with a global minimum of $0$ located at $(0,0,\ldots,0)$. The n-dimensional version of the sphere function is as defined:
 \[ f(x_1,x_2,\ldots,x_n) = \sum\limits_{i=1}^n x_i^2 \text{ for } -5.12 \leq x_i \leq 5.12 \]
 %
 %De Jong Hyper-Ellipsoid Definition
 %
-The hyper-ellipsoid function is defined similarly, and maintains the global minimum of $0$ located at $(0,0,\ldots,0)$.\cite{molga05,yang10}:
+The hyper-ellipsoid function is defined similarly, and maintains the global minimum of $0$ located at $(0,0,\ldots,0)$.:
 \[ f(x_1,x_2,\ldots,x_n) = \sum\limits_{i=1}^n ix_i^2 \text{ for } -5.12 \leq x_i \leq 5.12\]
 %
 % Sum of Different Powers Function
 %
-We also selected the closely related sum of different powers function, whose minimum is also of $0$ located at $(0,0,\ldots,0)$\cite{molga05,yang10}:
+We also selected the closely related sum of different powers function, whose minimum is also of $0$ located at $(0,0,\ldots,0)$:
 \[ f(x_1,x_2,\ldots,x_n) = \sum\limits_{i=1}^n |x_i|^{i+1} \text{ for } -1 \leq x_i \leq 1\]
 %
 % Griewank's Function
 %
-The Griewank function is known for its multi-modality and also has its global minimum of $0$ located at $(0,0,\ldots,0)$\cite{molga05,yang10}:
+The Griewank function is known for its multi-modality and also has its global minimum of $0$ located at $(0,0,\ldots,0)$:
  \[ f(x_1,x_2,\ldots,x_n) = \frac{1}{4000}\sum\limits_{i=1}^n x_i^{2} - \prod\limits_{i=1}^{n} \cos \left(\frac{x_i}{\sqrt{i}} \right)+1 \text{ for } -600 \leq x_i \leq 600\]
  %
  % Rastrigin's Function
  %
- Rastrigin's Function is another highly multimodal function with a global minimum of $0$ at $(0,0,\ldots,0)$ \cite{molga05,yang10}:
+ Rastrigin's Function is another highly multi-modal function with a global minimum of $0$ at $(0,0,\ldots,0)$ :
  \[f(x_1,x_2,\ldots,x_n) = \sum\limits_{i=1}^n \big( x_i^2 - 10\cos(2\pi x_i) \big)\text{ for } -600 \leq x_i \leq 600\]
  %
  % Rosenbrock's Function
  %
- Rosenbrock's function has a global minimum of 0 at $(1,1,\ldots,1)$ \cite{molga05,yang10}:
+ Rosenbrock's function has a global minimum of 0 at $(1,1,\ldots,1)$ :
  \[f(x_1,x_2,\ldots,x_n) = \sum\limits_{i=1}^{n-1} ((x_i-1)^2 + 100(x_{i+1}-x_i^2)^2) \text{ for } -5 \leq x_i \leq 5\]
  %
  % 2-D Michaelwicz Function
  %
- The two dimensional Michaelwicz function has a global minimum approximately equal to $-1.8013$ at the approximate points $(2.2032,1.5705)$ and is defined below\cite{molga05,yang10}:
+ The two dimensional Michaelwicz function has a global minimum approximately equal to $-1.8013$ at the approximate points $(2.2032,1.5705)$ and is defined below:
  \[ f(x,y) = -\sin(x)\sin^{20} \left(\frac{x^2}{\pi} \right) - \sin(y)\sin^{20} \left(\frac{2y^2}{\pi} \right) \text{ for } 0 \leq x,y \leq 5\]
  %
  % Six Hump Camel Back Function
  %
- The two-dimensional six-hump camel back function has a global minimum of approximately $-1.0316$ at the coordinates $(0.0898,-0.7126)$ and $(-0.0898,0.7126)$\cite{molga05,yang10}:
+ The two-dimensional six-hump camel back function has a global minimum of approximately $-1.0316$ at the coordinates $(0.0898,-0.7126)$ and $(-0.0898,0.7126)$:
  \[f(x,y) = \frac{x^6}{3}-2.1x^4+4x^2+xy+4y^4-4y^2 \]
  %
  % Schubert's 2D Function
  %
- Schubert's function is multimodal and has $18$ global minima of approximate value $-186.7309$ in the given search domain \cite{molga05,yang10}:
+ Schubert's function is multi-modal and has $18$ global minima of approximate value $-186.7309$ in the given search domain :
  \[ f(x,y) = \left( \sum\limits_{i=1}^{5} i\cos(i + ix + x) \right) * \left( \sum\limits_{i=1}^{5} i\cos(i + iy + y) \right) \text{ for } -10 \leq x,y \leq 10 \]
  
  %
@@ -125,7 +125,7 @@ In order to guarantee that we both do not disturb a given genetic overlay and th
 An elitist schema overlay will never contain a duplicated element, given that all members of the population are $k$-permutations of $n$ elements where k $\leq$ n.
 \end{thm}
 
-To begin, let $e$ be an elitist schema overlay created from a population $P$. It is given that $\forall p \in P$, $p$ must be a $k$-permutation of $n$ elements. Thus, the $x$ most fit individuals in $P$ must also be permutations. Since each of these individuals is a permuatation, none of them may contain duplicate values. By the definition of an elitist schema overlay, $e$ will only be defined for the matching alleles of the $x$ most fit members of $P$. Since none of these members can have duplicate values, $e$ cannot have duplicate values either.
+To begin, let $e$ be an elitist schema overlay created from a population $P$. It is given that $\forall p \in P$, $p$ must be a $k$-permutation of $n$ elements. Thus, the $x$ most fit individuals in $P$ must also be permutations. Since each of these individuals is a permutation, none of them may contain duplicate values. By the definition of an elitist schema overlay, $e$ will only be defined for the matching alleles of the $x$ most fit members of $P$. Since none of these members can have duplicate values, $e$ cannot have duplicate values either.
 
 %
 % Permutation Repair Algorithm Code

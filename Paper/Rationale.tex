@@ -1,4 +1,4 @@
-Fitness values are the determining force behind whether or not the genetic sequence of an individual will survive and propagate. The selection phase of Genetic Algorithms determines the probability of a given individual being chosen for recombination. The technique to ensure the survival of good genes was conceptually expanded upon with elitism, which allows the best performing individual to survive into the next generation. Elitist schema overlays engrain this concept within a genetic operator, and are a special instance of genetic overlays:
+Fitness values are the determining force behind whether or not the genetic sequence of an individual will survive and propagate. The selection phase of Genetic Algorithms determines the probability of a given individual being chosen for recombination. The technique to ensure the survival of good genes was conceptually expanded upon with elitism, which allows the best performing individual to survive into the next generation. Elitist schema overlays ingrain this concept within a genetic operator, and are a special instance of genetic overlays:
 
 \begin{overlay}
 Genetic Overlay - A genetic operator which modifies an individual's genetic sequence to match the specified alleles of a given schema, while leaving the unspecified alleles at their original values. 
@@ -41,7 +41,7 @@ To define this formally, let $P = \{p_1,p_2,\ldots,p_n\}$ be a set of $n$ indivi
 \text{Resultant Genetic Overlay} &:   -1~0--0~1-0			
 \end{align*}
 
-From here, we will apply $s$ as a genetic overlay to each individual in $P$. An apllication of the example elitist schema overlay created before can be seen below:
+From here, we will apply $s$ as a genetic overlay to each individual in $P$. An application of the example elitist schema overlay created before can be seen below:
 
 \begin{align*}
 \text{Unmodified Individual} &: {\color{myred}1~0~0~1~1~0~1~1~1}		\\	
@@ -88,4 +88,4 @@ Elitist schema overlays with an effective choice of $k$, are intentionally relat
 
 Strangely, when Forrest and Mitchell tested the performance of Genetic Algorithms against Hill-Climbing Algorithms on the Royal Road function, whose definition is tightly coupled with the building-block hypothesis, Genetic Algorithms were out-performed by Random Hill-Climbing Algorithms \cite{Forrest93}. Results like this have lead to criticism of the strength of the underlying assumptions and the narrowness over which the schema theorem and building-block hypothesis could be applied \cite{Burjorjee08, Senaratna05}. This has lead to the use of effective fitness measures and coarser graining on the size of building-block schemata to describe the evolutions of schemata over time\cite{Stephens99}.
 
-The underlying mechanics of successful Genetic Algorithms are still being debated, but the exploitation of current, successful genetic sequences is still fundamental to the field as a whole \cite{Russell10, Senaratna05}. Genetic overlays were designed to speed up the propagation of schemata in a population, and elitist schema overlays search the fittest individuals for useful schemata to propogate. To make comparative statements about the effectiveness of elitist schema overlays, we have also implemented successful genetic operators from the literature.
+The underlying mechanics of successful Genetic Algorithms are still being debated, but the exploitation of current, successful genetic sequences is still fundamental to the field as a whole \cite{Russell10, Senaratna05}. Genetic overlays were designed to speed up the propagation of schemata in a population, and elitist schema overlays search the fittest individuals for useful schemata to propagate. To make comparative statements about the effectiveness of elitist schema overlays, we have also implemented successful genetic operators from the literature.
