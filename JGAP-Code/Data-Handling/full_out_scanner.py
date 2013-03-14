@@ -7,14 +7,14 @@ def main():
     
     # Avg Convergence Gen
     conv = 0
-    hasConv= false
+    hasConv = False
     
     # runtime
     runtime = 0
     
     # Arrays for avg fitness / generation
-    avgAvg = zeros( 500, Double )
-    avgBest = zeros( 500, Double )
+    avgAvg = [ 0.0 ] * 500 
+    avgBest = [ 0.0 ] * 500
     
     # Read lines that have been piped in
     for line in sys.stdin.readlines():
@@ -28,16 +28,16 @@ def main():
             values = line.split( ',' )
             
             # Find the current generation
-            generation = int( values[0] )
+            generation = int( values[0] ) - 1
             
             # Create a running sum of the fitness values
-            avgAvg[ generation ] += double( values[1] )
-            avgBest[ generation ] += double( values[2] ) 
+            avgAvg[ generation ] += float( values[1] )
+            avgBest[ generation ] += float( values[2] ) 
             
             # Determine convergence generation
-            if( !hasConv and values[3] == "C" ):
+            if( not hasConv and values[3] == "C" ):
                 conv += generation
-                hasConv = true
+                hasConv = True
                 
         else:
         
@@ -45,11 +45,11 @@ def main():
             runtime += int( line )
             
             # Manipulate conv if the population never converged
-            if( !hasConv ):
+            if( not hasConv ):
                 conv += 500
             
             # Reset convergence checker
-            hasConv = false
+            hasConv = False
             
     for i in range(500):
         
@@ -58,7 +58,7 @@ def main():
         avgBest[ i ] = avgBest[i] / 100.0
         
         # Build a printable line
-        printLine = str(i) + ',' + str(avgAvg[i]) + ',' + str(avgBest[i]) + ','
+        printLine = str(i) + ',' + str(avgAvg[i]) + ',' + str(avgBest[i])
         
         # Send info to stdout
         print( printLine )
