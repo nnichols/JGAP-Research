@@ -35,9 +35,10 @@ def main():
             avgBest[ generation ] += float( values[2] ) 
             
             # Determine convergence generation
-            if( not hasConv and values[3] == "C" ):
-                conv += generation
-                hasConv = True
+            if( not hasConv ):
+                if( 'C' in str( values[3] ) ):
+                    conv += generation
+                    hasConv = True
                 
         else:
         
@@ -46,8 +47,8 @@ def main():
             
             # Manipulate conv if the population never converged
             if( not hasConv ):
-                conv += 500
-            
+                conv += 500          
+
             # Reset convergence checker
             hasConv = False
             
