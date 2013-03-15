@@ -1,6 +1,6 @@
 Improvements to Genetic Algorithms are frequently compared based upon their abilities to solve various benchmark numerical functions and real world problems like the Traveling Salesman and Job Scheduling problems\cite{molga05}. In order to get a good grasp on the general behavior of elitist schemata overlays in comparison to the other tested operators, we have chosen a variety of problems from both of these fields. 
 
-Our research found a set of common minimization functions used as benchmarks of the performance of new Genetic Algorithms\cite{Deb99,Eiben95,Tsutsui99}. These functions should give us a picture of how well our algorithm compares to more traditional ones. In order to make some reasoning about the behavior of elitist schemata overlays on real world problems, we will also test performance on several instances of the Knapsack and Traveling Salesman problems. Finally, each of the genetic operators will be run on several NK-Landscapes, a common testing tool for Genetic Algorithms.
+Our research found a set of common minimization functions used as benchmarks of the performance of new Genetic Algorithms\cite{Deb99,Eiben95,Tsutsui99}. These functions should give us a picture of how well our algorithm compares to more traditional ones. In order to make some reasoning about the behavior of elitist schemata overlays on real world problems, we will also test performance on several instances of the Knapsack and Traveling Salesman problems. Finally, each of the genetic operators will be run on several NK-Landscapes, a common testing tool for Genetic Algorithms. Definitions for each of these can be found below.
 
 \subsection*{Minimization Functions}
 \subsubsection*{Definitions}
@@ -53,10 +53,12 @@ The Griewank function is known for its multi-modality and also has its global mi
  Schubert's function is multi-modal and has $18$ global minima of approximate value $-186.7309$ in the given search domain :
  \[ f(x,y) = \left( \sum\limits_{i=1}^{5} i\cos(i + ix + x) \right) * \left( \sum\limits_{i=1}^{5} i\cos(i + iy + y) \right) \text{ for } -10 \leq x,y \leq 10 \]
  
+As a side note, the JGAP version used for our testing disallowed for negative fitness values \cite{jgap}. To account for this, a constant offset was added to each of the fitness scores returned for the Michaelwicz, six-hump camel back, and Schubert functions to ensure that only non-negative results were returned.
+ 
  %
  % Encoding
  %
- \subsubsection*{Encoding}
+ \subsubsection*{Numerical Encoding}
 Genetic sequences have traditionally been encoded as both traditional binary strings and \emph{Binary Reflective Gray Codes} \cite{Whitley97}. Gray Codes are modified interpretations of bit strings that minimize the variation in representation of adjacent values \cite{Back93}. In the traditional binary system, the unsigned values of $2^n$ and $2^n - 1$ have no bits in common over the first $n$ places, even though their values only differ by $1$. In a Gray Coding, all adjacent values differ by exactly one bit \cite{Michalewicz98}. Given a bit string $a = a_1 a_2 \ldots a_n$, we can described the translation between traditional binary strings and Binary Reflective Gray Codes mathematically. The traditional binary bit string $a$ can be rewritten as a Binary Reflective Gray Code bit string $b =  b_1 b_2 \ldots b_n$ with the following function \cite{Back93}:
 
 \begin{displaymath}
@@ -79,8 +81,12 @@ Likewise, we can translate between a Binary Reflective Gray Code bit string $b$ 
    \right.
 \end{displaymath} 
 
-To describe continuous domains, like those in the test functions presented, we must map our genetic sequences of discrete values to the real numbers. Suppose we wish to operate on a variable $x$ whose domain $D = [a,b] \subseteq \mathbb{R}$, and that we require $k$ decimal places of precision for $x$. To accomplish this, we need to partition $D$ into $10^k(b - a)$ ranges of equivalent length. So we find the smallest $n \in \mathbb{N}$ such that $10^k(b - a) \leq 2^n - 1$. To assign values to $x$ given a genetic sequence $g$ and a decoding function $d$, which takes a genetic sequence and evaluates it to its decimal equivalent \cite{Michalewicz98}:
+Emperically, Genetic Algorithms that employ Gray Codes have outperformed those using traditional binary genetic sequences \cite{Back93}. For that reason, we have implemented Gray Codes in our research. This gives us a good means of representing integers, but our numerical optimizations are defined over the real numbers.
+
+To describe continuous domains, like those in the test functions presented, we must map our genetic sequences of discrete values to the real numbers. Suppose we wish to operate on a variable $x$ whose domain $D = [a,b] \subseteq \mathbb{R}$, and that we require $k$ decimal places of precision for $x$. To accomplish this, we need to partition $D$ into $10^k(b - a)$ ranges of equivalent length. So we find the smallest $n \in \mathbb{N}$ such that $10^k(b - a) \leq 2^n - 1$. To assign values to $x$ given a genetic sequence $g$ and a decoding function $d$, which takes a genetic sequence and evaluates it to its decimal equivalent, we use the following formula \cite{Michalewicz98}:
 \[ x = a + d(g) \left( \frac{b-a}{2^n - 1} \right) \]
+
+\noindent This methodology is also used in our reasearch.
 
 %
 % Knapsack
@@ -89,7 +95,7 @@ To describe continuous domains, like those in the test functions presented, we m
 \subsubsection*{Definition}
 
 The 0-1 Knapsack Problem is an NP-Hard optimization problem. Let $X$ be the set of items $\{x_1, x_2, \ldots, x_n\}$, $C$ be the set of cost values $\{c_1, c_2, \ldots, c_n\}$, and $B$ be the set of benefit values $\{b_1, b_2, \ldots, b_n\}$. Each item $x_i$, with the domain $\{0,1\}$, has an associated cost $c_i$ and benefit $b_i$, where each $b_i,c_i \in \mathbb{R}^{+}$. Given a cost limit $L$ we want to maximize the sum of the benefit values while not allowing the sum of our cost values to exceed $L$:
-\[ max\big( \sum\limits_{i = 1}^{n} b_ix_i \big) \text{ where } \sum\limits_{i = 1}^{n} c_ix_i \leq L \]
+\[ max\left( \sum\limits_{i = 1}^{n} b_ix_i \right) \text{ subject to } \sum\limits_{i = 1}^{n} c_ix_i \leq L \]
 
 \subsubsection*{Encoding}
 The  0-1 Knapsack Problem is typically also represented with bit strings, but these are not evaluated in the same manner as those for continuous domains. For a genetic sequence $g = g_1 g_2 \ldots g_n$, each $g_i$, where $1 \leq i \leq n$, represents the value of the corresponding $x_i$ in the item set $X$ for a given instance of the problem. 
@@ -99,7 +105,7 @@ The  0-1 Knapsack Problem is typically also represented with bit strings, but th
 %
 \subsection*{Traveling Salesman Problem}
 \subsubsection*{Definition}
-The Traveling Salesman Problem from Graph Theory is another NP-Hard problem. Let $V$ be a set of vertices $v_1, v_2, \ldots v_r$ of a graph $G$. The set of edges $E$ is defined such that each $e_i \in E$ is an ordered tuple of the form $(v_j,v_k), j \not = k$ where $v_j,v_k \in V$ are the vertices that $e_i$ connects. For each $e_n \in E$, there is an associated $w_n \in W$ where $w_n$ is a positive real number that is the weight of the edge $e_n$. The goal of a given Traveling Salesman Problem instance is to find the Hamiltonian Circuit that has the minimum total weight. In other words, we must find a series of connected edges $T = e_{1},e_{2},\ldots,e_{r}$, where $r$ is the number of vertices, that minimizes the following\cite{Haxhimusa11}:
+The Traveling Salesman Problem is another NP-Hard problem. Let $V$ be a set of vertices $v_1, v_2, \ldots v_r$ of a graph $G$. The set of edges $E$ is defined such that each $e_i \in E$ is an ordered tuple of the form $(v_j,v_k), j \not = k$ where $v_j,v_k \in V$ are the vertices that $e_i$ connects. For each $e_n \in E$, there is an associated $w_n \in W$ where $w_n$ is a positive real number that is the weight of the edge $e_n$. The goal of a given Traveling Salesman Problem instance is to find the Hamiltonian Circuit that has the minimum total weight. In other words, we must find a series of connected edges $T = e_{1},e_{2},\ldots,e_{r}$, where $r$ is the number of vertices, that minimizes the following\cite{Haxhimusa11}:
 \[\sum\limits_{e_{i} \in T} w_{i}\]
 \noindent Where $w_{i}$ is the weight of the edge $e_{i}$.
 
@@ -115,17 +121,17 @@ For most applications, the described genetic operators will function correctly u
 \text{Resultant Individual} &: {\color{myred}2}~{\color{mygreen}1}~3~4~5~6~{\color{myred}2}~{\color{mygreen}1}~9
 \end{align*}
 
-As we can see above, the resultant individual now contains two instances of both 2 and 1. Thus, we need a repair algorithm can be used to correct this example, while maintaining the given genetic overlay. 
+As we can see above, the application of the genetic overlay resultis in an individual that contains two instances of both 2 and 1 in its genetic sequence. Since this is no longer a permutation, it cannot be a potential solution to the Traveling Salesman Problem. Thus, we need a repair algorithm can be used to correct this example, while maintaining the given genetic overlay. 
 
 Our repair algorithm, whose pseudocode can be found in Figure \ref{PRA-Alg}, iterates through a genetic sequence and counts how often each value is used. On the second pass, we check each value to see if it has been used exactly once in the permutation. If this is true, then we advance to the next allele. We will also skip alleles that are defined in the given genetic overlay. If neither of these conditions are true, we replace the current allele with a value that is not already in the permutation. With this structure, we maintain the invariant that the genetic subsequence from the beginning up to the point we are operating on is a valid permutation.
 
-In order to guarantee that we both do not disturb a given genetic overlay and that our end result is a permutation, we must require that every genetic overlay is a permutation. This constraint is feasible in practice, and we have proven that no elitist schema overlay will ever contain a duplicated value if the population consists of permutations only.
+In order to guarantee that we both do not disturb a given genetic overlay and that our end result is a permutation, we must require that every genetic overlay is a permutation. This constraint is feasible in practice, and we have proven below that no elitist schema overlay will ever contain a duplicated value if the population consists of permutations only.
 
 \begin{thm}
-An elitist schema overlay will never contain a duplicated element, given that all members of the population are $k$-permutations of $n$ elements where k $\leq$ n.
+An elitist schema overlay will contain no duplicated elements, given that all members of the population are $k$-permutations of $n$ elements where k $\leq$ n.
 \end{thm}
 
-To begin, let $e$ be an elitist schema overlay created from a population $P$. It is given that $\forall p \in P$, $p$ must be a $k$-permutation of $n$ elements. Thus, the $x$ most fit individuals in $P$ must also be permutations. Since each of these individuals is a permutation, none of them may contain duplicate values. By the definition of an elitist schema overlay, $e$ will only be defined for the matching alleles of the $x$ most fit members of $P$. Since none of these members can have duplicate values, $e$ cannot have duplicate values either.
+To begin, let $e$ be an elitist schema overlay created from a population $P$. Let us assume towards a contradiction that $e$ contains at least one value that has been duplicated. Thus, the must exist distinct alleles $e_p, e_q$, such that $e_p = e_q$. So, for each individual $I$ used to construct $e$, we know that $I_p = e_p = e_q = I_q$ by the definition of elitist schema overlays. However, $I_p = I_q$ implies that $I$ is not a $k$-permutations of $n$ elements. This contradicts our assumption that every individual in the population must be a $k$-permutations of $n$ elements, and so each $e$ must only contain distinct elements. \blacksquare
 
 %
 % Permutation Repair Algorithm Code
@@ -186,22 +192,25 @@ To begin, let $e$ be an elitist schema overlay created from a population $P$. It
 	\label{PRA-Alg}
 \end{algorithm}
 
-Given the code in Figure \ref{PRA-Alg}, we will now demonstrate that this approach will always return permutations given that our genetic overlays are always permutations.
+Given the code in Figure \ref{PRA-Alg}, we will now demonstrate that this approach will always return permutations given that our genetic overlays contain no duplicated elements.
 
 \begin{thm}
-The result of applying the permutation repair algorithm on a genetic sequence and overlay of length $k$ is always a genetic sequence that is a $k$-permutation of the $n$ possible values for each allele given that $ k \leq n$.
+The result of applying the permutation repair algorithm on a genetic sequence, $s$, and an overlay, $o$, of length $k$ is always a genetic sequence, with $o$ intact, that is a $k$-permutation of the $n$ possible values for each allele, given that $ k \leq n$ and that the genetic overlay contains no duplicated elements.
 \end{thm}
 
-To prove this theorem via strong induction, we shall begin with the base case of genetic sequences of length 1. Since neither a genetic sequence nor a genetic overlay of length 1 can have any duplicated values, we are done. 
+To prove this theorem via weak induction, we shall begin with the base case of genetic sequences of length 1. Thus, neither $s$ nor a $o$ can have any duplicated values. Thus, applying $o$ to $s$ will create no duplicate elements and will leave $o$ intact. 
 
-Now we assume that the permutation repair algorithm will work on any genetic sequence and genetic overlay of length $k$, and will return a $k$-permutation of $n$ with the genetic overlay intact. From here, we show that the case of $k \leq n$ follows. We must consider the following cases:
+Now we assume that the permutation repair algorithm will work on any genetic sequence and genetic overlay of length $k - 1$, and will return a $(k - 1)$-permutation of $n-1$ elements with the genetic overlay intact. From here, we show that the case of $k \leq n$ follows. For this proof, assume that the $n$ permutable values are contained in a set $N$. We must consider the following cases:
 \begin{enumerate}
-\item The genetic overlay is defined for all values. 
-If this is true, then by the constraint of the algorithm, the genetic overlay must be a permutation. Thus, the sequence resulting from the genetic overlay's application will have identical values to the genetic overlay. Thus, the sequence is already a permutation, and we are done.
+\item The first value of the genetic overlay is defined. 
+To begin, we have already applied $o$ to $s$. Now we apply the inductive hypothesis to the subsequence $s_2 \ldots s_k$ and set of values $ N' = N \setminus \{ o_1 \}$. Thus, $s_2 \ldots s_k$ is a $(k-1)$ permutation of the $n-1$ elements of $N'$ with $o_2 \ldots o_k$ intact. Since,  $o_1 = s_1$ we know that $o$ is intact with respect to $s$. Further, since $s_1 \neq n_i, \forall n_i \in N'$, we know that $s$ can contain no duplicate values.
 
-\item The genetic overlay is defined for $j$ values, where $0 \leq j \leq k $. 
-Consider the subsequence formed by taking an arbitrary $k$ values of the given genetic sequence in order, such that the position \emph{not} selected, $d$, does not appear in the genetic overlay. By the inductive hypothesis, we can use the permutation repair algorithm to change this into a $k$-permutation of $n$ elements. Since $k < n$, there must exist an element $c$ that does not appear in the other $k$ values. If the $d$th value is already set to a unique element, we are done. Else, we can change the $d$th value to $c$ and be done.
+\item The first value of the genetic overlay is undefined. 
+Consider the set $N' = N \setminus \{ o_t | \forall o_t \in o \text{ where } o_t \text{ is defined} \}$. Since $o_1$ is undefined and the length of $o$ is less than or equal to $n$, we know that at least one element exists in $N'$. We now set $s_1$ to be an arbitrary member of $N'$.  Now we apply the inductive hypothesis to the subsequence $s_2 \ldots s_k$ and set of values $ N'' = N \setminus \{ s_1 \}$. By the inductive hypothesis and the assumption that $o_1$ is undefined, $o$ must be intact with respect to $s$. Additionally, because $s_2 \ldots s_k$ cannot contain duplicate values and cannot contain $s_1$, since $s_2 \ldots s_k$ is a $(k-1)$ permutation of $N''$, we know that $s$ contains no duplicate values.
+
 \end{enumerate}
+
+In either case, we are left with a genetic sequence that is a $k$ permutation of $n$ elements with our genetic overlay, $o$, intact. \blacksquare 
 
 %
 % NK-Landscapes
@@ -209,9 +218,9 @@ Consider the subsequence formed by taking an arbitrary $k$ values of the given g
 
 \subsection*{NK-Landscapes}
 
-NK-Landscapes are mathematical models that have appeared in many disciplines, and finding the global minimum or maximum of one of these models has been demonstrated to be in NP-Complete\cite{Weinberger96}. Since multi-parent genetic operators have had success on NK-Landscapes in previous studies, we will test each genetic operator on several NK-Landscapes of varying size and ruggedness\cite{Eiben96,Skellett05}. 
+NK-Landscapes are mathematical models that have appeared in many disciplines, and finding the global minimum or maximum of one of these models has been demonstrated to be in NP-Hard \cite{Weinberger96}.  
 
-NK-Landscapes assign values to bit strings of length $N$ by applying a function $f$ to each allele and its $K$ neighbors\cite{Kauffman93}. A string $S$, consisting of the bits $b_1,b_2,\ldots,b_N$ has a fitness value $V$ defined to be:
+NK-Landscapes assign values to bit strings of length $N$ by applying a function $f$ to each allele and its $K$ neighbors \cite{Kauffman93}. A string $S$, consisting of the bits $b_1,b_2,\ldots,b_N$ has a fitness value $V$ defined to be:
 
 \[ V = \sum\limits_{i = 0}^{N} f(S,i) \]
 
@@ -219,4 +228,4 @@ The function $f$ takes the string and evaluates the necessary number of bits usi
 
 \[ f(S,i) = g(b_i, b_{i+1 \bmod{N}}, \ldots, b_{i+K \bmod{N}}) \]
 
-Larger values of $K$ increase the ruggedness of a model by increasing the interplay between the bits, and lower values of $K$ make for smoother landscapes \cite{Kauffman93}. Rugged models have large numbers of local optima, and so tuning $K$ gives us varying degrees of difficulty for local search methods like Genetic Algorithms\cite{Russell10,Skellett05}. Likewise, larger values for $N$ lead to search spaces of exponentially increasing size. 
+Larger values of $K$ increase the ruggedness of a model by increasing the interplay between the bits, and lower values of $K$ make for smoother landscapes \cite{Kauffman93}. Rugged models have large numbers of local optima, and so tuning $K$ gives us varying degrees of difficulty for local search methods like Genetic Algorithms \cite{Russell10,Skellett05}. Likewise, larger values for $N$ lead to search spaces of exponentially increasing size. Since multi-parent genetic operators have had success on NK-Landscapes in previous studies, we will test each genetic operator on several NK-Landscapes of varying size and ruggedness \cite{Eiben96,Skellett05}.
