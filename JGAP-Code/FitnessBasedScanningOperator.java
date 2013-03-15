@@ -58,7 +58,7 @@ public class FitnessBasedScanningOperator extends BaseGeneticOperator implements
 	public void operate( final Population population, final List candidateChromosomes ) {
 		
 		// Calculate the number of times to run the operator
-		int populationSize = (int) ((double) population.size() * operationPercent);
+		int populationSize = (int) ((double) population.size() * operationPercent) ;
 		
 		// Get the current random generator
 		RandomGenerator generator = getConfiguration().getRandomGenerator();

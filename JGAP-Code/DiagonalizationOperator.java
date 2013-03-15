@@ -41,7 +41,7 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 	// 70% Crossover rate consistent with Eiben
 	protected void initialize(){
 		arity = 2;
-		diagonalizationPercent = 0.55;
+		diagonalizationPercent = 0.70;
 		isPermutation = false;
 	}
 	
@@ -61,9 +61,9 @@ public class DiagonalizationOperator extends BaseGeneticOperator implements Comp
 	
 	// Perform Diagonalization as many times as needed
 	public void operate( final Population population, final List candidateChromosomes) {
-		
+
 		// Calculate the number of times to run the operator
-		int populationSize = (int) ((double) population.size() * diagonalizationPercent);
+		int populationSize = (int) (((double) population.size() * diagonalizationPercent) / (double) arity / 2.0 );
 		
 		// Get the current random generator
 		RandomGenerator generator = getConfiguration().getRandomGenerator();
