@@ -2,16 +2,61 @@
 To implement the operators and benchmarks described earlier, we have built upon the JGAP framework. JGAP is an open source Genetic Algorithms package for the Java programming language developed by Meffert et al \cite{jgap}. This work is built upon JGAP version 3.6.2, which was the latest stable release at the time this paper was written.
 
 \subsection*{Experimentation Setup}
-Nothing here yet.
+
+To determine how well any Genetic Algorithm performs, it is important to know which of the many available operators and configurations were utilized. The same setup was used for each experiment, and is outlined in Figure \ref{GA-config}. 
+
+\begin{figure}[h]
+\begin{center}
+\begin{tabular}{ | l | c | }
+\hline
+parents used for recombination & 2-10, by steps of 2 \\
+\hline
+selection type & steady-state \\
+\hline
+selection mechanic & best and unevaluated first \\
+\hline
+diagonal crossover rate & 70 \% \\
+\hline
+fitness-based scanning rate & 70 \% \\
+\hline
+elitist schema overlay rate & 100 \% \\
+\hline
+mutation rate & dynamic \cite{Back93} \\
+\hline
+population size & fixed at 200 \\
+\hline
+termination condition & 500 generations elapsed \\
+\hline
+trials per configuration & 100 \\
+\hline
+\end{tabular}
+\caption{Parameters used for testing}
+\end{center}
+\label{GA-config}
+\end{figure}
+
+The selection operator that we have utilized, namely the StandardPostSelector in JGAP, takes the $n$ most fit individuals from one generation to the next \cite{jgap}. This prevents us from having to re-evaluate the fitness of any individual that survives directly from one generation to the next.
 
 \subsection*{Results}
-Some subsubsections are here, but no real content yet.
+To determine the usefulness of elitist schema overlays as a genetic operator, we compared our work to current successful operators. To do so, we have analyzed both how efficient our operator is and how well it contributes to solution quality. The efficiency data is drawn from runtimes while minimizing instances of increasing size of the first De Jong function. To measure solution quality, we measured the average fitness of the population and the average fitness of the most fit solution across each of the numerical optimization problems, and the frequency at which we found the best known solution across the problems in NP-Hard. This data was used to help answer the following questions:
+
+\begin{itemize}
+\item Do fitness-based scanning and diagonal crossover perform as previously reported, with more parents tending to higher success rates?
+\item Do fitness-based scanning and diagonal crossover perform better when used seperately or in conjunction with each other? 
+\item Which of the three methods of selecting $k$, assinging random values, selecting a fixed percentage, or by computing a linear relationship with generations left, performs best?
+\item How do each of the above methods of $k$ selection affect the convergence rates of their respective populations?
+\item With which genetic operator(s) does the best performing elitist schema overlay configuration perform best?
+\item Do elitist schema overlays improve solution quality?
+\item How efficiently can elitist schema overlays be computed and applied in relation to other genetic operators?
+\end{itemize}
+
+To answer these questions, we will first explore the genetic operators from the literature. Secondly, we compare the various methodogies used to select a $k$-value for elitist schema overlays to determine which we will test in conjunction with existing gentic operators. Finally, we will analyze how elitist schema overlays perform when used in conjunction with existing genetic operators.
 
 \subsubsection*{Existing Genetic Operators}
-Nothing here yet.
+I wanted to wait for Ammar's jobs and my ESO jobs to finish first before rerunning these to keep the queue from overflowing again.
 
 \subsubsection*{$k$-Value Selection Methodologies}
-Nothing here yet.
+This is rerunning the 7 unfinished jobs.
 
-\subsubsection*{Elitist Schema Overlays}
+\subsubsection*{Elitist Schema Overlays with Existing Operators}
 Nothing here yet.
