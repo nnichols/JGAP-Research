@@ -1,6 +1,19 @@
+\subsection*{Traditional Genetic Operators}
+Nothing here yet.
+
+\subsubsection*{1-Point Crossover}
+Nothing here yet.
+
+\subsubsection*{Mutation}
+Nothing here yet.
+
+\subsubsection*{Steady-State Selection}
+Nothing here yet.
+
+\subsection*{Multi-Parent Genetic Operators}
 The literature concerning multi-parent genetic operators highlighted two central operators: fitness-based scanning and diagonal crossover. These two strategies have shown success as multi-parent genetic operators, and are the direct conceptual descendants of traditional genetic operators.
 
-\subsection*{Fitness-Based Scanning}
+\subsubsection*{Fitness-Based Scanning}
 The first operator from the literature that has been implemented and tested is fitness-based scanning as proposed by Eiben, et al \cite{Eiben94}. The generalized form of scanning iterates through the empty genetic sequence of a child and determines its value based upon the values present in $n$ selected parents \cite{Eiben91}. Fitness-based scanning makes a roulette wheel selection to choose each allele. At each allele, the probability that a parent, from the population $S$, named $i$ with a fitness value of $f(i)$, will donate its allele to the child's genetic sequence has probability $P(i)$ as described below \cite{Eiben94}: 
 
 \[ P(i) = \frac{f(i)}{\sum\limits_{i \in S} f(i)} \]
@@ -11,7 +24,7 @@ The first operator from the literature that has been implemented and tested is f
 
 In previous studies, fitness-based scanning had mixed results across several numeric optimization functions, and performed well on the Traveling Salesman Problem \cite{Eiben94, Eiben95}. Overall, fitness-based scanning showed the best results when the number of parents was between 2 and 5, and even managed to surpass the results of traditional crossover \cite{Eiben94}. 
 
-\subsection*{Diagonal Crossover}
+\subsubsection*{Diagonal Crossover}
 Traditional crossover takes two genetic sequences, chooses a splitting point, and swaps the portions after that point to create two new genetic sequences. \emph{Diagonal crossover} was introduced by Eiben, et al. to extend the concept of crossover into the realm of multi-parent genetic operators \cite{Eiben03}. A diagonal crossover of arity $n$ can be described easily. Take $n$ individuals from a population, select $n-1$ crossover points, and create $n$ children by selecting one subsequence from each piece of the genetic sequences given \cite{Eiben95}. Figure \ref{DC-Fig} depicts how this would work \cite{Eiben95}. Note that $a_i, b_i, c_i,$ and $d_i$ are genetic subsequences of arbitrary length.
 \begin{figure}[h!]
 \centering
@@ -35,3 +48,5 @@ $d_1$ & {\color{mygreen}$c_2$} & {\color{myblue}$b_3$} & {\color{myred}$a_4$} & 
 \end{figure} 
 
 The rationale behind expanding this operator into the realm of multi-parenthood was to increase the disruptiveness, and by extension the explorativity, of traditional crossover \cite{Eiben97}. This meant that the population would need a large degree of similar genetic sequences before the search would narrow and converge \cite{Eiben95}. It should also be noted that in the special case of $n = 2$ is identical to traditional 1-point crossover \cite{Eiben95}. High arity versions of this operator increased the performance of Genetic Algorithms in research, though they were ultimately less successful than scanning operators; however, it was also noted that it is much less expensive to compute, meaning that larger populations could be processed in the same time \cite{Eiben95}. In our research, the population sizes are set to be equal across all operators.
+
+Now that we have defined each of the genetic operators from the literature, we will define our contribution: the genetic overlay and its concrete impletation, the elitist schema overlay.

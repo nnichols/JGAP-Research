@@ -1,6 +1,6 @@
-Improvements to Genetic Algorithms are frequently compared based upon their abilities to solve various benchmark numerical functions and real world problems like the Traveling Salesman and Job Scheduling problems\cite{molga05}. In order to get a good grasp on the general behavior of elitist schemata overlays in comparison to the other tested operators, we have chosen a variety of problems from both of these fields.
+Improvements to Genetic Algorithms are frequently compared based upon their abilities to solve various benchmark numerical functions and real world problems like the Traveling Salesman and Job Scheduling problems \cite{molga05}. In order to get a good grasp on the general behavior of elitist schemata overlays in comparison to the other tested operators, we have chosen a variety of problems from both of these fields.
 
-Our research found a set of common minimization functions used as benchmarks of the performance of new Genetic Algorithms\cite{Deb99,Eiben95,Tsutsui99}. These functions should give us a picture of how well our algorithm compares to more traditional ones. In order to make some reasoning about the behavior of elitist schemata overlays on real world problems, we will also test performance on several instances of the Knapsack and Traveling Salesman problems. Finally, each of the genetic operators will be run on several NK-Landscapes, a common testing tool for Genetic Algorithms. Definitions for each of these can be found below.
+Our research found a set of common minimization functions used as benchmarks of the performance of new Genetic Algorithms \cite{Deb99,Eiben95,Tsutsui99}. These functions should give us a picture of how well our algorithm compares to more traditional ones. In order to make some reasoning about the behavior of elitist schemata overlays on real world problems, we will also test performance on several instances of the Knapsack and Traveling Salesman problems. Finally, each of the genetic operators will be run on several NK-Landscapes, a common testing tool for Genetic Algorithms. Definitions for each of these can be found below.
 
 \subsection*{Minimization Functions}
 \subsubsection*{Definitions}
@@ -117,7 +117,7 @@ Every simple, connected graph with $n \geq 3$ vertices that satisfies $degree(n)
 Permutation based problems, like the Traveling Salesman Problem, break away from the tradition of utilizing binary values to build genetic sequences. Na\"{\i}ve bit string representations create long genetic sequences that commonly encode infeasible solutions, those that do not meet the constraints of the problem instance, or incorrect genetic sequences, those that are not permutations \cite{Potvin96}. To help correct this, Traveling Salesman Problems of size $n$ can be encoded as a sequence of integers from the set $\{1, 2, \ldots, n\}$ to minimize the length of the genetic sequences. Another common optimization is to fix a single point in all genetic sequencess to reduce the number of representations of an identical solution, and we have followed this trend in our work. 
 
 \subsubsection*{Permutation Repair Algorithm}
-For most applications, the described genetic operators will function correctly unmodified; however, for permutation based problems that allow for only one instance of a given allele, like the Traveling Salesman Problem, a slight change is necessary. For instance, the application of an overlay might leave identical values in multiple positions in the genetic sequence. Many genetic operators have this effect, and two main solutions are utilized in practice: New genetic operators tailored to these problems, and repair algorithms\cite{Larranaga99}. To keep our choice of operators consistent, we have devised a repair algorithm to use in every necessary case.
+For most applications, the described genetic operators will function correctly unmodified; however, for permutation based problems that allow for only one instance of a given allele, like the Traveling Salesman Problem, a slight change is necessary. For instance, the application of an overlay might leave identical values in multiple positions in the genetic sequence. Many genetic operators have this effect, and two main solutions are utilized in practice: New genetic operators tailored to these problems, and repair algorithms \cite{Larranaga99}. To keep our choice of operators consistent, we have devised a repair algorithm to use in every necessary case.
  
 \begin{align*}
 \text{Genetic Overlay} &:   -1~3--6~2-9				\\
@@ -135,7 +135,7 @@ In order to guarantee that we both do not disturb a given genetic overlay and th
 An elitist schema overlay will contain no duplicated elements, given that all members of the population are $k$-permutations of $n$ elements where k $\leq$ n.
 \end{thm}
 
-To begin, let $e$ be an elitist schema overlay created from a population $P$. Let us assume towards a contradiction that $e$ contains at least one value that has been duplicated. Thus, the must exist distinct alleles $e_p, e_q$, such that $e_p = e_q$. So, for each individual $I$ used to construct $e$, we know that $I_p = e_p = e_q = I_q$ by the definition of elitist schema overlays. However, $I_p = I_q$ implies that $I$ is not a $k$-permutations of $n$ elements. This contradicts our assumption that every individual in the population must be a $k$-permutations of $n$ elements, and so each $e$ must only contain distinct elements. \blacksquare
+To begin, let $e$ be an elitist schema overlay created from a population $P$. Let us assume towards a contradiction that $e$ contains at least one value that has been duplicated. Thus, the must exist distinct alleles $e_p, e_q$, such that $e_p = e_q$. So, for each individual $I$ used to construct $e$, we know that $I_p = e_p = e_q = I_q$ by the definition of elitist schema overlays. However, $I_p = I_q$ implies that $I$ is not a $k$-permutations of $n$ elements. This contradicts our assumption that every individual in the population must be a $k$-permutations of $n$ elements, and so each $e$ must only contain distinct elements. $\blacksquare$
 
 %
 % Permutation Repair Algorithm Code
@@ -214,7 +214,7 @@ Consider the set $N' = N \setminus \{ o_t | \forall o_t \in o \text{ where } o_t
 
 \end{enumerate}
 
-In either case, we are left with a genetic sequence that is a $k$ permutation of $n$ elements with our genetic overlay, $o$, intact. \blacksquare 
+In either case, we are left with a genetic sequence that is a $k$ permutation of $n$ elements with our genetic overlay, $o$, intact. $\blacksquare$ 
 
 %
 % NK-Landscapes
