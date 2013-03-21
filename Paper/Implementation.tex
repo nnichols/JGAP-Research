@@ -1,11 +1,30 @@
 \subsection*{Traditional Genetic Operators}
-Nothing here yet.
+Genetic Algorithms were designed to emulate evolution by natural selection, and traditional genetic operators closely resemble their biological counterparts. Crossover, mutation, and selection build the core of many Genetic Algorithms, and are direct translations of biological processes into the computational world. \cite{Russell10}.
 
 \subsubsection*{1-Point Crossover}
-Nothing here yet.
+1-point crossover is the computational analog to sexual reproduction. This binary genetic operator takes two genetic sequences, and then chooses a splitting point in their genetic sequences. In the example below, the splitting point is between the fourth and fifth alleles:
+
+\begin{align*}
+\text{Parent 1} &: {\color{myred}0~1~1~0~}|{\color{myred}~1~0~1~1~0} 			\\
+\text{Parent 2} &: {\color{myblue}0~1~0~0~}|{\color{myblue}~0~0~1~0~1} 	\\		
+\end{align*}
+
+\noindent The alleles that occur after the splitting point are then swapped between the two parents to create two new child genetic sequences. The parents from the example above would produce the children below:
+
+\begin{align*}
+\text{Child 1} &: {\color{myred}0~1~1~0}{\color{myblue}~0~0~1~0~1} 			\\  
+\text{Child 2} &: {\color{myblue}0~1~0~0}{\color{myred}~1~0~1~1~0} 		
+\end{align*}
 
 \subsubsection*{Mutation}
-Nothing here yet.
+Mutation is a unary genetic operator designed to help Genetic Algorithms break out of local optima \cite{Russell10}. This operator scans through a genetic sequence of length $n$, and at each point will change that allele to another value in that position's domain with a given probability $p$. This probability is typically set to $\frac{1}{n}$, but further research has demonstrated that a dynamically set $p$ produces better behavior \cite{Back93}.
+
+Problems that require their genetic sequences to be permutations, like the Traveling Salesman Problem, utilize a different mutation operator. Both operators scan through their respective genetic sequences, but the difference occurs when a change is made in the case of permutations. These mutation operators choose a random point in the rest of the genetic sequence and swap the values at these two locations. An example can be seen below:
+
+\begin{align*}
+\text{Before Mutation} &: 8~4~2~1~9~7~3~5~6 			\\
+\text{After Mutation} &:  8~{\color{myred}7}~2~1~9~{\color{myred}4}~3~5~6		
+\end{align*}
 
 \subsubsection*{Steady-State Selection}
 Nothing here yet.
@@ -25,7 +44,7 @@ The first operator from the literature that has been implemented and tested is f
 In previous studies, fitness-based scanning had mixed results across several numeric optimization functions, and performed well on the Traveling Salesman Problem \cite{Eiben94, Eiben95}. Overall, fitness-based scanning showed the best results when the number of parents was between 2 and 5, and even managed to surpass the results of traditional crossover \cite{Eiben94}. 
 
 \subsubsection*{Diagonal Crossover}
-Traditional crossover takes two genetic sequences, chooses a splitting point, and swaps the portions after that point to create two new genetic sequences. \emph{Diagonal crossover} was introduced by Eiben, et al. to extend the concept of crossover into the realm of multi-parent genetic operators \cite{Eiben03}. A diagonal crossover of arity $n$ can be described easily. Take $n$ individuals from a population, select $n-1$ crossover points, and create $n$ children by selecting one subsequence from each piece of the genetic sequences given \cite{Eiben95}. Figure \ref{DC-Fig} depicts how this would work \cite{Eiben95}. Note that $a_i, b_i, c_i,$ and $d_i$ are genetic subsequences of arbitrary length.
+\emph{Diagonal crossover} was introduced by Eiben, et al. to extend the concept of crossover into the realm of multi-parent genetic operators \cite{Eiben03}. A diagonal crossover of arity $n$ can be described easily. Take $n$ individuals from a population, select $n-1$ crossover points, and create $n$ children by selecting one subsequence from each piece of the genetic sequences given \cite{Eiben95}. Figure \ref{DC-Fig} depicts how this would work \cite{Eiben95}. Note that $a_i, b_i, c_i,$ and $d_i$ are genetic subsequences of arbitrary length.
 \begin{figure}[h!]
 \centering
 \begin{tabular}{ | c | c | c | c | c | }
