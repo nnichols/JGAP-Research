@@ -16,10 +16,11 @@ Genetic Algorithms were designed to emulate evolution by natural selection, and 
 \text{Child 2} &: {\color{myblue}0~1~0~0}{\color{myred}~1~0~1~1~0} 		
 \end{align*}
 
-\subsubsection*{Mutation}
+\subsubsection*{Uniform Mutation}
 Mutation is a unary genetic operator designed to help Genetic Algorithms break out of local optima \cite{Russell10}. This operator scans through a genetic sequence of length $n$, and at each point will change that allele to another value in that position's domain with a given probability $p$. This probability is typically set to $\frac{1}{n}$, but further research has demonstrated that a dynamically set $p$ produces better behavior \cite{Back93}.
 
-Problems that require their genetic sequences to be permutations, like the Traveling Salesman Problem, utilize a different mutation operator. Both operators scan through their respective genetic sequences, but the difference occurs when a change is made in the case of permutations. These mutation operators choose a random point in the rest of the genetic sequence and swap the values at these two locations. An example can be seen below:
+\subsubsection*{Swapping Mutation}
+Problems that require their genetic sequences to be permutations, like the Traveling Salesman Problem, utilize swapping, instead of uniform, mutation. Both operators scan through their respective genetic sequences, but the difference occurs when a change is made in the case of permutations. These mutation operators choose a random point in the rest of the genetic sequence and swap the values at these two locations. An example can be seen below:
 
 \begin{align*}
 \text{Before Mutation} &: 8~4~2~1~9~7~3~5~6 			\\
@@ -27,7 +28,7 @@ Problems that require their genetic sequences to be permutations, like the Trave
 \end{align*}
 
 \subsubsection*{Steady-State Selection}
-Nothing here yet.
+Steady-state selection is used to ensure that undeperforming genetic sequences are eliminated from the population, thus preventing their genes from propagating further. Once recombination and mutation have finished adding individuals to the population for a particular generation, this operator assigns each individual a fitness value with the fitness function for the current problem. The individuals are then sorted in descending order with respect to their fitness values. The first $k$ individuals in this list become the population operated upon in the next generation.
 
 \subsection*{Multi-Parent Genetic Operators}
 The literature concerning multi-parent genetic operators highlighted two central operators: fitness-based scanning and diagonal crossover. These two strategies have shown success as multi-parent genetic operators, and are the direct conceptual descendants of traditional genetic operators.
