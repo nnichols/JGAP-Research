@@ -21,8 +21,8 @@ do
 	# run the right python script
 	if [[ $problem < 10 ]] && [[ $problem != 0 ]]
 	then
-		less eso_$i.out | python ~/JGAP-Research/JGAP-Code/Data-Handling/full_out_scanner.py > $problem.csv
+		less eso_$i.out | python ~/JGAP-Research/JGAP-Code/Data-Handling/full_out_scanner.py >> problem_$problem.csv
 	else
-		less eso_$i.out | python ~/JGAP-Research/JGAP-Code/Data-Handling/full_np_scanner.py > $problem.csv
+		less eso_$i.out | python ~/JGAP-Research/JGAP-Code/Data-Handling/full_np_scanner.py >> problem_$problem.csv
 	fi
 done
