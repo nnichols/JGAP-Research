@@ -13,7 +13,7 @@ parents used for recombination & 2-10, by steps of 2 \\
 \hline
 selection type & steady-state \\
 \hline
-selection mechanic & best and unevaluated first \\
+selection mechanic & best first \\
 \hline
 diagonal crossover rate & 70 \% \\
 \hline
@@ -35,7 +35,6 @@ trials per configuration & 100 \\
 \label{GA-config}
 \end{figure}
 
-The selection operator that we have utilized, namely the StandardPostSelector in JGAP, takes the $n$ most fit individuals from one generation to the next \cite{jgap}. This prevents us from having to re-evaluate the fitness of any individual that survives directly from one generation to the next.
 
 \subsection*{Results}
 To determine the usefulness of elitist schema overlays as a genetic operator, we compared our work to current successful operators. To do so, we have analyzed both how efficient our operator is and how well it contributes to solution quality. The efficiency data is drawn from runtimes while minimizing instances of increasing size of the first De Jong function. To measure solution quality, we measured the average fitness of the population and the average fitness of the most fit solution across each of the numerical optimization problems, and the frequency at which we found the best known solution across the problems in NP-Hard. This data was used to help answer the following questions:
