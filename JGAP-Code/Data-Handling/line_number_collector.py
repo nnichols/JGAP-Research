@@ -9,6 +9,6 @@ def main():
         values = line.split( ':' )
         
         # print line number portion    
-        print( values[0] )
+        print( str( values[0] ) )
     
 main()
