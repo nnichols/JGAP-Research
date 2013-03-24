@@ -28,7 +28,7 @@ do
 		fSize=$(($fSize + 1))
 	fi
 	
-	less problem_$i.csv | python full_success_rate.py >> np_$fSize.csv
+	less problem_$i.csv | python ~/JGAP-Research/JGAP-Code/Data-Handling/full_success_rate.py >> np_$fSize.csv
 	
 	# Increment fCtr
 	fCtr=$(($fCtr + 1))
@@ -40,6 +40,6 @@ done
 for j in {1..30}
 do
 
-	less np_$j.csv | python full_avg_rate.py >> np_condensed_$j.csv
+	less np_$j.csv | python ~/JGAP-Research/JGAP-Code/Data-Handling/full_avg_rate.py >> np_condensed_$j.csv
 
 done
