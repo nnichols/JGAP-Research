@@ -35,7 +35,7 @@ def main():
         else:
         
             # Store generations to convergence
-            conv[ (lc % 101) ] = float(line ) 
+            conv[ (lc / 101) ] = float(line ) 
     
     # Go through each config for each line
     for i in range(11):
@@ -51,6 +51,6 @@ def main():
         print( str( percents[i] ) )
         
    		# print avg convergence gen
-        print( str( conv ) )
+        print( str( conv[i] ) )
     
 main()
