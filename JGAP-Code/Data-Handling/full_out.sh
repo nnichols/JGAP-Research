@@ -16,10 +16,10 @@ cd /share/data/nnichols/jgap_experimentation/eso_quality
 for i in {1..3399}
 do 
 
-	problem=$(($i % 309))
+	problem=$((($i - 1) % 309))
 
 	# run the right python script
-	if [[ $problem < 10 ]] && [[ $problem != 0 ]]
+	if [[ $problem -lt 9 ]] 
 	then
 		less eso_$i.out | python ~/JGAP-Research/JGAP-Code/Data-Handling/full_out_scanner.py >> problem_$problem.csv
 	else
