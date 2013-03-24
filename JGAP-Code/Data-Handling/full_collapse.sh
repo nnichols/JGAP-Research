@@ -28,10 +28,18 @@ do
 		fSize=$(($fSize + 1))
 	fi
 	
+	less problem_$i.csv | python full_success_rate.py >> np_$fSize.csv
+	
 	# Increment fCtr
 	fCtr=$(($fCtr + 1))
 	
-	echo $fSize
-	echo $fCtr
 	
+done
+
+# Collapse down into 1 record per configuration
+for j in {1..30}
+do
+
+	less np_$j.csv | python full_avg_rate.py >> np_condensed_$j.csv
+
 done
