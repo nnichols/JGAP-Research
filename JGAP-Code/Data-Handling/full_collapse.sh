@@ -17,7 +17,7 @@ fCtr=0
 fSize=0
 
 # Condense all data to 1 file per problem instance 
-for i in {9..309}
+for i in {9..308}
 do 
 
 	problem=$(($fCtr % 10))

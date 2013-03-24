@@ -17,18 +17,18 @@ def main():
         if( lc % 2 == 0 ):
         	
         	# Sum up success rates
-        	successRate[ (config % 11) ] += float( line )
+            successRate[ (config % 11) ] += float( line )
         	
         else:
         
         	# Sum up avg convergence rates
-        	avgConv[ (config % 11) ] += float( line )
+            avgConv[ (config % 11) ] += float( line )
         	
         config += 1
         lc += 1
             
 	# Print data
-	for i in range(11):
-		print( str( successRate[i] / 10 ) + ',' + str( avgConv[i] / 10 ) )        
+    for i in range(11):
+        print( str( successRate[i] / 10 ) + ',' + str( avgConv[i] / 10 ) )        
      
 main()
