@@ -4,6 +4,7 @@ def main():
     
     # Line and array counters
     lc = 0
+    cCtr = 0
     arrayIndex = 0
 
 	# Looking for best solution thus far (minimum)
@@ -35,7 +36,8 @@ def main():
         else:
         
             # Store generations to convergence
-            conv[ (lc / 101) ] = float(line ) 
+            conv[ cCtr ] = float(line ) 
+            cCtr += 1
     
     # Go through each config for each line
     for i in range(11):
