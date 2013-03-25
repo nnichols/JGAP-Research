@@ -12,8 +12,7 @@ def main():
     
     # Arrays for fitness values, success rate, and convergence
     fitnessValues = [ 0.0 ] * 1500
-    percents = [ 0 ] * 11
-    conv = [ 0.0 ] * 11
+    percents = [ 0 ] * 15
     
     # Read lines that have been piped in to find best fitness
     for line in sys.stdin.readlines():
