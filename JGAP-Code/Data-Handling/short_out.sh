@@ -13,7 +13,7 @@
 cd /share/data/nnichols/jgap_experimentation/solution_quality
 
 # Condense all data to 1 file per problem instance 
-for i in {1..3399}
+for i in {1..4635}
 do 
 
 	problem=$((($i - 1) % 309))

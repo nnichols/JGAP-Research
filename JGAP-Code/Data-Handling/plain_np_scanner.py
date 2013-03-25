@@ -24,7 +24,6 @@ def main():
         
     # print values
     for i in range( 100 ):
-        print( str( Avg[i] ) )
         print( str( Best[i] ) )
     
 main()
