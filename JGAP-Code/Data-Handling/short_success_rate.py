@@ -34,8 +34,8 @@ def main():
     	
     		curCell = (100 * i) + j
     		
-    		# Current value matches best
-    		if( fitnessValues[ curCell ] == bestFitness ):
+    		# Current value is within 1% of the best)
+    		if( fitnessValues[ curCell ] < (bestFitness * 1.01 )):
     			percents[i] += 1
         
         # Print success percent

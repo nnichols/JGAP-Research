@@ -15,8 +15,7 @@ def main():
         # Extra t the values into a list
         values = line.split( ',' )
             
-        # Store fitness values
-        Avg[ lc ] = float( values[1] )
+        # Store fitness value
         Best[ lc ] = float( values[2] ) 
         
         lc += 1

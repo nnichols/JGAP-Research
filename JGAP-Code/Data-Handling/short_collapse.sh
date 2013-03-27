@@ -17,7 +17,7 @@ fCtr=0
 fSize=0
 
 # Condense all data to 1 file per problem instance 
-for i in {9..309}
+for i in {9..308}
 do 
 
 	problem=$(($fCtr % 10))
@@ -37,7 +37,7 @@ do
 done
 
 # Collapse down into 1 record per configuration
-for j in {1..30}
+for j in {1..300}
 do
 
 	less np_$j.csv | python ~/JGAP-Research/JGAP-Code/Data-Handling/short_avg_rate.py >> np_condensed_$j.csv
