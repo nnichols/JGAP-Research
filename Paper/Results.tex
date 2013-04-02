@@ -52,10 +52,14 @@ To determine the usefulness of elitist schema overlays as a genetic operator, we
 To answer these questions, we will first explore the genetic operators from the literature. Secondly, we compare the various methodogies used to select a $k$-value for elitist schema overlays to determine which we will test in conjunction with existing gentic operators. Finally, we will analyze how elitist schema overlays perform when used in conjunction with existing genetic operators.
 
 \subsubsection*{Existing Genetic Operators}
-I wanted to wait for Ammar's jobs and my ESO jobs to finish first before rerunning these to keep the queue from overflowing again.
+To determine if elitist schema overlays improve the overall performance of Genetic Algorithms, we must first establish a performance baseline from the existing research. To do so, we have tested both diagonal crossover and fitness-based scanning individually and in conjunction with eachother against our benchmarks. Diagonal crossover and fitness-based scanning were both tested with arities of 2, 4, 6, 8, and 10. When combined, both operators were set to the same arity from the previous list. 
+
 
 \subsubsection*{$k$-Value Selection Methodologies}
-This is rerunning the 7 unfinished jobs.
+Each of our $k$ selection methodologies was used in addition to a traditional genetic algorithm to determine which methodology performed the best. When using $k$ as a fixed percentage of the population, we ran tests with $k$ set to $10\%, 20\%, 30\%, 40\%, 50\%, 60\%, 70\%, 80\%,\text{and } 90\%,$. During our tests with $k$ chosen as a linear relationship with the number of generations remaining, we determined $k$ with the following formula:
+\[
+k = \left\lfloor \frac{generationsLeft}{totalGenerations} * populationSize \right\rfloor
+\]
 
 \subsubsection*{Elitist Schema Overlays with Existing Operators}
-Nothing here yet.
+We chose to run our further experiments with $k$ set to be a fixed $20\%$ of our population. The rationale behind this choices was based upon the observed convergence rates in our experiments. Since most of the solutions were comprable in quality, we focused upon the methodology that converged the slowest to help fight against premature convergence \cite{Andre01}. This was used in conjunction with the $15$ different genetic operator configurations used in the experiments with the existing genetic operators.
