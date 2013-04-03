@@ -12,7 +12,7 @@ def main():
     
     # Arrays for fitness values, success rate, and convergence
     fitnessValues = [ 0.0 ] * 1100
-    percents = [ 0 ] * 11
+    percents = [ 0.0 ] * 11
     conv = [ 0.0 ] * 11
     
     # Read lines that have been piped in to find best fitness
@@ -45,12 +45,12 @@ def main():
     	
     		curCell = (100 * i) + j
     		
-    		# Current value matches best (within 1%)
-    		if( fitnessValues[ curCell ] < (bestFitness * 1.01) ):
-    			percents[i] += 1
+    		
+    		# Find percent difference of found solution to best so far solution
+    		percents[i] += fitness[ curCell ] / bestFitness
         
         # Print success percent
-        print( str( percents[i] ) )
+        percents[i] = percents[i] / 100.0
         
    		# print avg convergence gen
         print( str( conv[i] ) )

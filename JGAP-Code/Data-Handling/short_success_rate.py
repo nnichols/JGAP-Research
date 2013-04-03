@@ -12,7 +12,7 @@ def main():
     
     # Arrays for fitness values, success rate, and convergence
     fitnessValues = [ 0.0 ] * 1500
-    percents = [ 0 ] * 15
+    percents = [ 0.0 ] * 15
     
     # Read lines that have been piped in to find best fitness
     for line in sys.stdin.readlines():
@@ -34,11 +34,11 @@ def main():
     	
     		curCell = (100 * i) + j
     		
-    		# Current value is within 1% of the best)
-    		if( fitnessValues[ curCell ] < (bestFitness * 1.01 )):
-    			percents[i] += 1
+    		# Find percent difference of found solution to best so far solution
+    		percents[i] += fitness[ curCell ] / bestFitness
         
         # Print success percent
+        percents[i] = percents[i] / 100.0
         print( str( percents[i] ) )
     
 
