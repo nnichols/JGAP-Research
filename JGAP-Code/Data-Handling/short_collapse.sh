@@ -37,7 +37,7 @@ do
 done
 
 # Collapse down into 1 record per configuration
-for j in {1..300}
+for j in {1..30}
 do
 
 	less np_$j.csv | python ~/JGAP-Research/JGAP-Code/Data-Handling/short_avg_rate.py >> np_condensed_$j.csv
