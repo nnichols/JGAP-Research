@@ -35,7 +35,7 @@ def main():
     		curCell = (100 * i) + j
     		
     		# Find percent difference of found solution to best so far solution
-    		percents[i] += fitness[ curCell ] / bestFitness
+    		percents[i] += fitnessValues[ curCell ] / bestFitness
         
         # Print success percent
         percents[i] = percents[i] / 100.0
