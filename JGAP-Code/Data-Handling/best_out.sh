@@ -23,6 +23,6 @@ do
 	then
 		less solution_$i.out | python ~/JGAP-Research/JGAP-Code/Data-Handling/plain_scanner.py >> problem_$problem.csv
 	else
-		less solution_$i.out | python ~/JGAP-Research/JGAP-Code/Data-Handling/plain_np_scanner.py >> problem_$problem.csv
+		less solution_$i.out | python ~/JGAP-Research/JGAP-Code/Data-Handling/plain_np_scanner.py >> /share/data/nnichols/jgap_experimentation/solution_quality/problem_$problem.csv
 	fi
 done
