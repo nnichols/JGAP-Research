@@ -52,6 +52,8 @@ def main():
         # Print success percent
         percents[i] = percents[i] / 100.0
         
+        print( str( percents[i] ) )
+        
    		# print avg convergence gen
         print( str( conv[i] ) )
     

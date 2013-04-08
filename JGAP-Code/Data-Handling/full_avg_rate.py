@@ -29,6 +29,9 @@ def main():
             
 	# Print data
     for i in range(11):
-        print( str( successRate[i] / 10 ) + ',' + str( avgConv[i] / 10 ) )        
+        print( str( successRate[i] / 10 ) ) 
+        
+    for i in range(11):
+        print( str( avgConv[i] / 10 ) )   
      
 main()

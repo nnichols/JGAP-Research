@@ -11,8 +11,8 @@ def main():
     bestFitness = 1000000.0
     
     # Arrays for fitness values, success rate, and convergence
-    fitnessValues = [ 0.0 ] * 1500
-    percents = [ 0.0 ] * 15
+    fitnessValues = [ 0.0 ] * 3000
+    percents = [ 0.0 ] * 30
     
     # Read lines that have been piped in to find best fitness
     for line in sys.stdin.readlines():
@@ -29,7 +29,7 @@ def main():
 
    
     # Go through each config for each line
-    for i in range(15):
+    for i in range(30):
     	for j in range(100):
     	
     		curCell = (100 * i) + j
