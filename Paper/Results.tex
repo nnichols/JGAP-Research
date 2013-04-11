@@ -95,13 +95,13 @@ We also observed that diagonalization was consistently outperformed on both the 
 % MP Knapsack Data goes here
 %
 
-For the Knapsack Problem, diagonalization consistently performs worse than all other configurations; however, in the worst case, the instances with 500 objects, its average best solution was only $1.39\%$ higher than the best found solution across all configurations. Within that range of performance, our previous observation that increasing the arity of the operators improved performance held true.
+For the Knapsack Problem, diagonalization consistently performs worse than all other configurations; however, in the worst case, the instances with 500 objects, its average best solution was only $1.39\%$ higher than the best found solution across all configurations, where the best strategy found solutions $0.01\%$ greater than the optimal when averaging over all instances of all sizes. Within that range of performance, our previous observation that increasing the arity of the operators improved performance held true.
 
 %
 % MP TSP Data goes here
 %
 
-Within the Traveling Salesman Problem instances tested, high-arity diagonalization outperformed fitness-based scanning, but was outperformed by mixed operator strategies. Mixed operator strategies performed the best with arity 4, but across the other two strategies, more parents typically increased performance.
+Within the Traveling Salesman Problem instances tested, high-arity diagonalization outperformed fitness-based scanning, but was outperformed by mixed operator strategies. Mixed operator strategies performed the best with arity 4, but across the other two strategies, more parents typically increased performance. Once again, traditional Genetic Algorithms performed the worst, and found solutions $216.52\%$ greater than the best found when averaged across all instances for all problem sizes, where the best averaged performance was $31.47\%$ greater than the best found on average.
 
 As previously found, multi-parent strategies performed the best when tested on NK-Landscapes \cite{Eiben96}. For each problem instance, the best found solution was always found by each operator configuration.
 
@@ -130,11 +130,43 @@ As before, the observed performance on the numerical optimization problems only 
 % Both Knapsack Data goes here
 %
 
-%
-% Both TSP Data goes here
-%
+Within the data gathered for the Knapsack Problem, the use of elitist schema overlays decreased the average performance of all operators by an average $0.05$ percentage points; however, when utilized with traditional Genetic Algorithms, elitist schema overlays increased performance by $0.18\%$. Overall, the range of performance was small, with the worst average solution found evaluated at $0.51\%$ above optimal. As before, the worst performance for any singular problem size were traditional Genetic Algorithms with instances of $500$ items. Additionally, our previous observation that increasing the arity of the operators improved performance continued to hold true. The only exception to this trend occurred when higher arity operators were used in conjunction with each other and elitist schema overlays.
 
-As before, elitist schema overlays consistently converged to the best found solution across all trials, regardless of which operator it was used in conjunction with. Now that we have examined the data concerning solution quality, we will now examine how elitist schema overlays affect the runtime of Genetic Algorithms empirically. 
+
+\begin{figure}[h]
+\begin{center}
+\begin{tabular}{ | l | c | c | c | c | c |}
+\hline
+Arity: & 2 & 4 & 6 & 8 & 10 \\
+\hline
+Diagonalization: & $.\%$ & $.\%$ & $.\%$ & $.\%$ & $.\%$ \\
+\hline
+Diagonalization (ESO): & $.\%$ & $.\%$ & $.\%$ & $.\%$ & $.\%$ \\
+\hline
+Diagonalization Difference: & $-.\%$ & $-.\%$ & $-.\%$ & $-.\%$ & $-.\%$ \\
+\hline
+Fitness-Based Scanning: & $.\%$ & $.\%$ & $.\%$ & $.\%$ & $.\%$ \\
+\hline
+Fitness-Based Scanning (ESO): & $.\%$ & $.\%$ & $.\%$ & $.\%$ & $.\%$ \\
+\hline
+Fitness-Based Scanning Difference: & $-.\%$ & $-.\%$ & $-.\%$ & $-.\%$ & $-.\%$ \\
+\hline
+Multi-Operator: & $.\%$ & $.\%$ & $.\%$ & $.\%$ & $.\%$ \\
+\hline
+Multi-Operator (ESO): & $.\%$ & $.\%$ & $.\%$ & $.\%$ & $.\%$ \\
+\hline
+Multi-Operator Difference:  & $-.\%$ & $-.\%$ & $-.\%$ & $-.\%$ & $-.\%$ &
+\hline
+\end{tabular}
+\caption{Comparative Traveling Salesman Problem Data}
+\label{fig:Both-TSP}
+\end{center}
+\end{figure}
+
+The Traveling Salesman Problem instances tested showed similar trends to the experiments with the Knapsack Problem. When elitist schema overlays were used, the solutions found by traditional Genetic Algorithms were $78.03$ percentage points closer to the best found solution when averaged across all instances and problem sizes. Diagonaliza
+
+
+NK-Landscape problem instances generated the same behavior as before, and elitist schema overlays consistently converged to the best found solution across all trials, regardless of which operator it was used in conjunction with. Thus, little more can be gained from examining that data. Now that we have finished analyzing the data concerning solution quality, we will examine how elitist schema overlays affect the runtime of Genetic Algorithms empirically. 
 
 %
 % Runtime Data goes here
