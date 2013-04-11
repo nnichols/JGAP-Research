@@ -81,12 +81,12 @@ Likewise, we can translate between a Binary Reflective Gray Code bit string $b$ 
    \right.
 \end{displaymath} 
 
-Emperically, Genetic Algorithms that employ Gray Codes have outperformed those using traditional binary genetic sequences \cite{Back93}. For that reason, we have implemented Gray Codes in our research. This gives us a good means of representing integers, but our numerical optimizations are defined over the real numbers.
+Empirically, Genetic Algorithms that employ Gray Codes have outperformed those using traditional binary genetic sequences \cite{Back93}. For that reason, we have implemented Gray Codes in our research. This gives us a good means of representing integers, but our numerical optimizations are defined over the real numbers.
 
 To describe continuous domains, like those in the test functions presented, we must map our genetic sequences of discrete values to the real numbers. Suppose we wish to operate on a variable $x$ whose domain $D = [a,b] \subseteq \mathbb{R}$, and that we require $k$ decimal places of precision for $x$. To accomplish this, we need to partition $D$ into $10^k(b - a)$ ranges of equivalent length. So we find the smallest $n \in \mathbb{N}$ such that $10^k(b - a) \leq 2^n - 1$. To assign values to $x$ given a genetic sequence $g$ and a decoding function $d$, which takes a genetic sequence and evaluates it to its decimal equivalent, we use the following formula \cite{Michalewicz98}:
 \[ x = a + d(g) \left( \frac{b-a}{2^n - 1} \right) \]
 
-\noindent This methodology is also used in our reasearch.
+\noindent This methodology is also used in our research.
 
 %
 % Knapsack
@@ -114,7 +114,7 @@ Every simple, connected graph with $n \geq 3$ vertices that satisfies $degree(n)
 \end{thm}
 
 \subsubsection*{Encoding}
-Permutation based problems, like the Traveling Salesman Problem, break away from the tradition of utilizing binary values to build genetic sequences. Na\"{\i}ve bit string representations create long genetic sequences that commonly encode infeasible solutions, those that do not meet the constraints of the problem instance, or incorrect genetic sequences, those that are not permutations \cite{Potvin96}. To help correct this, Traveling Salesman Problems of size $n$ can be encoded as a sequence of integers from the set $\{1, 2, \ldots, n\}$ to minimize the length of the genetic sequences. Another common optimization is to fix a single point in all genetic sequencess to reduce the number of representations of an identical solution, and we have followed this trend in our work. 
+Permutation based problems, like the Traveling Salesman Problem, break away from the tradition of utilizing binary values to build genetic sequences. Na\"{\i}ve bit string representations create long genetic sequences that commonly encode infeasible solutions, those that do not meet the constraints of the problem instance, or incorrect genetic sequences, those that are not permutations \cite{Potvin96}. To help correct this, Traveling Salesman Problems of size $n$ can be encoded as a sequence of integers from the set $\{1, 2, \ldots, n\}$ to minimize the length of the genetic sequences. Another common optimization is to fix a single point in all genetic sequences to reduce the number of representations of an identical solution, and we have followed this trend in our work. 
 
 \subsubsection*{Permutation Repair Algorithm}
 For most applications, the described genetic operators will function correctly unmodified; however, for permutation based problems that allow for only one instance of a given allele, like the Traveling Salesman Problem, a slight change is necessary. For instance, the application of an overlay might leave identical values in multiple positions in the genetic sequence. Many genetic operators have this effect, and two main solutions are utilized in practice: New genetic operators tailored to these problems, and repair algorithms \cite{Larranaga99}. To keep our choice of operators consistent, we have devised a repair algorithm to use in every necessary case.
@@ -125,7 +125,7 @@ For most applications, the described genetic operators will function correctly u
 \text{Resultant Individual} &: {\color{myred}2}~{\color{mygreen}1}~3~4~5~6~{\color{myred}2}~{\color{mygreen}1}~9
 \end{align*}
 
-As we can see above, the application of the genetic overlay resultis in an individual that contains two instances of both 2 and 1 in its genetic sequence. Since this is no longer a permutation, it cannot be a potential solution to the Traveling Salesman Problem. Thus, we need a repair algorithm can be used to correct this example, while maintaining the given genetic overlay. 
+As we can see above, the application of the genetic overlay results in an individual that contains two instances of both 2 and 1 in its genetic sequence. Since this is no longer a permutation, it cannot be a potential solution to the Traveling Salesman Problem. Thus, we need a repair algorithm can be used to correct this example, while maintaining the given genetic overlay. 
 
 Our repair algorithm, whose pseudocode can be found in Figure \ref{PRA-Alg}, iterates through a genetic sequence and counts how often each value is used. On the second pass, we check each value to see if it has been used exactly once in the permutation. If this is true, then we advance to the next allele. We will also skip alleles that are defined in the given genetic overlay. If neither of these conditions are true, we replace the current allele with a value that is not already in the permutation. With this structure, we maintain the invariant that the genetic subsequence from the beginning up to the point we are operating on is a valid permutation.
 

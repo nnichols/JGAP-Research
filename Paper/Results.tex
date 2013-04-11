@@ -3,7 +3,7 @@ To implement the operators and benchmarks described earlier, we have built upon 
 
 \subsection*{Experimentation Setup}
 
-To determine how well any Genetic Algorithm performs, it is important to know which of the many available operators and configurations were utilized. The same setup was used for each experiment, and is outlined in Figure \ref{GA-config}. 
+To determine how well any Genetic Algorithm performs, it is important to know which of the many available operators and configurations were utilized. The same setup was used for each experiment measuring solution quality, and is outlined in Figure \ref{GA-config}. 
 
 \begin{figure}[h]
 \begin{center}
@@ -31,12 +31,14 @@ trials per configuration & 100 \\
 \hline
 \end{tabular}
 \caption{Parameters used for testing}
+\label{fig:GA-config}
 \end{center}
-\label{GA-config}
 \end{figure}
 
+
+
 \subsubsection*{Benchmark Parameters}
-To ensure that our tests are reproducable, the parameters used to generate each of our test cases have also been included. The n-dimensional numerical optimization problems were teseted on genetic sequences of length $100$, split into $4$ dimensions of $25$ alleles: For reference, they have been listed below:
+To ensure that our tests are reproducible, the parameters used to generate each of our test cases have also been included. The n-dimensional numerical optimization problems were tested on genetic sequences of length $100$, split into $4$ dimensions of $25$ boolean alleles: For reference, they have been listed below:
 
 \begin{itemize}
 \item De Jong's Hypersphere Function
@@ -47,7 +49,7 @@ To ensure that our tests are reproducable, the parameters used to generate each 
 \item Rosenbrock's Function
 \end{itemize} 
 
-The 2-dimensional functions were tested on genetic sequences of length $62$, with the alleles split evenly between the two dimensions. They have also been listed below:
+The 2-dimensional functions were tested on genetic sequences of length $62$, with the boolean alleles split evenly between the two dimensions. They have also been listed below:
 
 \begin{itemize}
 \item Michaelwicz's Function
@@ -55,53 +57,87 @@ The 2-dimensional functions were tested on genetic sequences of length $62$, wit
 \item Schubert's Function
 \end{itemize}
 
-Both the Knapsack and the Travelling Salesman problems were tested on several randomly generated instances of size $50$ to $500$ by increments of $50$. $10$ instances of each size were generated to help prevent against a particular operator having an advantage over another due to its ability to exploit a feature of a given instance. NK-Landscapes were similarly generated for $n = 50$ to $n = 250$ with increments of $50$. $20$ instances were generated for each size, $10$ with $k = 5$ and the remainder with $k = 10$.
+Both the Knapsack and the Traveling Salesman problems were tested on several randomly generated instances of size $50$ to $500$ by increments of $50$. $10$ instances of each size were generated to help prevent against a particular operator having an advantage over another due to its ability to exploit a feature of a given instance. NK-Landscapes were similarly generated for $n = 50$ to $n = 250$ with increments of $50$. $20$ instances were generated for each size, $10$ with $k = 5$ and the remainder with $k = 10$. Both NK-Landscapes and Knapsack Problem instances were tested using boolean alleles, and the Traveling Salesman Problem used integer alleles.
 
 \subsection*{Results}
-To determine the usefulness of elitist schema overlays as a genetic operator, we compared our work to current successful operators. To do so, we have analyzed both how efficient our operator is and how well it contributes to solution quality. The efficiency data is drawn from runtimes while minimizing instances of increasing size of the first De Jong function. To measure solution quality, we measured the average fitness of the population and the average fitness of the most fit solution across each of the numerical optimization problems, and the frequency at which we found the best known solution across the problems in NP-Hard. This data was used to help answer the following questions:
+To determine the usefulness of elitist schema overlays as a genetic operator, we compared our work to current successful operators. To do so, we have analyzed both how efficient our operator is and how well it contributes to solution quality. 
+
+The efficiency data is drawn from runtimes while minimizing instances of increasing size of the first De Jong function over $150$ generations. A numerical optimization function was chosen to limit error stemming from variance in the time required to read the input files that stored instances of NP-Hard problems. De Jong's Hypersphere function was specifically selected since the population converged to the optimal solution in each of our experiments. This allowed us to account for variance in the time necessary to construct elitist schema overlays with respect to the similarity of high performing genetic sequences.
+
+To measure solution quality for each operator, we measured the average fitness of the most fit solution found for each of the numerical optimization problems. To measure the solution quality of problems in NP-Hard, we measured the frequency at which each operator found the best known solution across the problems all operators. This data was collected because internal features of a given instance may play a role in how well a particular operator performs. Thus, we tested several instances of each size of each problem to reduce error, and collected frequency data to allow us to compare solutions of different instances that were the same size. We used this data to help answer the following questions:
 
 \begin{itemize}
 \item Do fitness-based scanning and diagonal crossover perform as previously reported, with more parents tending to higher success rates?
-\item Do fitness-based scanning and diagonal crossover perform better when used seperately or in conjunction with each other? 
-\item Which of the three methods of selecting $k$, assinging random values, selecting a fixed percentage, or by computing a linear relationship with generations left, performs best?
+\item Do fitness-based scanning and diagonal crossover perform better when used separately or in conjunction with each other? 
+\item Which of the three methods of selecting $k$, assigning random values, selecting a fixed percentage, or by computing a linear relationship with generations left, performs best?
 \item How do each of the above methods of $k$ selection affect the convergence rates of their respective populations?
 \item With which genetic operator(s) does the best performing elitist schema overlay configuration perform best?
 \item Do elitist schema overlays improve solution quality?
-%\item How efficiently can elitist schema overlays be computed and applied in relation to other genetic operators?
+\item How efficiently can elitist schema overlays be computed and applied in relation to other genetic operators?
 \end{itemize}
 
-To answer these questions, we will first explore the genetic operators from the literature. Secondly, we compare the various methodogies used to select a $k$-value for elitist schema overlays to determine which we will test in conjunction with existing gentic operators. Finally, we will analyze how elitist schema overlays perform when used in conjunction with existing genetic operators.
+To answer these questions, we will first explore the genetic operators from the literature. Secondly, we compare the various methodologies used to select a $k$-value for elitist schema overlays to determine which we will test in conjunction with existing genetic operators. Finally, we will analyze how elitist schema overlays perform when used in conjunction with existing genetic operators.
 
 \subsubsection*{Existing Genetic Operators}
-To determine if elitist schema overlays improve the overall performance of Genetic Algorithms, we must first establish a performance baseline from the existing research. To do so, we have tested both diagonal crossover and fitness-based scanning individually and in conjunction with eachother against our benchmarks. Diagonal crossover and fitness-based scanning were both tested with arities of 2, 4, 6, 8, and 10. When combined, both operators were set to the same arity from the previous list. 
+To determine if elitist schema overlays improve the overall performance of Genetic Algorithms, we must first establish a performance baseline from the existing research. To do so, we have tested both diagonal crossover and fitness-based scanning individually and in conjunction with each other against our benchmarks. Diagonal crossover and fitness-based scanning were both tested with arities of 2, 4, 6, 8, and 10. When combined, both operators were set to the same arity from the previous list. 
 
 %
 % Numerical Optimization Data goes here
 %
 
-Each of the operator configurations found the same minima for 6 of the 9 optimization problems. In the remaining cases, traditional Genetic Algorithms consistently performed worse than multi-parent strategies. As a general trend, both utilizing more operators and increasing the arity of those operators increased performance, but there were exceptions. Fitness-based scanning saw performance degredation with arity 10 on the Rastrigin function, as did mixed operator usage on the Griewank function. Utilizing several operators performed the best on the Griewank and Rastrigin functions, and was outperformed on the Rosenbrock function by fitness-based scanning.
+Each of the operator configurations consistently found the same minima for 6 of the 9 optimization problems. Since this data does not differentiate the operators, we will focus upon the remaining three functions: Griewank's, Rastrigin's, and Rosenbrock's. 
+
+In these cases, traditional Genetic Algorithms consistently performed worse than multi-parent strategies. As a general trend, both utilizing more operators and increasing the arity of those operators increased performance, but there were exceptions. Fitness-based scanning saw performance degradation with arity 10 on the Rastrigin function, as did mixed operator usage on the Griewank function. Utilizing several operators performed the best on the Griewank and Rastrigin functions, and was outperformed on the Rosenbrock function by fitness-based scanning.
 
 We also observed that diagonalization was consistently outperformed on both the Rosenbrock and Griewank functions; however, diagonalization did outperform fitness-based scanning on the Rastrigin function. Each of these findings were in line with the literature on fitness-based scanning and diagonalization \cite{Eiben94, Eiben95}. We will now investigate how these operators performed on the NP-Hard test problems.
 
 %
-% NP-Hard Data goes here
+% MP Knapsack Data goes here
 %
 
-For the Knapsack Problem, diagonalization consistenly performs worse than all other configurations; however, in the worst case, the instances with 500 objects, its average best solution was only $1.39\%$ higher than the best found solution across all configurations. Within that range of performance, our previous observation that increasing the arity of the operators improved performance held true.
+For the Knapsack Problem, diagonalization consistently performs worse than all other configurations; however, in the worst case, the instances with 500 objects, its average best solution was only $1.39\%$ higher than the best found solution across all configurations. Within that range of performance, our previous observation that increasing the arity of the operators improved performance held true.
+
+%
+% MP TSP Data goes here
+%
 
 Within the Traveling Salesman Problem instances tested, high-arity diagonalization outperformed fitness-based scanning, but was outperformed by mixed operator strategies. Mixed operator strategies performed the best with arity 4, but across the other two strategies, more parents typically increased performance.
 
 As previously found, multi-parent strategies performed the best when tested on NK-Landscapes \cite{Eiben96}. For each problem instance, the best found solution was always found by each operator configuration.
 
-This data supports previous conclusions about the success of genetic operators with arities greater than $2$. Increasing the number of parents involved in recombination improved the success of both diagonalization and fitness-based scanning. Additionally, utilizing both of these operators in conjunction with each-other further increased performance on both the numerical optimization and NP-Hard test problems. 
+Overall, this data supports previous conclusions about the success of genetic operators with arities greater than $2$. Increasing the number of parents involved in recombination improved the success of both diagonalization and fitness-based scanning. Additionally, utilizing both of these operators in conjunction with each-other further increased performance on both the numerical optimization and NP-Hard test problems. 
 
 Now we will compare the various methodologies of $k$ selection with elitist schema overlays, and compare the best found strategy to the multi-parent operators tested here. 
 
 \subsubsection*{$k$-Value Selection Methodologies}
-Each of our $k$ selection methodologies was used in addition to a traditional genetic algorithm to determine which methodology performed the best. When using $k$ as a fixed percentage of the population, we ran tests with $k$ set to $10\%, 20\%, 30\%, 40\%, 50\%, 60\%, 70\%, 80\%,\text{and } 90\%,$. During our tests with $k$ chosen as a linear relationship with the number of generations remaining, we determined $k$ with the following formula:
+Each of our $k$ selection methodologies was used in addition to a traditional Genetic Algorithm to determine which methodology performed the best. When using $k$ as a fixed percentage of the population, we ran tests with $k$ set to $10\%, 20\%, 30\%, 40\%, 50\%, 60\%, 70\%, 80\%,\text{and } 90\%,$. During our tests with $k$ chosen as a linear relationship with the number of generations remaining, we determined $k$ with the following formula:
 \[
 k = \left\lfloor \frac{generationsLeft}{totalGenerations} * populationSize \right\rfloor
 \]
 
+This data helped us select a $k$-value selection methodology to utilize with both traditional Genetic Algorithms and multi-parent operators to determine empirically how they affect performance.
+
 \subsubsection*{Elitist Schema Overlays with Existing Operators}
-We chose to run our further experiments with $k$ set to be a fixed $20\%$ of our population. The rationale behind this choices was based upon the observed convergence rates in our experiments. Since most of the solutions were comprable in quality, we focused upon the methodology that converged the slowest to help fight against premature convergence \cite{Andre01}. This was used in conjunction with the $15$ different genetic operator configurations used in the experiments with the existing genetic operators.
+We chose to run our further experiments with $k$ set to be a fixed $20\%$ of our population. The rationale behind this choices was based upon the observed convergence rates in our experiments. Since most of the solutions were comparable in quality, we focused upon the methodology that converged the slowest. This decision was made in an attempt to help prevent premature convergence \cite{Andre01}. We also aimed to maintain the disruptiveness of diagonalization and fitness-based scanning, which is thought to be central to the successes of multi-parent operators \cite{Eiben95}. This was used in conjunction with the $15$ different genetic operator configurations used in the experiments with the existing genetic operators. We will begin by comparing performance on the numerical optimization functions.
+
+%
+% Both Numerical Data Goes Here
+%
+
+As before, the observed performance on the numerical optimization problems only deviated during tests on Griewank's function, Rastrigin's function, and Rosenbrock's function. Across these tests, multi-parent operators without elitist schema overlays tend to outperform those with elitist schema overlays. The tests run with elitist schema overlays show similar relative behavior when compared to each other as the multi-parent operators without elitist schema overlays; that is, diagonalization was usually outperformed by fitness-based scanning, which was in turn out performed by a multiple-operator strategy. In contrast to the previous experiment, increasing the number of parents no longer resulted in improved performance in the average case.
+
+%
+% Both Knapsack Data goes here
+%
+
+%
+% Both TSP Data goes here
+%
+
+As before, elitist schema overlays consistently converged to the best found solution across all trials, regardless of which operator it was used in conjunction with. Now that we have examined the data concerning solution quality, we will now examine how elitist schema overlays affect the runtime of Genetic Algorithms empirically. 
+
+%
+% Runtime Data goes here
+%
+
+ The whole of this data was used to derive our conclusions from our experiments.

@@ -1,9 +1,13 @@
-Our data supports the hypothesis that multi-parent strategies are an improvement upon traditional Genetic Algorithms. When paired with traditional Genetic Algorithms, elitist schema overlays did improve performance; however, these gains in performance disappeared when used in conjunction with other multi-parent strategies. The benefits of multi-parent strategies, including elitist schema overlays, can be seen in the significant performance differences on the tested instances of the Travelling Salesman Problem.
+Our data supports the hypothesis that multi-parent strategies are an improvement upon traditional Genetic Algorithms. When paired with traditional Genetic Algorithms, elitist schema overlays improved performance in most cases, especially while testing instances of the Traveling Salesman Problem. Traditional Genetic Algorithms were also out performed by the operators from the literature: $n$-arity diagonalization, fitness-based scanning, and multi-operator strategies. 
+
+While elitist schema overlays increased the performance of traditional Genetic Algorithms, this effect did not carry over when elitist schema overlays were used with multi-parent operators. In most of the observed cases, adding elitist schema overlays to other $n$-arity genetic operators degraded performance; however, they still outperformed traditional Genetic Algorithms in most cases. While elitist schema overlays could not match the successes of other multi-parent operators, they provide another method to improve upon traditional paradigms.
 
 \subsection*{Further Research}
 During our research, we came across and developed several unanswered questions that could be the focus of further research into elitist schema overlays and multi-parent Genetic Algorithms.
 
 \begin{itemize}
+\item What do these results tell us about the building block hypothesis and the schema theorem?
+
 \item What other ways of choosing and modifying the $k$ value in an elitist schema overlay will produce better behavior, and why?
 
 \item What other strategies exist for creating effective genetic overlays?

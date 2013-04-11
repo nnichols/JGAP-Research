@@ -1,5 +1,5 @@
 \subsection*{Traditional Genetic Operators}
-Genetic Algorithms were designed to emulate evolution by natural selection, and traditional genetic operators closely resemble their biological counterparts. Crossover, mutation, and selection build the core of many Genetic Algorithms, and are direct translations of biological processes into the computational world. \cite{Russell10}.
+Genetic Algorithms were designed to emulate evolution by natural selection, and traditional genetic operators closely resemble their biological counterparts. Crossover, mutation, and selection build the core of many Genetic Algorithms, and are direct translations of biological processes into the computational world. \cite{Russell10}. For the rest of this paper, the term ``traditional Genetic Algorithm'' will be used to refer to 1-point crossover and mutation together.
 
 \subsubsection*{1-Point Crossover}
 1-point crossover is the computational analog to sexual reproduction. This binary genetic operator takes two genetic sequences, and then chooses a splitting point in their genetic sequences. In the example below, the splitting point is between the fourth and fifth alleles:
@@ -28,7 +28,7 @@ Problems that require their genetic sequences to be permutations, like the Trave
 \end{align*}
 
 \subsubsection*{Steady-State Selection}
-Steady-state selection is used to ensure that undeperforming genetic sequences are eliminated from the population, thus preventing their genes from propagating further. Once recombination and mutation have finished adding individuals to the population for a particular generation, this operator assigns each individual a fitness value with the fitness function for the current problem. The individuals are then sorted in descending order with respect to their fitness values. The first $k$ individuals in this list become the population operated upon in the next generation.
+Steady-state selection is used to ensure that underperforming genetic sequences are eliminated from the population, thus preventing their genes from propagating further. Once recombination and mutation have finished adding individuals to the population for a particular generation, this operator assigns each individual a fitness value with the fitness function for the current problem. The individuals are then sorted in descending order with respect to their fitness values. The first $k$ individuals in this list become the population operated upon in the next generation.
 
 \subsection*{Multi-Parent Genetic Operators}
 The literature concerning multi-parent genetic operators highlighted two central operators: fitness-based scanning and diagonal crossover. These two strategies have shown success as multi-parent genetic operators, and are the direct conceptual descendants of traditional genetic operators.
@@ -69,4 +69,4 @@ $d_1$ & {\color{mygreen}$c_2$} & {\color{myblue}$b_3$} & {\color{myred}$a_4$} & 
 
 The rationale behind expanding this operator into the realm of multi-parenthood was to increase the disruptiveness, and by extension the explorativity, of traditional crossover \cite{Eiben97}. This meant that the population would need a large degree of similar genetic sequences before the search would narrow and converge \cite{Eiben95}. It should also be noted that in the special case of $n = 2$ is identical to traditional 1-point crossover \cite{Eiben95}. High arity versions of this operator increased the performance of Genetic Algorithms in research, though they were ultimately less successful than scanning operators; however, it was also noted that it is much less expensive to compute, meaning that larger populations could be processed in the same time \cite{Eiben95}. In our research, the population sizes are set to be equal across all operators.
 
-Now that we have defined each of the genetic operators from the literature, we will define our contribution: the genetic overlay and its concrete impletation, the elitist schema overlay.
+Now that we have defined each of the genetic operators from the literature, we will define our contribution: the genetic overlay and its concrete implementation, the elitist schema overlay.
