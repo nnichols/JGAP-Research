@@ -3,7 +3,7 @@ To implement the operators and benchmarks described earlier, we have built upon 
 
 \subsection*{Experimentation Setup}
 
-To determine how well any Genetic Algorithm performs, it is important to know which of the many available operators and configurations were utilized. The same setup was used for each experiment measuring solution quality, and is outlined in Figure \ref{GA-config}. 
+To determine how well any Genetic Algorithm performs, it is important to know which of the many available operators and configurations were utilized. The same setup was used for each experiment measuring solution quality, and is outlined in Figure \ref{fig:GA-config}. These parameters are similar to those found in the literature to ensure that our results are comparable to previous research \cite{Sudholt12, Eiben95, Eiben96}. 
 
 \begin{figure}[h]
 \begin{center}
@@ -35,7 +35,7 @@ trials per configuration & 100 \\
 \end{center}
 \end{figure}
 
-
+All of our experiments measuring runtime were executed on an Intel Core i5-2500 processor clocked at 3.30 gigahertz. The computer also had 16 gigabytes of RAM and was running version 5.5 of the CentOS operating system. 
 
 \subsubsection*{Benchmark Parameters}
 To ensure that our tests are reproducible, the parameters used to generate each of our test cases have also been included. The n-dimensional numerical optimization problems were tested on genetic sequences of length $100$, split into $4$ dimensions of $25$ boolean alleles: For reference, they have been listed below:
@@ -64,7 +64,7 @@ To determine the usefulness of elitist schema overlays as a genetic operator, we
 
 The efficiency data is drawn from runtimes while minimizing instances of increasing size of the first De Jong function over $150$ generations. A numerical optimization function was chosen to limit error stemming from variance in the time required to read the input files that stored instances of NP-Hard problems. De Jong's Hypersphere function was specifically selected since the population converged to the optimal solution in each of our experiments. This allowed us to account for variance in the time necessary to construct elitist schema overlays with respect to the similarity of high performing genetic sequences.
 
-To measure solution quality for each operator, we measured the average fitness of the most fit solution found for each of the numerical optimization problems. To measure the solution quality of problems in NP-Hard, we measured the frequency at which each operator found the best known solution across the problems all operators. This data was collected because internal features of a given instance may play a role in how well a particular operator performs. Thus, we tested several instances of each size of each problem to reduce error, and collected frequency data to allow us to compare solutions of different instances that were the same size. We used this data to help answer the following questions:
+To measure solution quality for each operator, we measured the average fitness of the most fit solution found for each of the numerical optimization problems. To measure the solution quality of problems in NP-Hard, we measured the frequency at which each operator found the best known solution across the problems all operators. It should be noted that the best found solutions during experimentation for $k$-value selection were only compared against other methodologies in that section; the best found solutions during experiments comparing elitist schema overlays to multi-parent operators were drawn from across both of these datasets. We tested several instances of each size of each problem to reduce error, and collected frequency data to allow us to compare solutions of different instances that were the same size. Multiple instances were used because internal features of a given instance may play a role in how well a particular operator performs. All of this data was used to help answer the following questions:
 
 \begin{itemize}
 \item Do fitness-based scanning and diagonal crossover perform as previously reported, with more parents tending to higher success rates?
@@ -110,10 +110,34 @@ Overall, this data supports previous conclusions about the success of genetic op
 Now we will compare the various methodologies of $k$ selection with elitist schema overlays, and compare the best found strategy to the multi-parent operators tested here. 
 
 \subsubsection*{$k$-Value Selection Methodologies}
-Each of our $k$ selection methodologies was used in addition to a traditional Genetic Algorithm to determine which methodology performed the best. When using $k$ as a fixed percentage of the population, we ran tests with $k$ set to $10\%, 20\%, 30\%, 40\%, 50\%, 60\%, 70\%, 80\%,\text{and } 90\%,$. During our tests with $k$ chosen as a linear relationship with the number of generations remaining, we determined $k$ with the following formula:
+Each of our $k$ selection methodologies was used in addition to a traditional Genetic Algorithm to determine which methodology performed the best. When using $k$ as a fixed percentage of the population, we ran tests with $k$ set to $10\%, 20\%, 30\%, 40\%, 50\%, 60\%, 70\%, 80\%,\text{and } 90\%$. During our tests with $k$ chosen as a linear relationship with the number of generations remaining, we determined $k$ with the following formula:
 \[
 k = \left\lfloor \frac{generationsLeft}{totalGenerations} * populationSize \right\rfloor
 \]
+
+As before, 6 of the 9 numerical optimization problems lead to each of the operators converging to the same solution. The solution quality information from these cases does not help us differentiate these operators, but the convergence information from these tests will be explored later. The remaining functions to be analyzed for solution quality information are the following: Griewank's, Rastrigin's, and Rosenbrock's.
+
+%
+% ESO Num Data goes here
+%
+
+Across each of these functions, no single methodology consistently dominated the others. Further, when analyzing the data across the percentage based selection methods, the percent used and the overall performance did not appear to be correlated. Selecting $k$ randomly consistently converged the slowest, taking $153.28$ generations on average, and selecting $k = 30\%$, the fastest converging methodology, lead to convergence after $130.7$ generations on average. We will now investigate the behavior of traditional Genetic Algorithms with elitist schema overlays on problems in NP-Hard.
+
+%
+% ESO Knapsack Data goes here
+%
+
+The solution quality data gathered from the Knapsack Problem is almost indistinguishable, much like the numerical optimization data was. Every methodology found on average a solution that was between $100.19\%$ and $100.21\%$ of the best found solution for that given instance. The convergence data was more varied. Selecting $k = 20\%$ converged on average after $161.78$ generations, and $k = 40\%$ converged the fastest, taking $142.09$ generations on average. 
+
+%
+% ESO TSP Data goes here
+%
+
+%
+% ESO NK Data goes here
+%
+
+As was the case with multi-parent Genetic Algorithms, our tests with elitist schema overlays on NK-Landscape instances gave us little data to differentiate methodologies. Following the trend of the other problems in NP-Hard, $k = 20\%$ converged the slowest, taking $33.97$ generations on average, and $k = 40\%$ converged the fastest, taking $22.48$ generations on average.
 
 This data helped us select a $k$-value selection methodology to utilize with both traditional Genetic Algorithms and multi-parent operators to determine empirically how they affect performance.
 
@@ -132,38 +156,11 @@ As before, the observed performance on the numerical optimization problems only 
 
 Within the data gathered for the Knapsack Problem, the use of elitist schema overlays decreased the average performance of all operators by an average $0.05$ percentage points; however, when utilized with traditional Genetic Algorithms, elitist schema overlays increased performance by $0.18\%$. Overall, the range of performance was small, with the worst average solution found evaluated at $0.51\%$ above optimal. As before, the worst performance for any singular problem size were traditional Genetic Algorithms with instances of $500$ items. Additionally, our previous observation that increasing the arity of the operators improved performance continued to hold true. The only exception to this trend occurred when higher arity operators were used in conjunction with each other and elitist schema overlays.
 
+%
+% Both TSP Data goes here
+%
 
-\begin{figure}[h]
-\begin{center}
-\begin{tabular}{ | l | c | c | c | c | c |}
-\hline
-Arity: & 2 & 4 & 6 & 8 & 10 \\
-\hline
-Diagonalization: & $.\%$ & $.\%$ & $.\%$ & $.\%$ & $.\%$ \\
-\hline
-Diagonalization (ESO): & $.\%$ & $.\%$ & $.\%$ & $.\%$ & $.\%$ \\
-\hline
-Diagonalization Difference: & $-.\%$ & $-.\%$ & $-.\%$ & $-.\%$ & $-.\%$ \\
-\hline
-Fitness-Based Scanning: & $.\%$ & $.\%$ & $.\%$ & $.\%$ & $.\%$ \\
-\hline
-Fitness-Based Scanning (ESO): & $.\%$ & $.\%$ & $.\%$ & $.\%$ & $.\%$ \\
-\hline
-Fitness-Based Scanning Difference: & $-.\%$ & $-.\%$ & $-.\%$ & $-.\%$ & $-.\%$ \\
-\hline
-Multi-Operator: & $.\%$ & $.\%$ & $.\%$ & $.\%$ & $.\%$ \\
-\hline
-Multi-Operator (ESO): & $.\%$ & $.\%$ & $.\%$ & $.\%$ & $.\%$ \\
-\hline
-Multi-Operator Difference:  & $-.\%$ & $-.\%$ & $-.\%$ & $-.\%$ & $-.\%$ &
-\hline
-\end{tabular}
-\caption{Comparative Traveling Salesman Problem Data}
-\label{fig:Both-TSP}
-\end{center}
-\end{figure}
-
-The Traveling Salesman Problem instances tested showed similar trends to the experiments with the Knapsack Problem. When elitist schema overlays were used, the solutions found by traditional Genetic Algorithms were $78.03$ percentage points closer to the best found solution when averaged across all instances and problem sizes. Diagonaliza
+The Traveling Salesman Problem instances tested showed similar trends to the experiments with the Knapsack Problem. When elitist schema overlays were used, the solutions found by traditional Genetic Algorithms were $78.03$ percentage points closer to the best found solution when averaged across all instances and problem sizes. Diagonalization with arity 4 also had significant gains when utilizing elitist schema overlays, with solutions improving on average by $70.75$ percentage points; however, on average performance dropped by $5.92$ percentage points.
 
 
 NK-Landscape problem instances generated the same behavior as before, and elitist schema overlays consistently converged to the best found solution across all trials, regardless of which operator it was used in conjunction with. Thus, little more can be gained from examining that data. Now that we have finished analyzing the data concerning solution quality, we will examine how elitist schema overlays affect the runtime of Genetic Algorithms empirically. 
