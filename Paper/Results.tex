@@ -81,11 +81,28 @@ To answer these questions, we will first explore the genetic operators from the 
 \subsubsection*{Existing Genetic Operators}
 To determine if elitist schema overlays improve the overall performance of Genetic Algorithms, we must first establish a performance baseline from the existing research. To do so, we have tested both diagonal crossover and fitness-based scanning individually and in conjunction with each other against our benchmarks. Diagonal crossover and fitness-based scanning were both tested with arities of 2, 4, 6, 8, and 10. When combined, both operators were set to the same arity from the previous list. 
 
-%
-% Numerical Optimization Data goes here
-%
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.60]{charts/ESO_Griewank.pdf}
+\caption{Elitist Schema Overlay Performance on Griewank's Function}
+\label{fig:eso_griewank}
+\end{figure}
 
-Each of the operator configurations consistently found the same minima for 6 of the 9 optimization problems. Since this data does not differentiate the operators, we will focus upon the remaining three functions: Griewank's, Rastrigin's, and Rosenbrock's. 
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.60]{charts/ESO_Rastrigin.pdf}
+\caption{Elitist Schema Overlay Performance on Rastrigin's Function}
+\label{fig:eso_rastrigin}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.60]{charts/ESO_Rosenbrock.pdf}
+\caption{Elitist Schema Overlay Performance on Rosenbrock's Function}
+\label{fig:eso_rosenbrock}
+\end{figure}
+
+Each of the operator configurations consistently found the same minima for 6 of the 9 optimization problems. Since this data does not differentiate the operators, we will focus upon the remaining three functions: Griewank's (referenced in Figure \ref{fig:eso_griewank}), Rastrigin's (Figure \ref{fig:eso_rastrigin}), and Rosenbrock's (Figure \ref{fig:eso_rosenbrock}). 
 
 In these cases, traditional Genetic Algorithms consistently performed worse than multi-parent strategies. As a general trend, both utilizing more operators and increasing the arity of those operators increased performance, but there were exceptions. Fitness-based scanning saw performance degradation with arity 10 on the Rastrigin function, as did mixed operator usage on the Griewank function. Utilizing several operators performed the best on the Griewank and Rastrigin functions, and was outperformed on the Rosenbrock function by fitness-based scanning.
 
