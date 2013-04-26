@@ -17,7 +17,12 @@ Genetic Algorithms were designed to emulate evolution by natural selection, and 
 \end{align*}
 
 \subsubsection*{Uniform Mutation}
-Mutation is a unary genetic operator designed to help Genetic Algorithms break out of local optima \cite{Russell10}. This operator scans through a genetic sequence of length $n$, and at each point will change that allele to another value in that position's domain with a given probability $p$. This probability is typically set to $\frac{1}{n}$, but further research has demonstrated that a dynamically set $p$ produces better behavior \cite{Back93}.
+Mutation is a unary genetic operator designed to help Genetic Algorithms break out of local optima \cite{Russell10}. This operator scans through a genetic sequence of length $n$, and at each point will change that allele to another value in that position's domain with a given probability $p$. This probability is typically set to $\frac{1}{n}$, but further research has demonstrated that a dynamically set $p$ produces better behavior \cite{Back93}. An example has been provided below:
+
+\begin{align*}
+\text{Before Mutation} &: 0~1~1~0~0~0~1~0~1 			\\  
+\text{After Mutation} &: 0~1~1~{\color{myred}1}~0~0~1~0~1  		
+\end{align*}
 
 \subsubsection*{Swapping Mutation}
 Problems that require their genetic sequences to be permutations, like the Traveling Salesman Problem, utilize swapping, instead of uniform, mutation. Both operators scan through their respective genetic sequences, but the difference occurs when a change is made in the case of permutations. These mutation operators choose a random point in the rest of the genetic sequence and swap the values at these two locations. An example can be seen below:
@@ -34,15 +39,15 @@ Steady-state selection is used to ensure that underperforming genetic sequences 
 The literature concerning multi-parent genetic operators highlighted two central operators: fitness-based scanning and diagonal crossover. These two strategies have shown success as multi-parent genetic operators, and are the direct conceptual descendants of traditional genetic operators. Both of these operators will be tested independently, as well as in conjunction with each other. This \emph{mixed-operator} methodology has shown performance gains in previous research \cite{Smith04}.
 
 \subsubsection*{Fitness-Based Scanning}
-The first operator from the literature that has been implemented and tested is fitness-based scanning as proposed by Eiben, et al \cite{Eiben94}. The generalized form of scanning iterates through the empty genetic sequence of a child and determines its value based upon the values present in $n$ selected parents \cite{Eiben91}. Fitness-based scanning makes a roulette wheel selection to choose each allele. At each allele, the probability that a parent, from the population $S$, named $i$ with a fitness value of $f(i)$, will donate its allele to the child's genetic sequence has probability $P(i)$ as described below \cite{Eiben94}: 
+The first operator from the literature that has been implemented and tested is fitness-based scanning as proposed by Eiben, et al \cite{Eiben94}. The generalized form of scanning iterates through the empty genetic sequence of a child and determines its value based upon the values present in $n$ selected parents \cite{Eiben91}. Fitness-based scanning makes a roulette wheel selection to choose each allele. At each allele, the probability that a parent, from the sub-population, consisting of the parent genetic sequences selected for this recombination, $S$, named $i$ with a fitness value of $f(i)$, will donate its allele to the child's genetic sequence has probability $P(i)$ as described below \cite{Eiben94}: 
 
 \[ P(i) = \frac{f(i)}{\sum\limits_{i \in S} f(i)} \]
 
-\noindent Thus, the expected number of alleles inherited from a parent $i$ is $E(i)$\cite{Eiben94}:
+\noindent Thus, the expected number of alleles inherited from a parent $i$ is $E(i)$ \cite{Eiben94}:
 
 \[ E(i) = P(i) *(\text{ Chromosome length }) \]
 
-In previous studies, fitness-based scanning had mixed results across several numeric optimization functions, and performed well on the Traveling Salesman Problem \cite{Eiben94, Eiben95}. Overall, fitness-based scanning showed the best results when the number of parents was between 2 and 5, and even managed to surpass the results of traditional crossover \cite{Eiben94}. 
+In previous studies, fitness-based scanning had mixed results across several numeric optimization functions, and performed well on the Traveling Salesman Problem \cite{Eiben94, Eiben95}. Overall, fitness-based scanning managed to surpass the results of traditional crossover and other multi-parent genetic operators \cite{Eiben94}. 
 
 \subsubsection*{Diagonal Crossover}
 \emph{Diagonal crossover} was introduced by Eiben, et al. to extend the concept of crossover into the realm of multi-parent genetic operators \cite{Eiben03}. A diagonal crossover of arity $n$ can be described easily. Take $n$ individuals from a population, select $n-1$ crossover points, and create $n$ children by selecting one subsequence from each piece of the genetic sequences given \cite{Eiben95}. Figure \ref{DC-Fig} depicts how this would work \cite{Eiben95}. Note that $a_i, b_i, c_i,$ and $d_i$ are genetic subsequences of arbitrary length.
